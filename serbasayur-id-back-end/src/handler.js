@@ -1,5 +1,4 @@
 const { nanoid } = require('nanoid');
-const products = require('./products');
 const db = require('./db_config');
 
 async function getAllProducts(callback) {
@@ -107,56 +106,61 @@ const editProductByIdHandler = (request, h) => {
     nama, deskripsi, harga, image, kuantitas, rating,
   } = request.payload;
 
-  const index = products.findIndex((product) => product.idProduk === idProduk);
+  const promise = new Promise((resolve) => {
+    getProductById(idProduk, (results) => {
+      if (typeof results !== 'undefined' && results.length > 0) {
+        const sql = `UPDATE products SET nama='${nama}',deskripsi='${deskripsi}',harga=${harga},image='${image}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
 
-  if (index !== -1) {
-    products[index] = {
-      ...products[index],
-      nama,
-      deskripsi,
-      harga,
-      image,
-      kuantitas,
-      rating,
-    };
+        db.query(sql);
 
-    const response = h.response({
-      status: 'success',
-      message: 'Produk berhasil diperbarui',
+        const response = h.response({
+          status: 'success',
+          message: 'Produk berhasil diperbarui',
+        });
+        response.code(200);
+        resolve(response);
+      } else {
+        const response = h.response({
+          status: 'fail',
+          message: 'Gagal memperbarui produk. Id tidak ditemukan',
+        });
+        response.code(404);
+        resolve(response);
+      }
     });
-    response.code(200);
-    return response;
-  }
-
-  const response = h.response({
-    status: 'fail',
-    message: 'Gagal memperbarui produk. Id tidak ditemukan',
   });
-  response.code(404);
-  return response;
+
+  return promise;
 };
 
 const deleteProductByIdHandler = (request, h) => {
   const { idProduk } = request.params;
 
-  const index = products.findIndex((product) => product.idProduk === idProduk);
+  const promise = new Promise((resolve) => {
+    getProductById(idProduk, (results) => {
+      if (typeof results !== 'undefined' && results.length > 0) {
+        const sql = `DELETE FROM products WHERE id_produk='${idProduk}'`;
 
-  if (index !== -1) {
-    products.splice(index, 1);
-    const response = h.response({
-      status: 'success',
-      message: 'Produk berhasil dihapus',
+        db.query(sql);
+
+        const response = h.response({
+          status: 'success',
+          message: 'Produk berhasil dihapus',
+        });
+        response.code(200);
+        resolve(response);
+      } else {
+        const response = h.response({
+          status: 'fail',
+          message: 'Produk gagal dihapus. Id tidak ditemukan',
+        });
+        response.code(404);
+        resolve(response);
+      }
     });
-    response.code(200);
-    return response;
-  }
-
-  const response = h.response({
-    status: 'fail',
-    message: 'Produk gagal dihapus. Id tidak ditemukan',
   });
-  response.code(404);
-  return response;
+
+  return promise;
 };
 
 module.exports = {
