@@ -5,6 +5,13 @@ const {
   editProductByIdHandler,
   deleteProductByIdHandler,
 } = require('./products_handler');
+const {
+  addUserHandler,
+  getAllUsersHandler,
+  getUserByIdHandler,
+  editUserByIdHandler,
+  deleteUserByIdHandler,
+} = require('./users_handler');
 
 const routes = [
   {
@@ -35,27 +42,27 @@ const routes = [
   {
     method: 'POST',
     path: '/users',
-    handler: () => {},
+    handler: addUserHandler,
   },
   {
     method: 'GET',
     path: '/users',
-    handler: () => {},
+    handler: getAllUsersHandler,
   },
   {
     method: 'GET',
     path: '/users/{idUser}',
-    handler: () => {},
+    handler: getUserByIdHandler,
   },
   {
     method: 'PUT',
     path: '/users/{idUser}',
-    handler: () => {},
+    handler: editUserByIdHandler,
   },
   {
     method: 'DELETE',
     path: '/users/{idUser}',
-    handler: () => {},
+    handler: deleteUserByIdHandler,
   },
 ];
 

@@ -12,8 +12,8 @@ async function getAllUsers(callback) {
   });
 }
 
-async function getProductById(idProduk, callback) {
-  const sql = `SELECT * FROM products WHERE id_produk='${idProduk}'`;
+async function getUserById(idUser, callback) {
+  const sql = `SELECT * FROM users WHERE id_user='${idUser}'`;
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -23,48 +23,51 @@ async function getProductById(idProduk, callback) {
   });
 }
 
-const addProductHandler = (request, h) => {
+const addUserHandler = (request, h) => {
   const {
-    nama, deskripsi, harga, image, kuantitas, rating,
+    username, email, password, nomorTelepon, alamat,
   } = request.payload;
 
-  const idProduk = `product-${nanoid(16)}`;
+  const idUser = `user-${nanoid(16)}`;
 
-  try {
-    const sql = `INSERT INTO products(id_produk, nama, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${deskripsi}',${harga},'${image}',${kuantitas},${rating})`;
+  const promise = new Promise((resolve) => {
+    const sql = `INSERT INTO users(id_user, username, email, password, nomor_telepon, alamat) VALUES ('${idUser}','${username}','${email}','${password}','${nomorTelepon}','${alamat}')`;
 
-    db.query(sql);
-
-    const response = h.response({
-      status: 'success',
-      message: 'Berhasil',
-      data: {
-        idProduk,
-      },
+    db.query(sql, (err) => {
+      if (err) {
+        const response = h.response({
+          status: 'fail',
+          message: err.message,
+        });
+        response.code(500);
+        resolve(response);
+      }
+      const response = h.response({
+        status: 'success',
+        message: 'User berhasil ditambahkan',
+        data: {
+          idUser,
+        },
+      });
+      response.code(201);
+      resolve(response);
     });
-    response.code(201);
-    return response;
-  } catch (error) {
-    const response = h.response({
-      status: 'fail',
-      message: error,
-    });
-    response.code(500);
-    return response;
-  }
+  });
+
+  return promise;
 };
 
-const getAllProductsHandler = async () => {
+const getAllUsersHandler = () => {
   const promise = new Promise((resolve) => {
     getAllUsers((results) => {
-      const productList = [];
+      const usersList = [];
       Object.keys(results).forEach((v) => {
-        productList.push(results[v]);
+        usersList.push(results[v]);
       });
       const response = {
         status: 'success',
         data: {
-          products: productList,
+          products: usersList,
         },
       };
       resolve(response);
@@ -73,11 +76,11 @@ const getAllProductsHandler = async () => {
   return promise;
 };
 
-const getProductByIdHandler = (request, h) => {
-  const { idProduk } = request.params;
+const getUserByIdHandler = (request, h) => {
+  const { idUser } = request.params;
 
   const promise = new Promise((resolve) => {
-    getProductById(idProduk, (results) => {
+    getUserById(idUser, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
           status: 'success',
@@ -89,7 +92,7 @@ const getProductByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Produk tidak ditemukan',
+          message: 'User tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -99,30 +102,38 @@ const getProductByIdHandler = (request, h) => {
   return promise;
 };
 
-const editProductByIdHandler = (request, h) => {
-  const { idProduk } = request.params;
+const editUserByIdHandler = (request, h) => {
+  const { idUser } = request.params;
 
   const {
-    nama, deskripsi, harga, image, kuantitas, rating,
+    username, email, password, nomorTelepon, alamat,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getProductById(idProduk, (results) => {
+    getUserById(idUser, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE products SET nama='${nama}',deskripsi='${deskripsi}',harga=${harga},image='${image}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+        const sql = `UPDATE users SET username='${username}',email='${email}',password='${password}',nomor_telepon='${nomorTelepon}',alamat='${alamat}' WHERE id_user='${idUser}'`;
 
-        db.query(sql);
-
-        const response = h.response({
-          status: 'success',
-          message: 'Produk berhasil diperbarui',
+        db.query(sql, (err) => {
+          if (err) {
+            const response = h.response({
+              status: 'fail',
+              message: err.message,
+            });
+            response.code(500);
+            resolve(response);
+          }
+          const response = h.response({
+            status: 'success',
+            message: 'User berhasil diperbarui',
+          });
+          response.code(200);
+          resolve(response);
         });
-        response.code(200);
-        resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Gagal memperbarui produk. Id tidak ditemukan',
+          message: 'Gagal memperbarui user. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -133,26 +144,34 @@ const editProductByIdHandler = (request, h) => {
   return promise;
 };
 
-const deleteProductByIdHandler = (request, h) => {
-  const { idProduk } = request.params;
+const deleteUserByIdHandler = (request, h) => {
+  const { idUser } = request.params;
 
   const promise = new Promise((resolve) => {
-    getProductById(idProduk, (results) => {
+    getUserById(idUser, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `DELETE FROM products WHERE id_produk='${idProduk}'`;
+        const sql = `DELETE FROM users WHERE id_user='${idUser}'`;
 
-        db.query(sql);
-
-        const response = h.response({
-          status: 'success',
-          message: 'Produk berhasil dihapus',
+        db.query(sql, (err) => {
+          if (err) {
+            const response = h.response({
+              status: 'fail',
+              message: err.message,
+            });
+            response.code(500);
+            resolve(response);
+          }
+          const response = h.response({
+            status: 'success',
+            message: 'User berhasil dihapus',
+          });
+          response.code(200);
+          resolve(response);
         });
-        response.code(200);
-        resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Produk gagal dihapus. Id tidak ditemukan',
+          message: 'User gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -164,9 +183,9 @@ const deleteProductByIdHandler = (request, h) => {
 };
 
 module.exports = {
-  addProductHandler,
-  getAllProductsHandler,
-  getProductByIdHandler,
-  editProductByIdHandler,
-  deleteProductByIdHandler,
+  addUserHandler,
+  getAllUsersHandler,
+  getUserByIdHandler,
+  editUserByIdHandler,
+  deleteUserByIdHandler,
 };
