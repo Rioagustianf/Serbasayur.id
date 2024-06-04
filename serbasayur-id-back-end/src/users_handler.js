@@ -56,7 +56,7 @@ const addProductHandler = (request, h) => {
 
 const getAllProductsHandler = async () => {
   const promise = new Promise((resolve) => {
-    getAllProducts((results) => {
+    getAllUsers((results) => {
       const productList = [];
       Object.keys(results).forEach((v) => {
         productList.push(results[v]);
