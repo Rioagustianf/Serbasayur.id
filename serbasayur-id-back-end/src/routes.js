@@ -35,27 +35,27 @@ const routes = [
   {
     method: 'POST',
     path: '/users',
-    handler: addProductHandler,
+    handler: () => {},
   },
   {
     method: 'GET',
     path: '/users',
-    handler: getAllProductsHandler,
+    handler: () => {},
   },
   {
     method: 'GET',
     path: '/users/{idUser}',
-    handler: getProductByIdHandler,
+    handler: () => {},
   },
   {
     method: 'PUT',
     path: '/users/{idUser}',
-    handler: editProductByIdHandler,
+    handler: () => {},
   },
   {
     method: 'DELETE',
     path: '/users/{idUser}',
-    handler: deleteProductByIdHandler,
+    handler: () => {},
   },
 ];
 
