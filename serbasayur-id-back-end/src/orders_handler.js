@@ -1,8 +1,8 @@
 const { nanoid } = require('nanoid');
 const db = require('./db_config');
 
-async function getAllUsers(callback) {
-  const sql = 'SELECT * FROM users';
+async function getAllOrders(callback) {
+  const sql = 'SELECT * FROM orders';
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -12,8 +12,8 @@ async function getAllUsers(callback) {
   });
 }
 
-async function getUserById(idUser, callback) {
-  const sql = `SELECT * FROM users WHERE id_user='${idUser}'`;
+async function getOrderById(idOrder, callback) {
+  const sql = `SELECT * FROM orders WHERE id_order='${idOrder}'`;
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -23,15 +23,15 @@ async function getUserById(idUser, callback) {
   });
 }
 
-const addUserHandler = (request, h) => {
+const addOrderHandler = (request, h) => {
   const {
-    username, email, password, nomorTelepon, alamat,
+    idUser, tanggalOrder, alamatOrder, totalHarga,
   } = request.payload;
 
-  const idUser = `user-${nanoid(16)}`;
+  const idOrder = `order-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO users(id_user, username, email, password, nomor_telepon, alamat) VALUES ('${idUser}','${username}','${email}','${password}','${nomorTelepon}','${alamat}')`;
+    const sql = `INSERT INTO orders(id_order, id_user, tanggal_order, alamat_order, total_harga) VALUES ('${idOrder}','${idUser}','${tanggalOrder}','${alamatOrder}',${totalHarga})`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -44,9 +44,9 @@ const addUserHandler = (request, h) => {
       }
       const response = h.response({
         status: 'success',
-        message: 'User berhasil ditambahkan',
+        message: 'Order berhasil ditambahkan',
         data: {
-          idUser,
+          idOrder,
         },
       });
       response.code(201);
@@ -57,17 +57,17 @@ const addUserHandler = (request, h) => {
   return promise;
 };
 
-const getAllUsersHandler = () => {
+const getAllOrdersHandler = () => {
   const promise = new Promise((resolve) => {
-    getAllUsers((results) => {
-      const usersList = [];
+    getAllOrders((results) => {
+      const ordersList = [];
       Object.keys(results).forEach((v) => {
-        usersList.push(results[v]);
+        ordersList.push(results[v]);
       });
       const response = {
         status: 'success',
         data: {
-          users: usersList,
+          orders: ordersList,
         },
       };
       resolve(response);
@@ -76,23 +76,23 @@ const getAllUsersHandler = () => {
   return promise;
 };
 
-const getUserByIdHandler = (request, h) => {
-  const { idUser } = request.params;
+const getOrderByIdHandler = (request, h) => {
+  const { idOrder } = request.params;
 
   const promise = new Promise((resolve) => {
-    getUserById(idUser, (results) => {
+    getOrderById(idOrder, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
           status: 'success',
           data: {
-            user: results[0],
+            order: results[0],
           },
         };
         resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'User tidak ditemukan',
+          message: 'Order tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -102,17 +102,17 @@ const getUserByIdHandler = (request, h) => {
   return promise;
 };
 
-const editUserByIdHandler = (request, h) => {
-  const { idUser } = request.params;
+const editOrderByIdHandler = (request, h) => {
+  const { idOrder } = request.params;
 
   const {
-    username, email, password, nomorTelepon, alamat,
+    idUser, tanggalOrder, alamatOrder, totalHarga,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getUserById(idUser, (results) => {
+    getOrderById(idOrder, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE users SET username='${username}',email='${email}',password='${password}',nomor_telepon='${nomorTelepon}',alamat='${alamat}' WHERE id_user='${idUser}'`;
+        const sql = `UPDATE orders SET id_user='${idUser}',tanggal_order='${tanggalOrder}',alamat_order='${alamatOrder}',total_harga='${totalHarga}' WHERE id_order='${idOrder}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -125,7 +125,7 @@ const editUserByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'User berhasil diperbarui',
+            message: 'Order berhasil diperbarui',
           });
           response.code(200);
           resolve(response);
@@ -133,7 +133,7 @@ const editUserByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Gagal memperbarui user. Id tidak ditemukan',
+          message: 'Gagal memperbarui order. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -144,13 +144,13 @@ const editUserByIdHandler = (request, h) => {
   return promise;
 };
 
-const deleteUserByIdHandler = (request, h) => {
-  const { idUser } = request.params;
+const deleteOrderByIdHandler = (request, h) => {
+  const { idOrder } = request.params;
 
   const promise = new Promise((resolve) => {
-    getUserById(idUser, (results) => {
+    getOrderById(idOrder, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `DELETE FROM users WHERE id_user='${idUser}'`;
+        const sql = `DELETE FROM orders WHERE id_order='${idOrder}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -163,7 +163,7 @@ const deleteUserByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'User berhasil dihapus',
+            message: 'Order berhasil dihapus',
           });
           response.code(200);
           resolve(response);
@@ -171,7 +171,7 @@ const deleteUserByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'User gagal dihapus. Id tidak ditemukan',
+          message: 'Order gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -183,9 +183,9 @@ const deleteUserByIdHandler = (request, h) => {
 };
 
 module.exports = {
-  addUserHandler,
-  getAllUsersHandler,
-  getUserByIdHandler,
-  editUserByIdHandler,
-  deleteUserByIdHandler,
+  addOrderHandler,
+  getAllOrdersHandler,
+  getOrderByIdHandler,
+  editOrderByIdHandler,
+  deleteOrderByIdHandler,
 };
