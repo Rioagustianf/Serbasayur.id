@@ -30,31 +30,34 @@ const addProductHandler = (request, h) => {
 
   const idProduk = `product-${nanoid(16)}`;
 
-  try {
+  const promise = new Promise((resolve) => {
     const sql = `INSERT INTO products(id_produk, nama, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${deskripsi}',${harga},'${image}',${kuantitas},${rating})`;
 
-    db.query(sql);
+    db.query(sql, (err) => {
+      if (err) {
+        const response = h.response({
+          status: 'fail',
+          message: err.message,
+        });
+        response.code(500);
+        resolve(response);
+      }
+      const response = h.response({
+        status: 'success',
+        message: 'Berhasil',
+        data: {
+          idProduk,
+        },
+      });
+      response.code(201);
+      resolve(response);
+    });
+  });
 
-    const response = h.response({
-      status: 'success',
-      message: 'Berhasil',
-      data: {
-        idProduk,
-      },
-    });
-    response.code(201);
-    return response;
-  } catch (error) {
-    const response = h.response({
-      status: 'fail',
-      message: error,
-    });
-    response.code(500);
-    return response;
-  }
+  return promise;
 };
 
-const getAllProductsHandler = async () => {
+const getAllProductsHandler = () => {
   const promise = new Promise((resolve) => {
     getAllProducts((results) => {
       const productList = [];
@@ -111,14 +114,22 @@ const editProductByIdHandler = (request, h) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const sql = `UPDATE products SET nama='${nama}',deskripsi='${deskripsi}',harga=${harga},image='${image}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
 
-        db.query(sql);
-
-        const response = h.response({
-          status: 'success',
-          message: 'Produk berhasil diperbarui',
+        db.query(sql, (err) => {
+          if (err) {
+            const response = h.response({
+              status: 'fail',
+              message: err.message,
+            });
+            response.code(500);
+            resolve(response);
+          }
+          const response = h.response({
+            status: 'success',
+            message: 'Produk berhasil diperbarui',
+          });
+          response.code(200);
+          resolve(response);
         });
-        response.code(200);
-        resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
@@ -141,14 +152,22 @@ const deleteProductByIdHandler = (request, h) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const sql = `DELETE FROM products WHERE id_produk='${idProduk}'`;
 
-        db.query(sql);
-
-        const response = h.response({
-          status: 'success',
-          message: 'Produk berhasil dihapus',
+        db.query(sql, (err) => {
+          if (err) {
+            const response = h.response({
+              status: 'fail',
+              message: err.message,
+            });
+            response.code(500);
+            resolve(response);
+          }
+          const response = h.response({
+            status: 'success',
+            message: 'Produk berhasil dihapus',
+          });
+          response.code(200);
+          resolve(response);
         });
-        response.code(200);
-        resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
