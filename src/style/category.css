@@ -1,70 +1,93 @@
 .home-category {
-    margin: auto;
+  margin: auto;
 }
 
 .category-header-section__header {
-    width: 100%;
+  width: 100%;
 }
 
-
 .image-category {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .category-list {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr 1fr;
-    border-top: 1px solid rgba(0, 0, 0, 0.203);
-    border-left: 1px solid rgba(0, 0, 0, 0.203);
-    list-style-type: none;
-    padding: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 1fr 1fr;
+  border-top: 1px solid rgba(0, 0, 0, 0.203);
+  border-left: 1px solid rgba(0, 0, 0, 0.203);
+  list-style-type: none;
+  padding: 0;
 }
 
 .category-item {
-    width: 254px;
-    height: 254px;
-    border-right: 1px solid rgba(0, 0, 0, 0.203);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.203);
+  width: 254px;
+  height: 254px;
+  border-right: 1px solid rgba(0, 0, 0, 0.203);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.203);
 }
 
 .category-grid {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .item-wrap {
-    width: 100%;
+  width: 100%;
 }
 
 .item-wrap__image {
-    margin-top: 15%;
+  margin-top: 15%;
 }
 
 .item-wrap__image-title {
-    color: black;
+  color: black;
 }
 
 @media (max-width: 1530px) {
-    .category-list {
-        grid-template-columns: repeat(4, 1fr);
-    }
+  .category-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 @media (max-width: 1024px) {
-    .category-list {
-        grid-template-columns: repeat(3, 1fr);
-    }
+  .category-list {
+    grid-template-rows: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 767px) {
-    .category-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .category-list {
+    grid-template-rows: repeat(2, 1fr);
+  }
+  .category-item,
+  .item-wrap {
+    width: 170px;
+    height: 200px;
+  }
+  .category-image__placement {
+    width: 100px;
+    height: 100px;
+  }
+  .item-wrap__image-title {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 599px) {
-    .category-list {
-        grid-template-columns: repeat(1, 1fr);
-    }
+  .category-list {
+    grid-template-rows: repeat(1, 1fr);
+  }
+  .category-item,
+  .item-wrap {
+    width: 100px;
+    height: 100px;
+  }
+  .category-image__placement {
+    width: 50px;
+    height: 50px;
+  }
+  .item-wrap__image-title {
+    font-size: 12px;
+  }
 }

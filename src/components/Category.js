@@ -2,8 +2,9 @@ import categories from "../data/categories";
 
 const Category = {
   async render() {
-    const categoriesHTML = categories.map(category => {
-      return `
+    const categoriesHTML = categories
+      .map((category) => {
+        return `
         <li class="category-item">
           <a class="category-grid" href="#">
             <div class="item-wrap">
@@ -19,7 +20,8 @@ const Category = {
           </a>
         </li>
       `;
-    }).join('');
+      })
+      .join("");
 
     return `
       <div class="home-category mt-5">

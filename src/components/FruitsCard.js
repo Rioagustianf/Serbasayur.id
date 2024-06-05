@@ -91,31 +91,4 @@ const FruitsCard = {
   },
 };
 
-const CardProductFruits = {
-  async render() {
-    const produks = Array.from({ length: 10 }, (_, i) => i + 1);
-    const produkHTML = produks
-      .map(() => {
-        return `
-        <div class="col-md-3">
-          <div class="card col-sm">
-            <img height="200px" src="../../public/images/image1.png" class="card-img-top" alt="Paket Sayur Asem">
-            <div class="card-body text-center">
-              <h5 class="card-title">Paket Sayur Asem</h5>
-              <p class="card-text fs-5 fw-bold">Rp15.000</p>
-              <a href="#" class="btn btn-outline-success border-2">Masukan Keranjang</a>
-            </div>
-          </div>
-        </div>`;
-      })
-      .join("");
-
-    return `<div class="container">
-      <div class="row gap-3">
-        ${produkHTML}
-      </div>
-    </div>`;
-  },
-};
-
-export { FruitsCard, CardProductFruits };
+export default FruitsCard;

@@ -1,6 +1,6 @@
 const Register = {
-    async render() {
-        return `
+  async render() {
+    return `
         <div id="register-page">
             <div class="register-container text-center">
                 <div class="register-card">
@@ -36,12 +36,12 @@ const Register = {
                     </div>
                     <button type="submit" class="register-button">Register</button>
                 </form>
-                <p class="login-link">Have an account? <a href="#">Login</a></p>
+                <p class="login-link">Have an account? <a href="#/login">Login</a></p>
                 </div>
             </div>
         </div>
         `;
-    },
+  },
 };
 
 export default Register;

@@ -57,8 +57,9 @@
   font-size: 2rem;
 }
 
-.position-relative {
-  position: relative;
+.whist,
+.whist-text {
+  color: #4dc38c;
 }
 
 @media (max-width: 767px) {
@@ -74,8 +75,10 @@
 
   .card {
     width: calc(100% - 20px);
-    max-width: 300px; /* Maksimum lebar card */
-    margin: auto; /* Pusatkan card di layar */
+    max-width: 200px;
+    margin: auto;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
   }
 
   .carousel-item .row.justify-content-center > .col-md-3 {
