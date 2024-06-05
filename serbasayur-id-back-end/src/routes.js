@@ -19,6 +19,13 @@ const {
   editOrderByIdHandler,
   deleteOrderByIdHandler,
 } = require('./orders_handler');
+const {
+  addOrderItemHandler,
+  getAllOrderItemsHandler,
+  getOrderItemByIdHandler,
+  editOrderItemByIdHandler,
+  deleteOrderItemByIdHandler,
+} = require('./order_items_handler');
 
 const routes = [
   {
@@ -95,6 +102,31 @@ const routes = [
     method: 'DELETE',
     path: '/orders/{idOrder}',
     handler: deleteOrderByIdHandler,
+  },
+  {
+    method: 'POST',
+    path: '/orderitems',
+    handler: addOrderItemHandler,
+  },
+  {
+    method: 'GET',
+    path: '/orderitems/{idOrder}',
+    handler: getAllOrderItemsHandler,
+  },
+  {
+    method: 'GET',
+    path: '/orderitems/{idOrder}/{idOrderItem}',
+    handler: getOrderItemByIdHandler,
+  },
+  {
+    method: 'PUT',
+    path: '/orderitems/{idOrder}/{idOrderItem}',
+    handler: editOrderItemByIdHandler,
+  },
+  {
+    method: 'DELETE',
+    path: '/orderitems/{idOrder}/{idOrderItem}',
+    handler: deleteOrderItemByIdHandler,
   },
 ];
 

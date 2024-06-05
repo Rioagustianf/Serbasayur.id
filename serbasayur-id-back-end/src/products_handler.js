@@ -46,7 +46,7 @@ const addProductHandler = (request, h) => {
         status: 'success',
         message: 'Berhasil',
         data: {
-          idProduk,
+          id_produk: idProduk,
         },
       });
       response.code(201);

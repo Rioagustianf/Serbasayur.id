@@ -25,7 +25,7 @@ async function getUserById(idUser, callback) {
 
 const addUserHandler = (request, h) => {
   const {
-    username, email, password, nomorTelepon, alamat,
+    username, email, password, nomor_telepon: nomorTelepon, alamat,
   } = request.payload;
 
   const idUser = `user-${nanoid(16)}`;
@@ -46,7 +46,7 @@ const addUserHandler = (request, h) => {
         status: 'success',
         message: 'User berhasil ditambahkan',
         data: {
-          idUser,
+          id_user: idUser,
         },
       });
       response.code(201);
@@ -106,7 +106,7 @@ const editUserByIdHandler = (request, h) => {
   const { idUser } = request.params;
 
   const {
-    username, email, password, nomorTelepon, alamat,
+    username, email, password, nomor_telepon: nomorTelepon, alamat,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
