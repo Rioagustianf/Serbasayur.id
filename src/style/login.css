@@ -1,0 +1,111 @@
+#login-page {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-image: url(../../public/images/sayur-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Container Styles */
+#login-page .login-container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 80%;
+  max-width: 400px;
+  padding: 30px 60px;
+  box-sizing: border-box;
+}
+
+/* Card Styles */
+#login-page .login-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#login-page .logo {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+/* Form Styles */
+#login-page form {
+  width: 100%;
+}
+
+#login-page .input-group {
+  margin-bottom: 15px;
+}
+
+#login-page .input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  width: 100%;
+}
+
+#login-page .input-container i {
+  color: #888;
+  margin-right: 10px;
+}
+
+#login-page .input-container input {
+  width: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0;
+}
+
+#login-page .input-container input::placeholder {
+  color: #aaa;
+}
+
+/* Button Styles */
+#login-page .login-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#login-page .login-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Register Link Styles */
+#login-page .register-link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+#login-page .register-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+#login-page .register-link a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+    transition: color 0.3s ease;
+}
