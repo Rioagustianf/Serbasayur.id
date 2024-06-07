@@ -9,11 +9,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./routes/routes";
+import LandingPage from "./pages/LandingPage";
 
-document.addEventListener("DOMContentLoaded", () => {
-  page(); // Memanggil router untuk merender halaman yang sesuai pada saat halaman dimuat pertama kali
-});
-
-window.addEventListener("hashchange", () => {
-  page(); // Memanggil router untuk merender halaman yang sesuai setiap kali hash di URL berubah
+document.addEventListener("DOMContentLoaded", async () => {
+  const rootElement = document.getElementById("app");
+  rootElement.innerHTML = await LandingPage.render();
+  LandingPage.afterRender();
+  page();
 });

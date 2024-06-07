@@ -28,6 +28,10 @@ const LandingPage = {
       ${footer}
     `;
   },
+
+  async afterRender() {
+    VegetableCard.afterRender();
+  },
 };
 
 export default LandingPage;
