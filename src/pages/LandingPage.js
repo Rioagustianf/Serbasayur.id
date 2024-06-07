@@ -3,6 +3,7 @@ import VegetableCard from "../components/VegetableCard";
 import FruitsCard from "../components/FruitsCard";
 import OtherCards from "../components/OtherCards";
 import Category from "../components/Category";
+import Footer from "../components/Footer";
 
 const LandingPage = {
   async render() {
@@ -11,6 +12,7 @@ const LandingPage = {
     const fruitsCard = await FruitsCard.render();
     const categoris = await Category.render();
     const otherCards = await OtherCards.render();
+    const footer = await Footer.render();
 
     return `
       ${navbar}
@@ -23,6 +25,7 @@ const LandingPage = {
       ${fruitsCard}
       ${otherCards}
       ${categoris}
+      ${footer}
     `;
   },
 };

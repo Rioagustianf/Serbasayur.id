@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 
 const CheckoutPage = {
   async render() {
-
     const navbar = await Navbar.render();
     const address = await Address.render();
     const product = await ProductCheckout.render();

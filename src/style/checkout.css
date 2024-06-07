@@ -1,350 +1,350 @@
 #checkout-page {
-    width: 100%;
-    max-width: 1520px;
-    margin: auto;
+  width: 100%;
+  max-width: 1520px;
+  margin: auto;
 }
 
 #checkout-page h1,
 #checkout-page h2 {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 #checkout-page .checkout-title {
-    margin-top: 2.5rem;
+  margin-top: 2.5rem;
 }
 
 #checkout-page .container {
-    width: 100%;
-    max-width: 1520px;
-    padding: 48px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
-    margin: 2.5rem auto 0;
+  width: 100%;
+  max-width: 1520px;
+  padding: 48px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.21);
+  margin: 2.5rem auto 0;
 }
 
 #checkout-page .green {
-    color: #4DC38C;
+  color: #4dc38c;
 }
 
 #checkout-page .address-body {
-    width: 100%;
-    max-width: 1258px;
+  width: 100%;
+  max-width: 1258px;
 }
 
 #checkout-page .address-change {
-    width: 100%;
-    max-width: 166px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #4DC38C;
-    margin: auto;
+  width: 100%;
+  max-width: 166px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #4dc38c;
+  margin: auto;
 }
 
 /* Product Selected */
 #checkout-page .section-title-wrapper {
-    grid-template-columns: 4fr 1.5fr 1.5fr 2fr;
-    gap: 5px;
+  grid-template-columns: 4fr 1.5fr 1.5fr 2fr;
+  gap: 5px;
 }
 
 #checkout-page .selected-product {
-    text-align: left;
+  text-align: left;
 }
 
 #checkout-page .product-price,
 #checkout-page .product-quantity,
 #checkout-page .product-subtotal {
-    margin: auto;
-    text-align: center;
+  margin: auto;
+  text-align: center;
 }
 
 #checkout-page .product-subtotal {
-    text-align: right;
+  text-align: right;
 }
 
 #checkout-page .grey {
-    color: #c7c7c7;
+  color: #c7c7c7;
 }
 
 #checkout-page .product-wrapper {
-    grid-template-columns: 1fr 3fr 1.5fr 1.5fr 2fr;
-    gap: 1rem;
-    margin-top: 1.5rem;
+  grid-template-columns: 1fr 3fr 1.5fr 1.5fr 2fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 #checkout-page .product-image {
-    width: 100%;
-    max-width: 100px;
-    margin-right: 0.75rem;
+  width: 100%;
+  max-width: 100px;
+  margin-right: 0.75rem;
 }
 
 #checkout-page .product-title {
-    margin: auto;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  margin: auto;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #checkout-page .product-total {
-    text-align: right;
-    margin-top: 48px;
+  text-align: right;
+  margin-top: 48px;
 }
 
 #checkout-page .shipment-wrapper {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 #checkout-page .dropdown-shipment,
 #checkout-page .dropdown-payment {
-    width: 100%;
-    display: block;
+  width: 100%;
+  display: block;
 }
 
 #checkout-page .shipment-selector,
 #checkout-page .payment-selector {
-    width: 100%;
-    max-width: 920px;
-    padding: 1.5rem 3rem;
-    border-radius: 10px;
-    border: 1px solid black;
-    background-color: #f8f9fa;
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 920px;
+  padding: 1.5rem 3rem;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  transition: background-color 0.3s ease;
 }
 
 #checkout-page .dropdown-icon {
-    margin: auto 0 auto auto;
+  margin: auto 0 auto auto;
 }
 
 .dropdown-shipment-content,
 .dropdown-payment-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    border-radius: 5px;
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 5px;
 }
 
 .dropdown-shipment-content a,
 .dropdown-payment-content a {
-    color: #333;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: block;
-    transition: background-color 0.3s ease;
+  color: #333;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-shipment-content a:hover,
 .dropdown-payment-content a:hover {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .show {
-    display: block;
+  display: block;
 }
 
 #checkout-page .shipment-price {
-    width: 100%;
-    max-width: 504px;
-    text-align: right;
-    margin: auto;
+  width: 100%;
+  max-width: 504px;
+  text-align: right;
+  margin: auto;
 }
 
 #checkout-page .total-price-container {
-    width: 100%;
-    padding: 48px;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
-    margin-top: 2.5rem;
+  width: 100%;
+  padding: 48px;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  margin-top: 2.5rem;
 }
 
 #checkout-page .payment-container {
-    padding: 2.5rem 48px;
-    margin: auto;
+  padding: 2.5rem 48px;
+  margin: auto;
 }
 
 #checkout-page .payment-title {
-    width: 100%;
-    max-width: 530px;
-    margin: auto 1.5rem auto 0;
+  width: 100%;
+  max-width: 530px;
+  margin: auto 1.5rem auto 0;
 }
 
 #checkout-page .pay {
-    padding: 1.5rem;
-    background-color: #4DC38C;
-    color: #fff;
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 5rem;
-    font-size: 2rem;
-    border: none;
+  padding: 1.5rem;
+  background-color: #4dc38c;
+  color: #fff;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 5rem;
+  font-size: 2rem;
+  border: none;
 }
 
 #checkout-page .shipment-selector:hover,
 #checkout-page .payment-selector:hover {
-    background-color: #e9ecef;
+  background-color: #e9ecef;
 }
 
 @media screen and (max-width: 1520px) {
-    #checkout-page {
-        max-width: 1140px;
-    }
+  #checkout-page {
+    max-width: 1140px;
+  }
 
-    #checkout-page .checkout-title {
-        font-size: 2.5rem;
-    }
+  #checkout-page .checkout-title {
+    font-size: 2.5rem;
+  }
 
-    #checkout-page .section-title {
-        font-size: 1.8rem;
-    }
+  #checkout-page .section-title {
+    font-size: 1.8rem;
+  }
 
-    #checkout-page .address-body,
-    #checkout-page .product-title,
-    #checkout-page .product-price,
-    #checkout-page .product-quantity,
-    #checkout-page .product-subtotal,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__title,
-    #checkout-page .payment-title {
-        font-size: 1.6rem;
-    }
+  #checkout-page .address-body,
+  #checkout-page .product-title,
+  #checkout-page .product-price,
+  #checkout-page .product-quantity,
+  #checkout-page .product-subtotal,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__title,
+  #checkout-page .payment-title {
+    font-size: 1.6rem;
+  }
 
-    #checkout-page .address-change,
-    #checkout-page .pay {
-        font-size: 1.4rem;
-    }
+  #checkout-page .address-change,
+  #checkout-page .pay {
+    font-size: 1.4rem;
+  }
 
-    #checkout-page .product-total,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__value {
-        font-size: 2rem;
-    }
+  #checkout-page .product-total,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__value {
+    font-size: 2rem;
+  }
 }
 
 @media screen and (max-width: 1024px) {
-    #checkout-page {
-        max-width: 810px;
-    }
+  #checkout-page {
+    max-width: 810px;
+  }
 
-    #checkout-page .checkout-title {
-        font-size: 2rem;
-    }
+  #checkout-page .checkout-title {
+    font-size: 2rem;
+  }
 
-    #checkout-page .section-title {
-        font-size: 1.2rem;
-    }
+  #checkout-page .section-title {
+    font-size: 1.2rem;
+  }
 
-    #checkout-page .address-body,
-    #checkout-page .product-title,
-    #checkout-page .product-price,
-    #checkout-page .product-quantity,
-    #checkout-page .product-subtotal,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__title,
-    #checkout-page .payment-title {
-        font-size: 1.4rem;
-    }
+  #checkout-page .address-body,
+  #checkout-page .product-title,
+  #checkout-page .product-price,
+  #checkout-page .product-quantity,
+  #checkout-page .product-subtotal,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__title,
+  #checkout-page .payment-title {
+    font-size: 1.4rem;
+  }
 
-    #checkout-page .address-change,
-    #checkout-page .pay {
-        font-size: 1.2rem;
-    }
+  #checkout-page .address-change,
+  #checkout-page .pay {
+    font-size: 1.2rem;
+  }
 
-    #checkout-page .product-total,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__value {
-        font-size: 1.8rem;
-    }
+  #checkout-page .product-total,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__value {
+    font-size: 1.8rem;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    #checkout-page {
-        max-width: 720px;
-    }
+  #checkout-page {
+    max-width: 720px;
+  }
 
-    #checkout-page .checkout-title {
-        font-size: 2rem;
-    }
+  #checkout-page .checkout-title {
+    font-size: 2rem;
+  }
 
-    #checkout-page .section-title {
-        font-size: 1.2rem;
-    }
+  #checkout-page .section-title {
+    font-size: 1.2rem;
+  }
 
-    #checkout-page .address-body,
-    #checkout-page .product-title,
-    #checkout-page .product-price,
-    #checkout-page .product-quantity,
-    #checkout-page .product-subtotal,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__title {
-        font-size: 1.2rem;
-    }
+  #checkout-page .address-body,
+  #checkout-page .product-title,
+  #checkout-page .product-price,
+  #checkout-page .product-quantity,
+  #checkout-page .product-subtotal,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__title {
+    font-size: 1.2rem;
+  }
 
-    #checkout-page .address-change h2,
-    #checkout-page .pay {
-        font-size: 1rem;
-    }
+  #checkout-page .address-change h2,
+  #checkout-page .pay {
+    font-size: 1rem;
+  }
 
-    #checkout-page .product-total,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__value {
-        font-size: 1.6rem;
-    }
+  #checkout-page .product-total,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__value {
+    font-size: 1.6rem;
+  }
 }
 
 @media screen and (max-width: 576px) {
-    #checkout-page .container {
-        padding: 32px;
-        margin: 1rem auto 0;
-    }
+  #checkout-page .container {
+    padding: 32px;
+    margin: 1rem auto 0;
+  }
 
-    #checkout-page .address-change {
-        width: 30%;
-    }
+  #checkout-page .address-change {
+    width: 30%;
+  }
 
-    #checkout-page .shipment-selector,
-    #checkout-page .payment-selector {
-        padding: 0.25rem 0.5rem;
-    }
+  #checkout-page .shipment-selector,
+  #checkout-page .payment-selector {
+    padding: 0.25rem 0.5rem;
+  }
 
-    #checkout-page {
-        max-width: 540px;
-    }
+  #checkout-page {
+    max-width: 540px;
+  }
 
-    #checkout-page .checkout-title {
-        font-size: 2rem;
-        margin-top: 1rem;
-    }
+  #checkout-page .checkout-title {
+    font-size: 2rem;
+    margin-top: 1rem;
+  }
 
-    #checkout-page .section-title,
-    #checkout-page .payment-title {
-        font-size: 0.8rem;
-    }
+  #checkout-page .section-title,
+  #checkout-page .payment-title {
+    font-size: 0.8rem;
+  }
 
-    #checkout-page .address-body,
-    #checkout-page .product-title,
-    #checkout-page .product-price,
-    #checkout-page .product-quantity,
-    #checkout-page .product-subtotal,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__title {
-        font-size: 0.6rem;
-    }
+  #checkout-page .address-body,
+  #checkout-page .product-title,
+  #checkout-page .product-price,
+  #checkout-page .product-quantity,
+  #checkout-page .product-subtotal,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__title {
+    font-size: 0.6rem;
+  }
 
-    #checkout-page .address-change h2,
-    #checkout-page .pay {
-        font-size: 1rem;
-    }
+  #checkout-page .address-change h2,
+  #checkout-page .pay {
+    font-size: 1rem;
+  }
 
-    #checkout-page .product-total,
-    #checkout-page .shipment-price,
-    #checkout-page .price-total__value,
-    #checkout-page h2.fw-normal {
-        font-size: 1.2rem;
-    }
+  #checkout-page .product-total,
+  #checkout-page .shipment-price,
+  #checkout-page .price-total__value,
+  #checkout-page h2.fw-normal {
+    font-size: 1.2rem;
+  }
 }

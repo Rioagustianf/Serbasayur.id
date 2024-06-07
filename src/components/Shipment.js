@@ -1,6 +1,6 @@
 const Shipment = {
-    async render() {
-        return `
+  async render() {
+    return `
         <div class="container">
             <h2 class="section-title fw-semibold">PENGIRIMAN</h2>
             <div class="shipment-wrapper d-flex">
@@ -22,7 +22,7 @@ const Shipment = {
             </div>
         </div>
         `;
-    },
+  },
 };
 
 export default Shipment;

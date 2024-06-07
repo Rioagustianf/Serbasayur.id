@@ -1,6 +1,6 @@
 const Address = {
-    async render() {
-        return `
+  async render() {
+    return `
         <div class="container">
             <h2 class="section-title green fw-semibold">ALAMAT KIRIM</h2>
             <div class="address-wrapper d-flex">
@@ -9,7 +9,7 @@ const Address = {
             </div>
         </div>
         `;
-    },
+  },
 };
 
 export default Address;

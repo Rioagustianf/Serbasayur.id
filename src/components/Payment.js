@@ -1,6 +1,6 @@
 const Payment = {
-    async render() {
-        return `
+  async render() {
+    return `
         <div class="payment-container d-flex">
             <h1 class="payment-title fw-semibold">Pilih Metode Pembayaran</h1>
             <div class="dropdown-payment">
@@ -20,7 +20,7 @@ const Payment = {
             </div>
         </div>        
         `;
-    },
+  },
 };
 
 export default Payment;

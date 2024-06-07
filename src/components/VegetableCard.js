@@ -1,10 +1,9 @@
-import { getAllProducts } from "../services/api.js";
+import { getAllProducts } from "../services/api";
 
 const VegetableCard = {
   async render() {
     try {
       const products = await getAllProducts();
-
       if (!Array.isArray(products)) {
         throw new Error("Products is not an array");
       }
@@ -12,20 +11,19 @@ const VegetableCard = {
       const productCards = products
         .map(
           (product) => `
-          <div class="col-sm-3">
-            <div class="card">
-              <img height="200px" src="${product.image}" class="card-img-top" alt="${product.nama}">
-              <div class="card-body text-center">
-                <!-- Perbarui link untuk navigasi ke halaman detail produk -->
-                <a href="#/detail/${product.id_produk}" class="text-decoration-none text-black">
-                  <h5 class="card-title">${product.nama}</h5>
-                </a>
-                <p class="card-text fs-5 fw-bold">Rp${product.harga}</p>
-                <a href="#" class="btn btn-outline-success border-2">Masukan Keranjang</a>
-              </div>
+        <div class="col-sm-3">
+          <div class="card" data-id="${product.id_produk}">
+            <img height="200px" src="${product.image}" class="card-img-top" alt="${product.nama}">
+            <div class="card-body text-center">
+              <a href="/detail" class="text-decoration-none text-black product-link" data-id="${product.id_produk}">
+                <h5 class="card-title">${product.nama}</h5>
+              </a>
+              <p class="card-text fs-5 fw-bold">Rp${product.harga}</p>
+              <a href="#" class="btn btn-outline-success border-2">Masukan Keranjang</a>
             </div>
           </div>
-        `
+        </div>
+      `
         )
         .join("");
 

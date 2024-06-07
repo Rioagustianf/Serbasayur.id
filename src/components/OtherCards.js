@@ -4,7 +4,7 @@ const OtherCards = {
       <div class="container mt-5">
           <h2 class="text-center mb-4 py-2 title-product">Produk Lain</h2>
           <div class="position-relative mb-3">
-            <div id="fruits-carousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="other" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
                 <div class="carousel-item active">
                   <div class="row justify-content-center">
