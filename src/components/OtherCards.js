@@ -1,8 +1,7 @@
 import { getAllProducts } from "../services/api";
-import page from "page";
 import { chunk } from "lodash-es";
 
-const VegetableCard = {
+const OtherCards = {
   async render() {
     try {
       const products = await getAllProducts();
@@ -11,14 +10,6 @@ const VegetableCard = {
       }
 
       const productGroups = chunk(products, 4);
-
-      const formatCurrency = (amount) => {
-        return new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          maximumFractionDigits: 0,
-        }).format(amount);
-      };
 
       const carouselItems = productGroups
         .map((group, index) => {
@@ -33,7 +24,7 @@ const VegetableCard = {
                     <h5 class="card-title">${product.nama}</h5>
                   </a>
                   <div class="mt-auto">
-                    <p class="card-text fs-5 fw-bold">${formatCurrency(product.harga)}</p>
+                    <p class="card-text fs-5 fw-bold">${new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(product.harga)}</p>
                   </div>
                   <div class="mt-auto">
                     <a href="#" class="btn btn-outline-success border-2" style=" --bs-btn-font-size: .75rem;">Masukan Keranjang</a>
@@ -57,16 +48,16 @@ const VegetableCard = {
 
       const productListLayout = `
         <div class="container mt-5">
-          <h2 class="text-center mb-4 py-2 title-product">Sayuran Segar</h2>
-          <div id="product-carousel" class="carousel slide" data-bs-ride="carousel">
+          <h2 class="text-center mb-4 py-2 title-product">Produk Lain</h2>
+          <div id="other-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               ${carouselItems}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#product-carousel" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#other-carousel" data-bs-slide="prev">
               <span class="prev-icon" aria-hidden="true"><i class="fa-sharp fa-solid fa-chevron-left"></i></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#product-carousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#other-carousel" data-bs-slide="next">
               <span class="next-icon" aria-hidden="true"><i class="fa-sharp fa-solid fa-chevron-right"></i></span>
               <span class="visually-hidden">Next</span>
             </button>
@@ -80,6 +71,7 @@ const VegetableCard = {
       return `<div>Error fetching products. Please try again later.</div>`;
     }
   },
+
   afterRender() {
     const productLinks = document.querySelectorAll(".product-link");
     productLinks.forEach((link) => {
@@ -95,4 +87,4 @@ const VegetableCard = {
   },
 };
 
-export default VegetableCard;
+export default OtherCards;
