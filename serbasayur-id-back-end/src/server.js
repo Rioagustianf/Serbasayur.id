@@ -1,4 +1,5 @@
 const Hapi = require('@hapi/hapi');
+const Inert = require('inert');
 const routes = require('./routes');
 
 const init = async () => {
@@ -11,6 +12,8 @@ const init = async () => {
       },
     },
   });
+
+  await server.register(Inert);
 
   server.route(routes);
 

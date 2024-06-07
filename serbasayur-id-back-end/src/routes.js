@@ -31,6 +31,13 @@ const routes = [
   {
     method: 'POST',
     path: '/products',
+    options: {
+      payload: {
+        allow: 'multipart/form-data',
+        multipart: true,
+        output: 'stream',
+      },
+    },
     handler: addProductHandler,
   },
   {
@@ -127,6 +134,15 @@ const routes = [
     method: 'DELETE',
     path: '/orderitems/{idOrder}/{idOrderItem}',
     handler: deleteOrderItemByIdHandler,
+  },
+  {
+    method: 'GET',
+    path: '/image/{file*}',
+    handler: {
+      directory: {
+        path: 'image',
+      },
+    },
   },
 ];
 

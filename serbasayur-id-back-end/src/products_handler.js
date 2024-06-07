@@ -1,4 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 const { nanoid } = require('nanoid');
+const fs = require('fs');
 const db = require('./db_config');
 
 async function getAllProducts(callback) {
@@ -31,7 +33,22 @@ const addProductHandler = (request, h) => {
   const idProduk = `product-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO products(id_produk, nama, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${deskripsi}',${harga},'${image}',${kuantitas},${rating})`;
+    // eslint-disable-next-line prefer-destructuring
+    const filename = `image-${nanoid(16)}.jpg`;
+    const data = image._data;
+
+    fs.writeFile(`./image/${filename}`, data, (err) => {
+      if (err) {
+        const response = h.response({
+          status: 'fail',
+          message: err.message,
+        });
+        response.code(500);
+        resolve(response);
+      }
+    });
+
+    const sql = `INSERT INTO products(id_produk, nama, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${deskripsi}',${harga},'${filename}',${kuantitas},${rating})`;
 
     db.query(sql, (err) => {
       if (err) {
