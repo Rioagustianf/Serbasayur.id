@@ -53,6 +53,13 @@ const routes = [
   {
     method: 'PUT',
     path: '/products/{idProduk}',
+    options: {
+      payload: {
+        allow: 'multipart/form-data',
+        multipart: true,
+        output: 'stream',
+      },
+    },
     handler: editProductByIdHandler,
   },
   {
