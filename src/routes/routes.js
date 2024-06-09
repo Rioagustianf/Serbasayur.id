@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import DetailProduk from "../pages/DetailProduk";
 import CheckoutPage from "../pages/CheckoutPage";
+import OrderPage from "../pages/OrderPage";
 
 const app = document.getElementById("app");
 
@@ -25,5 +26,6 @@ page("/detail/:id", async (ctx) => {
   await renderPage(DetailProduk, id); // Render halaman detail produk dengan ID produk
 });
 page("/checkout", () => renderPage(CheckoutPage));
+page("/order", () => renderPage(OrderPage));
 
 page();

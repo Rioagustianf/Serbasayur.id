@@ -5,7 +5,7 @@ const ProductInfo = {
     return `
     <h1>${name}</h1>
     <p class=" fs-2 text-muted">${price}</p>
-    <p>${description}</p>
+    <p></p>
       `;
   },
 };

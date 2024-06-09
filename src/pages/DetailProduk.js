@@ -32,7 +32,7 @@ const DetailProduk = {
                 ${await ProductImage.render({ src: product.image, alt: product.nama })}
               </div>
               <div class="col-lg-7 col-md-6 mt-2">
-                ${await ProductInfo.render({ name: product.nama, price: `${formatCurrency(product.harga)}`, description: product.deskripsi })}
+                ${await ProductInfo.render({ name: product.nama, price: `${formatCurrency(product.harga)}` })}
                 <div class="d-flex">
                   ${await QuantityButtons.render()}
                   <button class="btn btn-success mx-3">+ Keranjang</button>
