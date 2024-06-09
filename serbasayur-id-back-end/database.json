@@ -1,0 +1,26 @@
+{
+  "test": {
+    "host": "localhost",
+    "user": "root",
+    "password" : "",
+    "database": "serbasayur_id",
+    "driver": "mysql",
+    "multipleStatements": true
+  },
+  "dev": {
+    "host": "localhost",
+    "user": "root",
+    "password" : "",
+    "database": "serbasayur_id",
+    "driver": "mysql",
+    "multipleStatements": true
+  },
+  "prod": {
+    "host": "localhost",
+    "user": "root",
+    "password" : "",
+    "database": "serbasayur_id",
+    "driver": "mysql",
+    "multipleStatements": true
+  }
+}
