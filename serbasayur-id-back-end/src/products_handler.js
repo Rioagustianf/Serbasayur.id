@@ -1,4 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 const { nanoid } = require('nanoid');
+const fs = require('fs');
 const db = require('./db_config');
 
 async function getAllProducts(callback) {
@@ -31,7 +33,22 @@ const addProductHandler = (request, h) => {
   const idProduk = `product-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO products(id_produk, nama, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${deskripsi}',${harga},'${image}',${kuantitas},${rating})`;
+    // eslint-disable-next-line prefer-destructuring
+    const filename = `image-${nanoid(16)}.jpg`;
+    const data = image._data;
+
+    fs.writeFile(`./image/${filename}`, data, (err) => {
+      if (err) {
+        const response = h.response({
+          status: 'fail',
+          message: err.message,
+        });
+        response.code(500);
+        resolve(response);
+      }
+    });
+
+    const sql = `INSERT INTO products(id_produk, nama, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${deskripsi}',${harga},'${filename}',${kuantitas},${rating})`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -112,7 +129,38 @@ const editProductByIdHandler = (request, h) => {
   const promise = new Promise((resolve) => {
     getProductById(idProduk, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE products SET nama='${nama}',deskripsi='${deskripsi}',harga=${harga},image='${image}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+        const oldImage = results[0].image;
+
+        // eslint-disable-next-line prefer-destructuring
+        const filename = `image-${nanoid(16)}.jpg`;
+        const data = image._data;
+
+        if (image) {
+          fs.writeFile(`./image/${filename}`, data, (err) => {
+            if (err) {
+              const response = h.response({
+                status: 'fail',
+                message: err.message,
+              });
+              response.code(500);
+              resolve(response);
+            }
+          });
+
+          fs.unlink(`./image/${oldImage}`, (err) => {
+            if (err) {
+              const response = h.response({
+                status: 'fail',
+                message: err.message,
+              });
+              response.code(500);
+              resolve(response);
+            }
+            console.log('file was deleted');
+          });
+        }
+
+        const sql = `UPDATE products SET nama='${nama}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -150,6 +198,20 @@ const deleteProductByIdHandler = (request, h) => {
   const promise = new Promise((resolve) => {
     getProductById(idProduk, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
+        const oldImage = results[0].image;
+
+        fs.unlink(`./image/${oldImage}`, (err) => {
+          if (err) {
+            const response = h.response({
+              status: 'fail',
+              message: err.message,
+            });
+            response.code(500);
+            resolve(response);
+          }
+          console.log('file was deleted');
+        });
+
         const sql = `DELETE FROM products WHERE id_produk='${idProduk}'`;
 
         db.query(sql, (err) => {
