@@ -4,150 +4,150 @@ const {
   getProductByIdHandler,
   editProductByIdHandler,
   deleteProductByIdHandler,
-} = require('./products_handler');
+} = require("./products_handler");
 const {
   addUserHandler,
   getAllUsersHandler,
   getUserByIdHandler,
   editUserByIdHandler,
   deleteUserByIdHandler,
-} = require('./users_handler');
+} = require("./users_handler");
 const {
   addOrderHandler,
   getAllOrdersHandler,
   getOrderByIdHandler,
   editOrderByIdHandler,
   deleteOrderByIdHandler,
-} = require('./orders_handler');
+} = require("./orders_handler");
 const {
   addOrderItemHandler,
   getAllOrderItemsHandler,
   getOrderItemByIdHandler,
   editOrderItemByIdHandler,
   deleteOrderItemByIdHandler,
-} = require('./order_items_handler');
+} = require("./order_items_handler");
 
 const routes = [
   {
-    method: 'POST',
-    path: '/products',
+    method: "POST",
+    path: "/products",
     options: {
       payload: {
-        allow: 'multipart/form-data',
+        allow: "multipart/form-data",
         multipart: true,
-        output: 'stream',
+        output: "stream",
       },
     },
     handler: addProductHandler,
   },
   {
-    method: 'GET',
-    path: '/products',
+    method: "GET",
+    path: "/products",
     handler: getAllProductsHandler,
   },
   {
-    method: 'GET',
-    path: '/products/{idProduk}',
+    method: "GET",
+    path: "/products/{idProduk}",
     handler: getProductByIdHandler,
   },
   {
-    method: 'PUT',
-    path: '/products/{idProduk}',
+    method: "PUT",
+    path: "/products/{idProduk}",
     options: {
       payload: {
-        allow: 'multipart/form-data',
+        allow: "multipart/form-data",
         multipart: true,
-        output: 'stream',
+        output: "stream",
       },
     },
     handler: editProductByIdHandler,
   },
   {
-    method: 'DELETE',
-    path: '/products/{idProduk}',
+    method: "DELETE",
+    path: "/products/{idProduk}",
     handler: deleteProductByIdHandler,
   },
   {
-    method: 'POST',
-    path: '/users',
+    method: "POST",
+    path: "/users",
     handler: addUserHandler,
   },
   {
-    method: 'GET',
-    path: '/users',
+    method: "GET",
+    path: "/users",
     handler: getAllUsersHandler,
   },
   {
-    method: 'GET',
-    path: '/users/{idUser}',
+    method: "GET",
+    path: "/users/{idUser}",
     handler: getUserByIdHandler,
   },
   {
-    method: 'PUT',
-    path: '/users/{idUser}',
+    method: "PUT",
+    path: "/users/{idUser}",
     handler: editUserByIdHandler,
   },
   {
-    method: 'DELETE',
-    path: '/users/{idUser}',
+    method: "DELETE",
+    path: "/users/{idUser}",
     handler: deleteUserByIdHandler,
   },
   {
-    method: 'POST',
-    path: '/orders',
+    method: "POST",
+    path: "/orders",
     handler: addOrderHandler,
   },
   {
-    method: 'GET',
-    path: '/orders',
+    method: "GET",
+    path: "/orders",
     handler: getAllOrdersHandler,
   },
   {
-    method: 'GET',
-    path: '/orders/{idOrder}',
+    method: "GET",
+    path: "/orders/{idOrder}",
     handler: getOrderByIdHandler,
   },
   {
-    method: 'PUT',
-    path: '/orders/{idOrder}',
+    method: "PUT",
+    path: "/orders/{idOrder}",
     handler: editOrderByIdHandler,
   },
   {
-    method: 'DELETE',
-    path: '/orders/{idOrder}',
+    method: "DELETE",
+    path: "/orders/{idOrder}",
     handler: deleteOrderByIdHandler,
   },
   {
-    method: 'POST',
-    path: '/orderitems',
+    method: "POST",
+    path: "/orderitems",
     handler: addOrderItemHandler,
   },
   {
-    method: 'GET',
-    path: '/orderitems/{idOrder}',
+    method: "GET",
+    path: "/orderitems/{idOrder}",
     handler: getAllOrderItemsHandler,
   },
   {
-    method: 'GET',
-    path: '/orderitems/{idOrder}/{idOrderItem}',
+    method: "GET",
+    path: "/orderitems/{idOrder}/{idOrderItem}",
     handler: getOrderItemByIdHandler,
   },
   {
-    method: 'PUT',
-    path: '/orderitems/{idOrder}/{idOrderItem}',
+    method: "PUT",
+    path: "/orderitems/{idOrder}/{idOrderItem}",
     handler: editOrderItemByIdHandler,
   },
   {
-    method: 'DELETE',
-    path: '/orderitems/{idOrder}/{idOrderItem}',
+    method: "DELETE",
+    path: "/orderitems/{idOrder}/{idOrderItem}",
     handler: deleteOrderItemByIdHandler,
   },
   {
-    method: 'GET',
-    path: '/image/{file*}',
+    method: "GET",
+    path: "/image/{file*}",
     handler: {
       directory: {
-        path: 'image',
+        path: "image",
       },
     },
   },

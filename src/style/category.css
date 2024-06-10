@@ -74,7 +74,7 @@
   }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 480px) {
   .category-list {
     grid-template-rows: repeat(1, 1fr);
   }

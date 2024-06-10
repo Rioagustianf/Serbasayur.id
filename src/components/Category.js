@@ -5,21 +5,21 @@ const Category = {
     const categoriesHTML = categories
       .map((category) => {
         return `
-        <li class="category-item">
-          <a class="category-grid" href="#">
-            <div class="item-wrap">
-              <div class="item-wrap__image">
-                <div class="category-image">
-                  <img class="category-image__placement" src="../../public/images/categories/${category.image}">
+          <li class="category-item">
+            <a class="category-grid" href="#">
+              <div class="item-wrap">
+                <div class="item-wrap__image">
+                  <div class="category-image">
+                    <img class="category-image__placement" src="../../public/images/categories/${category.image}">
+                  </div>
+                </div>
+                <div class="item-wrap__image-title">
+                  ${category.name}
                 </div>
               </div>
-              <div class="item-wrap__image-title">
-                ${category.name}
-              </div>
-            </div>
-          </a>
-        </li>
-      `;
+            </a>
+          </li>
+        `;
       })
       .join("");
 
@@ -31,10 +31,9 @@ const Category = {
           </div>
           <div class="category-header-section__content">
             <div class="image-category">
-                <ul class="category-list">
-                  ${categoriesHTML}
-                </lu>
-              </div>
+              <ul class="category-list">
+                ${categoriesHTML}
+              </ul>
             </div>
           </div>
         </div>

@@ -1,7 +1,4 @@
-// src/services/api.js
-
 const API_BASE_URL = "http://localhost:5000";
-
 // Fungsi untuk mengambil semua produk
 async function getAllProducts() {
   const response = await fetch(`${API_BASE_URL}/products`);
@@ -72,65 +69,6 @@ async function deleteProduct(id) {
   return response.json();
 }
 
-// Fungsi untuk mengambil semua pengguna
-async function getAllUsers() {
-  const response = await fetch(`${API_BASE_URL}/users`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch users");
-  }
-  return response.json();
-}
-
-// Fungsi untuk mengambil pengguna berdasarkan ID
-async function getUserById(id) {
-  const response = await fetch(`${API_BASE_URL}/users/${id}`);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch user with id ${id}`);
-  }
-  return response.json();
-}
-
-// Fungsi untuk menambahkan pengguna baru
-async function addUser(user) {
-  const response = await fetch(`${API_BASE_URL}/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to add user");
-  }
-  return response.json();
-}
-
-// Fungsi untuk memperbarui pengguna berdasarkan ID
-async function updateUser(id, user) {
-  const response = await fetch(`${API_BASE_URL}/users/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to update user");
-  }
-  return response.json();
-}
-
-// Fungsi untuk menghapus pengguna berdasarkan ID
-async function deleteUser(id) {
-  const response = await fetch(`${API_BASE_URL}/users/${id}`, {
-    method: "DELETE",
-  });
-  if (!response.ok) {
-    throw new Error("Failed to delete user");
-  }
-  return response.json();
-}
-
 // Ekspor fungsi-fungsi API
 export {
   getAllProducts,
@@ -138,9 +76,4 @@ export {
   addProduct,
   updateProduct,
   deleteProduct,
-  getAllUsers,
-  getUserById,
-  addUser,
-  updateUser,
-  deleteUser,
 };
