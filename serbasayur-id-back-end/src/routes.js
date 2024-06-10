@@ -26,6 +26,13 @@ const {
   editOrderItemByIdHandler,
   deleteOrderItemByIdHandler,
 } = require('./order_items_handler');
+const {
+  addAdminHandler,
+  getAllAdminsHandler,
+  getAdminByIdHandler,
+  editAdminByIdHandler,
+  deleteAdminByIdHandler,
+} = require('./admins_handler');
 
 const routes = [
   {
@@ -141,6 +148,31 @@ const routes = [
     method: 'DELETE',
     path: '/orderitems/{idOrder}/{idOrderItem}',
     handler: deleteOrderItemByIdHandler,
+  },
+  {
+    method: 'POST',
+    path: '/admins',
+    handler: addAdminHandler,
+  },
+  {
+    method: 'GET',
+    path: '/admins',
+    handler: getAllAdminsHandler,
+  },
+  {
+    method: 'GET',
+    path: '/admins/{idAdmin}',
+    handler: getAdminByIdHandler,
+  },
+  {
+    method: 'PUT',
+    path: '/admins/{idAdmin}',
+    handler: editAdminByIdHandler,
+  },
+  {
+    method: 'DELETE',
+    path: '/admins/{idAdmin}',
+    handler: deleteAdminByIdHandler,
   },
   {
     method: 'GET',
