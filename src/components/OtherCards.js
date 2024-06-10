@@ -1,4 +1,5 @@
-import { getAllProducts } from "../services/api";
+import { getAllProducts } from "../services/api/product";
+import page from "page";
 import { chunk } from "lodash-es";
 
 const OtherCards = {
@@ -9,25 +10,40 @@ const OtherCards = {
         throw new Error("Products is not an array");
       }
 
-      const productGroups = chunk(products, 4);
+      // Ubah jumlah kolom berdasarkan ukuran layar
+      const colSize = {
+        lg: 2,
+        md: 3,
+        sm: 6,
+      };
+
+      const productGroups = chunk(products, 3);
+
+      const formatCurrency = (amount) => {
+        return new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          maximumFractionDigits: 0,
+        }).format(amount);
+      };
 
       const carouselItems = productGroups
         .map((group, index) => {
           const productCards = group
             .map(
               (product) => `
-            <div class="col-sm-2">
+            <div class="col-4 col-md-${colSize.md} col-lg-${colSize.lg}">
               <div class="card h-100" data-id="${product.id_produk}">
-                <img height="100px" src="${product.image}" class="card-img-top" alt="${product.nama}">
-                <div class="card-body d-flex flex-column text-center">
+                <img height="100px" src="${product.image}" class="img-fluid" alt="${product.nama}">
+                <div class="card-body d-flex flex-column flex-lg-column flex-md-column flex-sm-column text-center">
                   <a href="/detail/${product.id_produk}" class="text-decoration-none text-black product-link" data-id="${product.id_produk}">
-                    <h5 class="card-title">${product.nama}</h5>
+                    <p class="card-title text-sm" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${product.nama}</p>
                   </a>
                   <div class="mt-auto">
-                    <p class="card-text fs-5 fw-bold">${new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(product.harga)}</p>
+                    <p class="card-text fw-bold text-sm">${formatCurrency(product.harga)}</p>
                   </div>
-                  <div class="mt-auto">
-                    <a href="#" class="btn btn-outline-success border-2" style=" --bs-btn-font-size: .75rem;">Masukan Keranjang</a>
+                  <div class="">
+                    <button class="btn-sm btn-cart rounded-3 p-2 mt-1">masukan keranjang</button>
                   </div>
                 </div>
               </div>
@@ -80,7 +96,6 @@ const OtherCards = {
         const productId = event.target
           .closest(".product-link")
           .getAttribute("data-id");
-        console.log("Product ID:", productId);
         page(`/detail/${productId}`); // Mengarahkan ke halaman detail produk dengan menggunakan page.js
       });
     });

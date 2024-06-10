@@ -1,7 +1,8 @@
 import Navbar from "../components/Navbar";
 import QtyButton from "../components/QtyButton";
 import Footer from "../components/Footer";
-import productHandler from "../utils/productHandler";
+import { handleProdukQty } from "../utils/productHandler";
+import { getAllOrderItems } from "../services/api/order";
 
 const OrderPage = {
   async render() {
@@ -9,27 +10,19 @@ const OrderPage = {
     const footer = await Footer.render();
     const qtyButton = await QtyButton.render();
 
-    // Data produk contoh
-    const products = [
-      {
-        id: 1,
-        name: "Bayam Hijau 1 ikat [200 gr]",
-        price: "Rp10.000",
-        imageUrl: "../../public/images/image1.png",
-      },
-      {
-        id: 2,
-        name: "Bayam Hijau 1 ikat [200 gr]",
-        price: "Rp10.000",
-        imageUrl: "../../public/images/image1.png",
-      },
-      {
-        id: 3,
-        name: "Bayam Hijau 1 ikat [200 gr]",
-        price: "Rp10.000",
-        imageUrl: "../../public/images/image1.png",
-      },
-    ];
+    // Mengambil data produk dari API
+    let products;
+    try {
+      const response = await getAllOrderItems(); // Pastikan fungsi ini benar
+      if (response.status === "success") {
+        products = response.data.orderItems;
+      } else {
+        throw new Error("Failed to fetch order items");
+      }
+    } catch (error) {
+      console.error(error);
+      products = [];
+    }
 
     const productListHTML = products
       .map(
@@ -88,7 +81,7 @@ const OrderPage = {
   },
 
   async afterRender() {
-    productHandler();
+    handleProdukQty();
   },
 };
 

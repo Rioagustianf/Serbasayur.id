@@ -20,7 +20,9 @@ page("/", async () => {
   await renderPage(LandingPage);
 });
 page("/login", () => renderPage(LoginPage));
-page("/register", () => renderPage(RegisterPage));
+page("/register", async () => {
+  await renderPage(RegisterPage);
+});
 page("/detail/:id", async (ctx) => {
   const { id } = ctx.params;
   await renderPage(DetailProduk, id); // Render halaman detail produk dengan ID produk
