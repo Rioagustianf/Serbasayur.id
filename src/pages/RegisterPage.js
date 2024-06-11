@@ -8,6 +8,10 @@ const RegisterPage = {
       ${register}
     `;
   },
+
+  async afterRender() {
+    await Register.afterRender();
+  },
 };
 
 export default RegisterPage;
