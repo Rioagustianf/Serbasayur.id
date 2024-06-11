@@ -28,16 +28,28 @@ exports.setup = function(options, seedLink) {
 exports.up = function(db, callback) {
   db.createTable('orders', {
     id_order: { type: 'char', primaryKey: true, length: 255 },
-    id_user: { type: 'char', length: 255 },
+    id_user: {
+      type: 'char',
+      length: 255,
+      foreignKey: {
+        name: 'orders_id_user',
+        table: 'users',
+        rules: {
+          onDelete: 'RESTRICT',
+          onUpdate: 'RESTRICT'
+        },
+        mapping: 'id_user'
+      }
+    },
     tanggal_order: { type: 'date' },
     alamat_order: { type: 'text' },
     total_harga: { type: 'bigint' },
   }, callback);
-  db.addIndex('orders', 'id_user_index', 'id_user', callback);
 };
 
 exports.down = function(db, callback) {
-  db.removeIndex('orders', 'id_user_index', callback);
+  // db.removeForeignKey('order_items', 'order_items_id_order', callback);
+  // db.removeIndex('orders', 'id_user_index', callback);
   db.dropTable('orders', callback);
 };
 

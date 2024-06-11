@@ -37,6 +37,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
+  // db.removeForeignKey('order_items', 'order_items_id_produk', callback);
   db.dropTable('products', callback);
 };
 

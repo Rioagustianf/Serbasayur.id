@@ -21,6 +21,7 @@
   "dependencies": {
     "@hapi/hapi": "^21.3.9",
     "db-migrate": "^0.11.14",
+    "db-migrate-mysql": "^2.3.2",
     "dotenv": "^16.4.5",
     "inert": "^5.1.3",
     "mysql": "^2.18.1",
