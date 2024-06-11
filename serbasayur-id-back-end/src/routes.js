@@ -9,6 +9,7 @@ const {
   addUserHandler,
   getAllUsersHandler,
   getUserByIdHandler,
+  getUserByUsernamePasswordHandler,
   editUserByIdHandler,
   deleteUserByIdHandler,
 } = require('./users_handler');
@@ -98,6 +99,11 @@ const routes = [
     method: 'DELETE',
     path: '/users/{idUser}',
     handler: deleteUserByIdHandler,
+  },
+  {
+    method: 'GET',
+    path: '/login',
+    handler: getUserByUsernamePasswordHandler,
   },
   {
     method: 'POST',

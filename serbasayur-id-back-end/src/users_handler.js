@@ -23,6 +23,17 @@ async function getUserById(idUser, callback) {
   });
 }
 
+async function getUserByUsernamePassword(username, password, callback) {
+  const sql = `SELECT * FROM users WHERE username='${username}' AND password='${password}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
 const addUserHandler = (request, h) => {
   const {
     username, email, password, nomor_telepon: nomorTelepon, alamat,
@@ -93,6 +104,32 @@ const getUserByIdHandler = (request, h) => {
         const response = h.response({
           status: 'fail',
           message: 'User tidak ditemukan',
+        });
+        response.code(404);
+        resolve(response);
+      }
+    });
+  });
+  return promise;
+};
+
+const getUserByUsernamePasswordHandler = (request, h) => {
+  const { username, password } = request.payload;
+
+  const promise = new Promise((resolve) => {
+    getUserByUsernamePassword(username, password, (results) => {
+      if (typeof results !== 'undefined' && results.length > 0) {
+        const response = {
+          status: 'success',
+          data: {
+            user: results[0],
+          },
+        };
+        resolve(response);
+      } else {
+        const response = h.response({
+          status: 'fail',
+          message: 'Username/password salah',
         });
         response.code(404);
         resolve(response);
@@ -186,6 +223,7 @@ module.exports = {
   addUserHandler,
   getAllUsersHandler,
   getUserByIdHandler,
+  getUserByUsernamePasswordHandler,
   editUserByIdHandler,
   deleteUserByIdHandler,
 };
