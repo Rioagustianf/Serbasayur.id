@@ -48,8 +48,6 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  // db.removeForeignKey('order_items', 'order_items_id_order', callback);
-  // db.removeIndex('orders', 'id_user_index', callback);
   db.dropTable('orders', callback);
 };
 

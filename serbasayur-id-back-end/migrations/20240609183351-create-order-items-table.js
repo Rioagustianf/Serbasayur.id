@@ -60,8 +60,6 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  // db.removeIndex('order_items', 'id_order_index', callback);
-  // db.removeIndex('order_items', 'id_produk_index', callback);
   db.dropTable('order_items', callback);
 };
 
