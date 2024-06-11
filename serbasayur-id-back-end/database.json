@@ -1,25 +1,25 @@
 {
   "test": {
-    "host": "localhost",
-    "user": "root",
-    "password" : "",
-    "database": "serbasayur_id",
+    "host": {"ENV": "DB_HOST"},
+    "user": {"ENV": "DB_USER"},
+    "password" : {"ENV": "DB_PASS"},
+    "database": {"ENV": "DB_NAME"},
     "driver": "mysql",
     "multipleStatements": true
   },
   "dev": {
-    "host": "localhost",
-    "user": "root",
-    "password" : "",
-    "database": "serbasayur_id",
+    "host": {"ENV": "DB_HOST"},
+    "user": {"ENV": "DB_USER"},
+    "password" : {"ENV": "DB_PASS"},
+    "database": {"ENV": "DB_NAME"},
     "driver": "mysql",
     "multipleStatements": true
   },
   "prod": {
-    "host": "localhost",
-    "user": "root",
-    "password" : "",
-    "database": "serbasayur_id",
+    "host": {"ENV": "DB_HOST"},
+    "user": {"ENV": "DB_USER"},
+    "password" : {"ENV": "DB_PASS"},
+    "database": {"ENV": "DB_NAME"},
     "driver": "mysql",
     "multipleStatements": true
   }
