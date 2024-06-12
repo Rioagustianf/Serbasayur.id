@@ -8,6 +8,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-var */
 /* eslint-disable strict */
+
 'use strict';
 
 var dbm;
@@ -25,32 +26,14 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('products', {
-    id_produk: { type: 'char', primaryKey: true, length: 255 },
-    nama: { type: 'char', length: 255 },
-    id_kategori: {
-      type: 'char',
-      length: 255,
-      foreignKey: {
-        name: 'products_id_kategori',
-        table: 'categories',
-        rules: {
-          onDelete: 'RESTRICT',
-          onUpdate: 'RESTRICT'
-        },
-        mapping: 'id_kategori'
-      }
-    },
-    deskripsi: { type: 'text' },
-    harga: { type: 'bigint' },
-    image: { type: 'char', length: 255 },
-    kuantitas: { type: 'bigint' },
-    rating: { type: 'bigint' },
+  db.createTable('categories', {
+    id_kategori: { type: 'char', primaryKey: true, length: 255 },
+    nama_kategori: { type: 'char', length: 255 },
   }, callback);
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('products', callback);
+  db.dropTable('categories', callback);
 };
 
 exports._meta = {

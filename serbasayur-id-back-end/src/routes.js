@@ -1,4 +1,11 @@
 const {
+  addCategoryHandler,
+  getAllCategoriesHandler,
+  getCategoryByIdHandler,
+  editCategoryByIdHandler,
+  deleteCategoryByIdHandler,
+} = require('./categories_handler');
+const {
   addProductHandler,
   getAllProductsHandler,
   getProductByIdHandler,
@@ -36,6 +43,31 @@ const {
 } = require('./admins_handler');
 
 const routes = [
+  {
+    method: 'POST',
+    path: '/categories',
+    handler: addCategoryHandler,
+  },
+  {
+    method: 'GET',
+    path: '/categories',
+    handler: getAllCategoriesHandler,
+  },
+  {
+    method: 'GET',
+    path: '/categories/{idKategori}',
+    handler: getCategoryByIdHandler,
+  },
+  {
+    method: 'PUT',
+    path: '/categories/{idKategori}',
+    handler: editCategoryByIdHandler,
+  },
+  {
+    method: 'DELETE',
+    path: '/categories/{idKategori}',
+    handler: deleteCategoryByIdHandler,
+  },
   {
     method: 'POST',
     path: '/products',

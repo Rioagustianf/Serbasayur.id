@@ -27,7 +27,7 @@ async function getProductById(idProduk, callback) {
 
 const addProductHandler = (request, h) => {
   const {
-    nama, deskripsi, harga, image, kuantitas, rating,
+    nama, id_kategori: idKategori, deskripsi, harga, image, kuantitas, rating,
   } = request.payload;
 
   const idProduk = `product-${nanoid(16)}`;
@@ -48,7 +48,7 @@ const addProductHandler = (request, h) => {
       }
     });
 
-    const sql = `INSERT INTO products(id_produk, nama, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${deskripsi}',${harga},'${filename}',${kuantitas},${rating})`;
+    const sql = `INSERT INTO products(id_produk, nama, id_kategori, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${idKategori}','${deskripsi}',${harga},'${filename}',${kuantitas},${rating})`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -123,7 +123,7 @@ const editProductByIdHandler = (request, h) => {
   const { idProduk } = request.params;
 
   const {
-    nama, deskripsi, harga, image, kuantitas, rating,
+    nama, id_kategori: idKategori, deskripsi, harga, image, kuantitas, rating,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
@@ -160,7 +160,7 @@ const editProductByIdHandler = (request, h) => {
           });
         }
 
-        const sql = `UPDATE products SET nama='${nama}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+        const sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -209,7 +209,6 @@ const deleteProductByIdHandler = (request, h) => {
             response.code(500);
             resolve(response);
           }
-          console.log('file was deleted');
         });
 
         const sql = `DELETE FROM products WHERE id_produk='${idProduk}'`;
