@@ -6,7 +6,7 @@ const Category = {
       .map((category) => {
         return `
           <li class="category-item">
-            <a class="category-grid" href="#">
+            <a class="category-grid" href="/c/${category.name}">
               <div class="item-wrap">
                 <div class="item-wrap__image">
                   <div class="category-image">
