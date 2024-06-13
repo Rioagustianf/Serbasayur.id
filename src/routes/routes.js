@@ -5,6 +5,8 @@ import RegisterPage from "../pages/RegisterPage";
 import DetailProduk from "../pages/DetailProduk";
 import CheckoutPage from "../pages/CheckoutPage";
 import OrderPage from "../pages/OrderPage";
+import ProductPage from "../pages/ProductPage";
+import SearchPage from "../pages/SearchPage";
 
 const app = document.getElementById("app");
 
