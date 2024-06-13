@@ -81,6 +81,7 @@ const OrderPage = {
   },
 
   async afterRender() {
+    await Navbar.afterRender();
     handleProdukQty();
   },
 };

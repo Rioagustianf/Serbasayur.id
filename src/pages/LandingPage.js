@@ -30,6 +30,7 @@ const LandingPage = {
   },
 
   async afterRender() {
+    await Navbar.afterRender();
     VegetableCard.afterRender();
   },
 };

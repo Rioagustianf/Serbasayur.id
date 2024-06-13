@@ -1,3 +1,5 @@
+import page from "page";
+
 const Navbar = {
   render() {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -13,9 +15,9 @@ const Navbar = {
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <form class="w-100 d-flex me-auto my-2 mx-4 mx-md-3 mx-sm-0 my-lg-0 mb-2 mb-lg-0">
+              <form id="search-form" class="w-100 d-flex me-auto my-2 mx-4 mx-md-3 mx-sm-0 my-lg-0 mb-2 mb-lg-0">
                 <div class="input-group w-100 position-relative">
-                  <input class="form-control ps-5" type="search" placeholder="Ayo hidup sehat dan cari kebutuhanmu disini!" aria-label="Search">
+                  <input id="search-input" class="form-control ps-5" type="search" placeholder="Ayo hidup sehat dan cari kebutuhanmu disini!" aria-label="Search">
                   <span class="input-group-text position-absolute top-50 start-0 translate-middle-y border-0 bg-transparent"><i class="fas fa-search icon-search"></i></span>
                 </div>
               </form>
@@ -56,6 +58,17 @@ const Navbar = {
       </div>
     `;
   },
+
+  afterRender() {
+    const searchForm = document.getElementById("search-form");
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const query = document.getElementById("search-input").value;
+      if (query) {
+        page(`/search/${query}`);
+      }
+    });
+  }
 };
 
 export default Navbar;

@@ -78,6 +78,15 @@ async function getProductsByCategory(category) {
   return response.json();
 }
 
+// Fungsi untuk mencari produk berdasarkan query
+async function searchProducts(query) {
+  const response = await fetch(`${API_BASE_URL}/products?id_produk=${query}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch search results for query: ${query}`);
+  }
+  return response.json();
+}
+
 // Ekspor fungsi-fungsi API
 export {
   getAllProducts,
@@ -86,4 +95,5 @@ export {
   updateProduct,
   deleteProduct,
   getProductsByCategory,
+  searchProducts,
 };
