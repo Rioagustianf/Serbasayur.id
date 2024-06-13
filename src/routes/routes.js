@@ -30,4 +30,14 @@ page("/detail/:id", async (ctx) => {
 page("/checkout", () => renderPage(CheckoutPage));
 page("/order", () => renderPage(OrderPage));
 
+page("/c/:category", async (ctx) => {
+  const { category } = ctx.params;
+  await renderPage(ProductPage, { category }); // Render halaman kategori dengan nama kategori
+});
+
+page("/search/:query", async (ctx) => {
+  const { query } = ctx.params;
+  await renderPage(SearchPage, { query }); // Render halaman pencarian dengan query
+});
+
 page();
