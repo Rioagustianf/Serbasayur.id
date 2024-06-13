@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import NavbarCheckout from '../components/NavbarCheckout';
 import Address from "../components/Address";
 import ProductCheckout from "../components/ProductCheckout";
 import Shipment from "../components/Shipment";
@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 
 const CheckoutPage = {
   async render() {
-    const navbar = await Navbar.render();
+    const navbar = await NavbarCheckout.render();
     const address = await Address.render();
     const product = await ProductCheckout.render();
     const shipment = await Shipment.render();

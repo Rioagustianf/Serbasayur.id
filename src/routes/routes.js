@@ -6,6 +6,8 @@ import RegisterPage from "../pages/RegisterPage";
 import DetailProduk from "../pages/DetailProduk";
 import CheckoutPage from "../pages/CheckoutPage";
 import OrderPage from "../pages/OrderPage";
+import ProductPage from "../pages/ProductPage";
+import SearchPage from "../pages/SearchPage";
 import { Dashboard } from "../pages/admin/Dashboard";
 import AddProduk from "../pages/admin/Addproduk";
 import AddCategory from "../pages/admin/AddCategory";

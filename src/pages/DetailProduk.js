@@ -121,6 +121,7 @@ const DetailProduk = {
   },
 
   afterRender(productId) {
+    Navbar.afterRender();
     handleProdukQty(); // Panggil fungsi untuk menangani kuantitas produk
   },
 };
