@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://serbasayur-id-back-end-production.up.railway.app";
+const API_BASE_URL = "http://localhost:5000";
 // Fungsi untuk mengambil semua produk
 async function getAllProducts() {
   const response = await fetch(`${API_BASE_URL}/products`);
@@ -69,6 +69,15 @@ async function deleteProduct(id) {
   return response.json();
 }
 
+// Fungsi untuk mengambil produk berdasarkan kategori
+async function getProductsByCategory(category) {
+  const response = await fetch(`${API_BASE_URL}/products?category=${category}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch products for category ${category}`);
+  }
+  return response.json();
+}
+
 // Ekspor fungsi-fungsi API
 export {
   getAllProducts,
@@ -76,4 +85,5 @@ export {
   addProduct,
   updateProduct,
   deleteProduct,
+  getProductsByCategory,
 };
