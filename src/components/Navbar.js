@@ -1,5 +1,7 @@
 const Navbar = {
-  async render() {
+  render() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
     return `
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,8 +36,18 @@ const Navbar = {
                   <a class="nav-link ms-2" href="#"><img height="25px" src="../../public/images/icon3.png" alt="" /></a>
                 </li>
                 <li class="nav-item ms-2 d-flex flex-column flex-sm-row">
-                  <a href="/login" type="button" class="btn text-white me-sm-2 mb-2 mb-sm-0" style="background-color: #4DC38C;">Masuk</a>
-                  <a href="/register" type="button" class="btn text-success" style="background-color: #D9D9D9;">Daftar</a>
+                  ${
+                    isLoggedIn
+                      ? `
+                    <!-- Jika pengguna sudah login, tombol masuk dan daftar disembunyikan -->
+                    <!-- Tombol Logout (jika dibutuhkan) -->
+                    `
+                      : `
+                    <!-- Jika pengguna belum login, tombol masuk dan daftar ditampilkan -->
+                    <a href="/login" type="button" class="btn text-white me-sm-2 mb-2 mb-sm-0" style="background-color: #4DC38C;">Masuk</a>
+                    <a href="/register" type="button" class="btn text-success" style="background-color: #D9D9D9;">Daftar</a>
+                    `
+                  }
                 </li>
               </ul>
             </div>

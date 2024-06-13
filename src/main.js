@@ -5,6 +5,7 @@ import "./style/login.css";
 import "./style/register.css";
 import "./style/checkout.css";
 import "./style/footer.css";
+import "./style/admin.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";

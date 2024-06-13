@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://serbasayur-id-back-end-production.up.railway.app";
 
 async function getAllUsers() {
   const response = await fetch(`${API_BASE_URL}/users`);

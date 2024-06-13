@@ -1,16 +1,51 @@
 import Register from "../components/Register";
+import { addUser } from "../services/api/user"; // Import addUser dari service API
+import page from "page";
 
 const RegisterPage = {
   async render() {
-    const register = await Register.render();
-
-    return `
-      ${register}
-    `;
+    return Register.render();
   },
-
   async afterRender() {
-    await Register.afterRender();
+    const registerForm = document.querySelector("#register-page form");
+
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault(); // Mencegah pengiriman form secara default
+
+      // Ambil nilai dari input form
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
+
+      // Buat objek user dari nilai input
+      const user = {
+        username,
+        email,
+        password,
+        nomor_telepon: phone,
+        alamat: address,
+      };
+
+      try {
+        // Gunakan service API untuk menambahkan pengguna ke database
+        const response = await addUser(user);
+
+        // Setelah submit berhasil, kosongkan nilai input
+        document.getElementById("username").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("address").value = "";
+
+        // Redirect ke halaman login
+        page.redirect("/login");
+      } catch (error) {
+        console.error("Failed to register:", error);
+        // Tampilkan pesan kesalahan kepada pengguna (opsional)
+      }
+    });
   },
 };
 
