@@ -1,5 +1,5 @@
 // src/services/api.js
-const API_BASE_URL = "https://serbasayur-id-back-end-production.up.railway.app";
+const API_BASE_URL = "http://localhost:5000";
 
 // Fungsi untuk menambahkan pesanan baru
 async function addOrder(order) {
