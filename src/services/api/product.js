@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "http://localhost:3000";
 // Fungsi untuk mengambil semua produk
 async function getAllProducts() {
   const response = await fetch(`${API_BASE_URL}/products`);
