@@ -1,5 +1,5 @@
 import Register from "../components/Register";
-import { addUser } from "../services/api/user"; // Import addUser dari service API
+import { addUser } from "../services/api/user";
 import page from "page";
 
 const RegisterPage = {
@@ -43,7 +43,6 @@ const RegisterPage = {
         page.redirect("/login");
       } catch (error) {
         console.error("Failed to register:", error);
-        // Tampilkan pesan kesalahan kepada pengguna (opsional)
       }
     });
   },

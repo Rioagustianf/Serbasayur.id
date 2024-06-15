@@ -63,13 +63,13 @@ const FormAddProduk = {
       const formData = new FormData(form);
 
       try {
-        const newProduct = await addProduct(formData);
-        console.log("Produk berhasil ditambahkan:", newProduct);
+        const response = await addProduct(formData);
+        console.log("Produk berhasil ditambahkan:", response);
         alert("Produk berhasil ditambahkan!");
-        form.reset(); // Reset form setelah berhasil ditambahkan
+        // Anda bisa tambahkan logika untuk menampilkan pesan sukses atau melakukan navigasi ke halaman lain
       } catch (error) {
-        console.error("Gagal menambahkan produk:", error);
-        alert(`Gagal menambahkan produk: ${error.message}`);
+        console.error("Gagal menambahkan produk:", error.message);
+        alert("Gagal menambahkan produk. Silakan coba lagi.");
       }
     });
   },

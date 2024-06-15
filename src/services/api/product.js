@@ -24,7 +24,7 @@ async function getProductById(idProduk) {
   return response.json();
 }
 
-const addProduct = async (formData) => {
+async function addProduct(formData) {
   try {
     const response = await fetch("http://localhost:3000/products", {
       method: "POST",
@@ -42,7 +42,7 @@ const addProduct = async (formData) => {
     console.error("Gagal menambahkan produk:", error.message);
     throw new Error(`Gagal menambahkan produk: ${error.message}`);
   }
-};
+}
 
 async function updateProduct(id, product) {
   const response = await fetch(`${API_BASE_URL}/products/${id}`, {

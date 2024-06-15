@@ -29,30 +29,7 @@ const Login = {
       `;
   },
 
-  async afterRender() {
-    const loginForm = document.getElementById("login-form");
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      try {
-        const user = await login(email, password);
-        // Login berhasil, Anda bisa menangani responsenya di sini
-        console.log("Login berhasil:", user);
-
-        // Simpan informasi pengguna ke sessionStorage atau cookie
-        sessionStorage.setItem("currentUser", JSON.stringify(user));
-
-        // Redirect ke halaman setelah login
-        window.location.href = "/dashboard"; // Ganti dengan halaman yang sesuai
-      } catch (error) {
-        // Login gagal, tampilkan pesan error
-        console.error("Login gagal:", error.message);
-        alert(error.message); // Tampilkan pesan error kepada pengguna
-      }
-    });
-  },
+  async afterRender() {},
 };
 
 export default Login;
