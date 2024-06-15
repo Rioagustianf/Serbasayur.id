@@ -147,7 +147,11 @@ const editProductByIdHandler = (request, h) => {
         const filename = `image-${nanoid(16)}.jpg`;
         const data = image._data;
 
-        if (image) {
+        const checkOldFilename = image.hapi.filename;
+
+        let sql;
+
+        if (checkOldFilename !== '') {
           fs.writeFile(`./image/${filename}`, data, (err) => {
             if (err) {
               const response = h.response({
@@ -170,9 +174,11 @@ const editProductByIdHandler = (request, h) => {
             }
             console.log("file was deleted");
           });
-        }
 
-        const sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+          sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+        } else {
+          sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+        }
 
         db.query(sql, (err) => {
           if (err) {
