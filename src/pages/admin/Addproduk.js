@@ -28,8 +28,9 @@ const AddProduk = {
         `;
   },
 
-  afterRender: () => {
+  async afterRender() {
     handleAdminNavigation();
+    await FormAddProduk.afterRender();
   },
 };
 

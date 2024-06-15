@@ -1,5 +1,5 @@
 const API_BASE_URL = "http://localhost:3000";
-// Fungsi untuk mengambil semua produk
+
 async function getAllProducts() {
   const response = await fetch(`${API_BASE_URL}/products`);
   if (!response.ok) {
@@ -7,43 +7,43 @@ async function getAllProducts() {
   }
 
   const data = await response.json();
-
-  // Periksa apakah data yang diterima adalah array
   if (Array.isArray(data)) {
     return data;
   } else if (data && data.data && Array.isArray(data.data.products)) {
-    // Jika data tidak berupa array langsung, tetapi ada dalam properti data
     return data.data.products;
   } else {
     throw new Error("Invalid data format for products");
   }
 }
 
-// Fungsi untuk mengambil produk berdasarkan ID
 async function getProductById(idProduk) {
   const response = await fetch(`${API_BASE_URL}/products/${idProduk}`);
   if (!response.ok) {
-    throw new Error(`Failed to fetch product with id ${idProduk}`); // Ganti dari id menjadi idProduk
+    throw new Error(`Failed to fetch product with id ${idProduk}`);
   }
   return response.json();
 }
 
-// Fungsi untuk menambahkan produk baru
-async function addProduct(product) {
-  const response = await fetch(`${API_BASE_URL}/products`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to add product");
-  }
-  return response.json();
-}
+const addProduct = async (formData) => {
+  try {
+    const response = await fetch("http://localhost:3000/products", {
+      method: "POST",
+      body: formData,
+    });
 
-// Fungsi untuk memperbarui produk berdasarkan ID
+    if (!response.ok) {
+      const errorData = await response.json(); // Ambil pesan error dari server
+      throw new Error(errorData.message || "Gagal menambahkan produk");
+    }
+
+    const data = await response.json();
+    return data; // Mengembalikan data jika diperlukan di frontend
+  } catch (error) {
+    console.error("Gagal menambahkan produk:", error.message);
+    throw new Error(`Gagal menambahkan produk: ${error.message}`);
+  }
+};
+
 async function updateProduct(id, product) {
   const response = await fetch(`${API_BASE_URL}/products/${id}`, {
     method: "PUT",
@@ -58,7 +58,6 @@ async function updateProduct(id, product) {
   return response.json();
 }
 
-// Fungsi untuk menghapus produk berdasarkan ID
 async function deleteProduct(id) {
   const response = await fetch(`${API_BASE_URL}/products/${id}`, {
     method: "DELETE",
@@ -69,7 +68,6 @@ async function deleteProduct(id) {
   return response.json();
 }
 
-// Fungsi untuk mengambil produk berdasarkan kategori
 async function getProductsByCategory(category) {
   const response = await fetch(`${API_BASE_URL}/products?category=${category}`);
   if (!response.ok) {
@@ -78,7 +76,6 @@ async function getProductsByCategory(category) {
   return response.json();
 }
 
-// Fungsi untuk mencari produk berdasarkan query
 async function searchProducts(query) {
   const response = await fetch(`${API_BASE_URL}/products?id_produk=${query}`);
   if (!response.ok) {
@@ -87,7 +84,72 @@ async function searchProducts(query) {
   return response.json();
 }
 
-// Ekspor fungsi-fungsi API
+// --- Service API Kategori ---
+
+async function getAllCategories() {
+  const response = await fetch(`${API_BASE_URL}/categories`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  const data = await response.json();
+  return data.data.categories;
+}
+
+async function getCategoryById(idKategori) {
+  const response = await fetch(`${API_BASE_URL}/categories/${idKategori}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch category with id ${idKategori}`);
+  }
+
+  const data = await response.json();
+  return data.data.category;
+}
+
+async function addCategory(category) {
+  const response = await fetch(`${API_BASE_URL}/categories`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(category),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to add category");
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+
+async function updateCategory(idKategori, category) {
+  const response = await fetch(`${API_BASE_URL}/categories/${idKategori}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(category),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to update category");
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+
+async function deleteCategory(idKategori) {
+  const response = await fetch(`${API_BASE_URL}/categories/${idKategori}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete category");
+  }
+
+  const data = await response.json();
+  return data.data;
+}
+
 export {
   getAllProducts,
   getProductById,
@@ -96,4 +158,9 @@ export {
   deleteProduct,
   getProductsByCategory,
   searchProducts,
+  getAllCategories,
+  getCategoryById,
+  addCategory,
+  updateCategory,
+  deleteCategory,
 };

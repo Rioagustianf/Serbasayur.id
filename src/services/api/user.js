@@ -54,4 +54,23 @@ async function deleteUser(id) {
   return response.json();
 }
 
-export { getAllUsers, getUserById, addUser, updateUser, deleteUser };
+async function login(email, password) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+      throw new Error("Email or password is incorrect");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Failed to login:", error.message);
+    throw error;
+  }
+}
+
+export { getAllUsers, getUserById, addUser, updateUser, deleteUser, login };
