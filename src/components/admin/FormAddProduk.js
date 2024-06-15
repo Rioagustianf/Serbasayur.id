@@ -64,7 +64,15 @@ const FormAddProduk = {
 
       try {
         const response = await addProduct(formData);
-        console.log("Produk berhasil ditambahkan:", response);
+
+        document.getElementById("nama").value = "";
+        document.getElementById("deskripsi").value = "";
+        document.getElementById("harga").value = "";
+        document.getElementById("image").value = "";
+        document.getElementById("kuantitas").value = "";
+        document.getElementById("id_kategori").value = "";
+        document.getElementById("rating").value = "";
+
         alert("Produk berhasil ditambahkan!");
         // Anda bisa tambahkan logika untuk menampilkan pesan sukses atau melakukan navigasi ke halaman lain
       } catch (error) {

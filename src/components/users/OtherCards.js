@@ -1,4 +1,4 @@
-import { getAllProducts } from "../services/api/product";
+import { getAllProducts } from "../../services/api/product";
 import page from "page";
 import { chunk } from "lodash-es";
 
@@ -34,7 +34,7 @@ const OtherCards = {
               (product) => `
             <div class="col-4 col-md-${colSize.md} col-lg-${colSize.lg}">
               <div class="card h-100" data-id="${product.id_produk}">
-                <img height="100px" src="${product.image}" class="img-fluid" alt="${product.nama}">
+                <img height="100px" src="${product.imageUrl}" class="img-fluid" alt="${product.nama}">
                 <div class="card-body d-flex flex-column flex-lg-column flex-md-column flex-sm-column text-center">
                   <a href="/detail/${product.id_produk}" class="text-decoration-none text-black product-link" data-id="${product.id_produk}">
                     <p class="card-title text-sm" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${product.nama}</p>

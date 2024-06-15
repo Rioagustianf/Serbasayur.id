@@ -1,6 +1,6 @@
-import Login from "../components/Login";
+import Login from "../../components/users/Login";
 import page from "page";
-import { loginUser } from "../services/api/user.js"; // Import addUser function from user API
+import { loginUser } from "../../services/api/user.js"; // Import addUser function from user API
 
 const LoginPage = {
   async render() {
@@ -24,7 +24,7 @@ const LoginPage = {
       event.preventDefault();
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-      
+
       try {
         // Assume addUser function adds the user to the database and returns user data
         const newUser = await loginUser(email, password);

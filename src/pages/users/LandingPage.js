@@ -1,9 +1,9 @@
-import Navbar from "../components/Navbar";
-import VegetableCard from "../components/VegetableCard";
-import FruitsCard from "../components/FruitsCard";
-import OtherCards from "../components/OtherCards";
-import Category from "../components/Category";
-import Footer from "../components/Footer";
+import Navbar from "../../components/users/Navbar";
+import VegetableCard from "../../components/users/VegetableCard";
+import FruitsCard from "../../components/users/FruitsCard";
+import OtherCards from "../../components/users/OtherCards";
+import Category from "../../components/users/Category";
+import Footer from "../../components/users/Footer";
 
 const LandingPage = {
   async render() {

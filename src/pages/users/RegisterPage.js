@@ -1,5 +1,5 @@
-import Register from "../components/Register";
-import { addUser } from "../services/api/user";
+import Register from "../../components/users/Register";
+import { addUser } from "../../services/api/user";
 import page from "page";
 
 const RegisterPage = {

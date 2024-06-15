@@ -7,13 +7,22 @@ async function getAllProducts() {
   }
 
   const data = await response.json();
+  let products = [];
+
   if (Array.isArray(data)) {
-    return data;
+    products = data;
   } else if (data && data.data && Array.isArray(data.data.products)) {
-    return data.data.products;
+    products = data.data.products;
   } else {
     throw new Error("Invalid data format for products");
   }
+
+  // Modifikasi produk untuk menambahkan URL gambar
+  products.forEach((product) => {
+    product.imageUrl = `${API_BASE_URL}/image/${product.image}`;
+  });
+
+  return products;
 }
 
 async function getProductById(idProduk) {

@@ -1,13 +1,13 @@
 // src/routes/index.js
 import page from "page";
-import LandingPage from "../pages/LandingPage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import DetailProduk from "../pages/DetailProduk";
-import CheckoutPage from "../pages/CheckoutPage";
-import OrderPage from "../pages/OrderPage";
-import ProductPage from "../pages/ProductPage";
-import SearchPage from "../pages/SearchPage";
+import LandingPage from "../pages/users/LandingPage";
+import LoginPage from "../pages/users/LoginPage";
+import RegisterPage from "../pages/users/RegisterPage";
+import DetailProduk from "../pages/users/DetailProduk";
+import CheckoutPage from "../pages/users/CheckoutPage";
+import OrderPage from "../pages/users/OrderPage";
+import ProductPage from "../pages/users/ProductPage";
+import SearchPage from "../pages/users/SearchPage";
 import { Dashboard } from "../pages/admin/Dashboard";
 import AddProduk from "../pages/admin/Addproduk";
 import AddCategory from "../pages/admin/AddCategory";

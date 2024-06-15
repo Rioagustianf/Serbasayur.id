@@ -24,7 +24,7 @@ const NavbarCheckout = {
         page(`/search/${query}`);
       }
     });
-  }
+  },
 };
 
 export default NavbarCheckout;

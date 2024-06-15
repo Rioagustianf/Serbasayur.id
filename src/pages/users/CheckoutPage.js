@@ -1,9 +1,9 @@
-import NavbarCheckout from '../components/NavbarCheckout';
-import Address from "../components/Address";
-import ProductCheckout from "../components/ProductCheckout";
-import Shipment from "../components/Shipment";
-import Payment from "../components/Payment";
-import Footer from "../components/Footer";
+import NavbarCheckout from "../../components/users/NavbarCheckout";
+import Address from "../../components/users/Address";
+import ProductCheckout from "../../components/users/ProductCheckout";
+import Shipment from "../../components/users/Shipment";
+import Payment from "../../components/users/Payment";
+import Footer from "../../components/users/Footer";
 
 const CheckoutPage = {
   async render() {

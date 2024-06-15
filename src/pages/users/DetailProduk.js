@@ -1,8 +1,8 @@
-import { getProductById } from "../services/api/product";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import { handleProdukQty } from "../utils/productHandler";
-import { generateStarRating, formatCurrency } from "../utils/productHandler";
+import { getProductById } from "../../services/api/product";
+import Footer from "../../components/users/Footer";
+import Navbar from "../../components/users/Navbar";
+import { handleProdukQty } from "../../utils/productHandler";
+import { generateStarRating, formatCurrency } from "../../utils/productHandler";
 
 const DetailProduk = {
   async render(productId) {
@@ -11,17 +11,18 @@ const DetailProduk = {
 
       if (productResponse.status === "success") {
         const product = productResponse.data.product;
+        const imageUrl = `http://localhost:3000/image/${product.image}`;
 
         return `
           ${await Navbar.render()}
           <div class="container my-5">
             <div class="row">
               <div class="col-12 col-md-5 mb-4 mb-md-0 d-flex justify-content-center align-items-center">
-                <img class="img-fluid" src="${product.image}" alt="${product.nama}" />
+                <img class="img-fluid" src="${imageUrl}" alt="${product.nama}" />
               </div>
               <div class="col-12 col-md-7 text-center text-md-start">
                 <h3 class="detail-name">${product.nama}</h3>
-                <p class="detail-price">${formatCurrency(product.harga)}</p>
+                <p class="detail-price">${formatCurrency(product.harga)}/kg</p>
                 <p>${generateStarRating(product.rating)}</p>
                 <p>Qty: ${product.kuantitas}</p>
                 <div class="d-flex flex-column flex-md-row align-items-center mb-3">
