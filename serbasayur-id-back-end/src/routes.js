@@ -1,3 +1,4 @@
+const path = require('path');
 const {
   addCategoryHandler,
   getAllCategoriesHandler,
@@ -223,7 +224,7 @@ const routes = [
     path: '/image/{file*}',
     handler: {
       directory: {
-        path: 'image',
+        path: path.resolve(__dirname, '/image'),
       },
     },
   },
