@@ -23,6 +23,17 @@ async function getAdminById(idAdmin, callback) {
   });
 }
 
+async function getAdminByUsernamePassword(username, password, callback) {
+  const sql = `SELECT * FROM admins WHERE username='${username}' AND password='${password}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
 const addAdminHandler = (request, h) => {
   const {
     username, email, password,
@@ -93,6 +104,32 @@ const getAdminByIdHandler = (request, h) => {
         const response = h.response({
           status: 'fail',
           message: 'User admin tidak ditemukan',
+        });
+        response.code(404);
+        resolve(response);
+      }
+    });
+  });
+  return promise;
+};
+
+const getAdminByUsernamePasswordHandler = (request, h) => {
+  const { username, password } = request.payload;
+
+  const promise = new Promise((resolve) => {
+    getAdminByUsernamePassword(username, password, (results) => {
+      if (typeof results !== 'undefined' && results.length > 0) {
+        const response = {
+          status: 'success',
+          data: {
+            user: results[0],
+          },
+        };
+        resolve(response);
+      } else {
+        const response = h.response({
+          status: 'fail',
+          message: 'Username/password salah',
         });
         response.code(404);
         resolve(response);
@@ -186,6 +223,7 @@ module.exports = {
   addAdminHandler,
   getAllAdminsHandler,
   getAdminByIdHandler,
+  getAdminByUsernamePasswordHandler,
   editAdminByIdHandler,
   deleteAdminByIdHandler,
 };
