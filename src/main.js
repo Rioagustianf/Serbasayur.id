@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./routes/routes";
-import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/users/LandingPage";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const rootElement = document.getElementById("app");

@@ -1,4 +1,4 @@
-import categories from "../data/categories";
+import categories from "../../data/categories";
 
 const Category = {
   async render() {

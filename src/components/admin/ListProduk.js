@@ -10,7 +10,7 @@ const ListProduk = {
         <td>${product.harga}</td>
         <td>${product.id_kategori}</td>
         <td>${product.kuantitas}</td>
-        <td><img src="/images/${product.image}" alt="${product.nama}" style="width: 100px;"></td>
+        <td><img src="${product.imageUrl}" alt="${product.nama}" style="width: 100px;"></td>
         <td>${product.rating}</td>
       </tr>
     `

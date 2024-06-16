@@ -1,8 +1,8 @@
-import Navbar from "../components/Navbar";
-import QtyButton from "../components/QtyButton";
-import Footer from "../components/Footer";
-import { handleProdukQty } from "../utils/productHandler";
-import { getAllOrderItems } from "../services/api/order";
+import Navbar from "../../components/users/Navbar";
+import QtyButton from "../../components/users/QtyButton";
+import Footer from "../../components/users/Footer";
+import { handleProdukQty } from "../../utils/productHandler";
+import { getAllOrderItems } from "../../services/api/order";
 
 const OrderPage = {
   async render() {

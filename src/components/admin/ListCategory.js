@@ -5,7 +5,7 @@ const ListCategory = {
     return `
       <div class="container mt-5">
         <h2>List Kategori</h2>
-        <ul class="list-group" id="categoryList">
+        <ul class="list-group mb-5" id="categoryList">
           <!-- Item list kategori akan diisi melalui JavaScript -->
         </ul>
       </div>

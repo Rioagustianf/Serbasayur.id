@@ -73,4 +73,29 @@ async function login(email, password) {
   }
 }
 
-export { getAllUsers, getUserById, addUser, updateUser, deleteUser, login };
+async function loginUser(email, password) {
+  try {
+    const response = await getAllUsers();
+    const users = response.data || response; // Pastikan untuk menangani respons dengan properti 'data' atau respons langsung sebagai array
+    const usersData = users.users;
+
+    if (!Array.isArray(usersData)) {
+      throw new Error("Expected an array of users");
+    }
+
+    const user = usersData.find(user => user.email === email && user.password === password);
+    if (user) {
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("userId", user.id_user);
+      return user;
+    } else {
+      alert("Invalid email or password");
+      throw new Error("Invalid email or password");
+    }
+  } catch (error) {
+    console.error("Failed to login:", error.message);
+    throw new Error("Failed to login");
+  }
+}
+
+export { getAllUsers, getUserById, addUser, updateUser, deleteUser, login, loginUser };
