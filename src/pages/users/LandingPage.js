@@ -18,7 +18,7 @@ const LandingPage = {
       ${navbar}
       <div class="container hero mt-3">
         <div class="row">
-            <img src="../../public/images/hero.png" alt="Hero Image" class="img-fluid" />
+            <a href="/about"><img src="../../public/images/hero.png" alt="Hero Image" class="img-fluid" /></a>
         </div>
       </div>
       ${vegeCard}

@@ -13,13 +13,13 @@ const ProductPage = {
       const productResponse = await getProductsByCategory(category);
       const categoryResponse = await getAllCategories();
       const container = await CategoryContainer.render();
-      if (productResponse.status === "success") {
-        const product = productResponse.data.products;
+      if (productResponse.length >= 0) {
         const productShelf = await ProductShelf.render(
           category,
-          product,
+          productResponse,
           categoryResponse
         );
+        console.log(productShelf)
         return `
                     ${await Navbar.render()}
                     <div class="cp-container mt-5 mb-5">
@@ -33,7 +33,11 @@ const ProductPage = {
       }
     } catch (error) {
       console.error(error);
-      return `<div>Error fetching product details. Please try again later.</div>`;
+      return `
+      ${await Navbar.render()}
+      <div style="height: calc(100vh - 66px)">Found Empty Product.<a href="../">Back</a></div>
+      ${await Footer.render()}
+      `;
     }
   },
   async afterRender() {

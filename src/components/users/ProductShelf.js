@@ -14,7 +14,7 @@ const ProductShelf = {
             <h6>Menampilkan ${filteredProducts.length} produk untuk kategori <b>"${category}"</b></h6>
             <div class="product-wrapper">
                 <div class="product-list mt-3">
-                    ${productCards}a
+                    ${productCards}
                 </div>
             </div>
         </div>
