@@ -19,7 +19,7 @@ async function getAllProducts() {
 
   // Modifikasi produk untuk menambahkan URL gambar
   products.forEach((product) => {
-    product.imageUrl = `${API_BASE_URL}/image/${product.image}`;
+    product.imageUrl = `${API_BASE_URL}/image/${product.image}`; // Hapus spasi tambahan
   });
 
   return products;
@@ -41,12 +41,12 @@ async function addProduct(formData) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json(); // Ambil pesan error dari server
+      const errorData = await response.json();
       throw new Error(errorData.message || "Gagal menambahkan produk");
     }
 
     const data = await response.json();
-    return data; // Mengembalikan data jika diperlukan di frontend
+    return data;
   } catch (error) {
     console.error("Gagal menambahkan produk:", error.message);
     throw new Error(`Gagal menambahkan produk: ${error.message}`);

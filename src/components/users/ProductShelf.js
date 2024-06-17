@@ -14,14 +14,6 @@ const ProductShelf = {
     const productCards = await ProductCard.render(filteredProducts);
 
     return `
-<<<<<<< HEAD
-      <div class="product-shelf mt-3">
-        <h6>Menampilkan ${filteredProducts.length} produk untuk kategori <b>"${category}"</b></h6>
-        <div class="product-wrapper">
-          <div class="product-list mt-3">
-            ${productCards}
-          </div>
-=======
         <div class="product-shelf mt-3">
             <h6>Menampilkan ${filteredProducts.length} produk untuk kategori <b>"${category}"</b></h6>
             <div class="product-wrapper">
@@ -29,7 +21,6 @@ const ProductShelf = {
                     ${productCards}
                 </div>
             </div>
->>>>>>> efe2eeea272e680e116950db56b78b4f08f9ab3a
         </div>
       </div>
     `;
