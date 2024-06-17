@@ -9,12 +9,15 @@ import OrderPage from "../pages/users/OrderPage";
 import ProductPage from "../pages/users/ProductPage";
 import SearchPage from "../pages/users/SearchPage";
 import AboutPage from "../pages/users/AboutPage";
+import ProfilePage from "../pages/users/ProfilePage";
+import EditProfilePage from "../pages/users/EditProfilePage";
 import { Dashboard } from "../pages/admin/Dashboard";
 import AddProduk from "../pages/admin/Addproduk";
 import AddCategory from "../pages/admin/AddCategory";
 import ListProdukPage from "../pages/admin/ListProdukPage";
 import CustomerDashboard from "../pages/admin/CustomerPage";
 import CustomerPage from "../pages/admin/CustomerPage";
+import { isObject } from "lodash";
 
 const app = document.getElementById("app");
 
@@ -41,6 +44,8 @@ page("/about", () => renderPage(AboutPage));
 page("/checkout", () => renderPage(CheckoutPage));
 page("/order", () => renderPage(OrderPage));
 page("/dashboard", () => renderPage(Dashboard));
+page("/profile", () => renderPage(ProfilePage));
+page("/profile/edit-profile", () => renderPage(EditProfilePage));
 page("/dashboard/addProduk", () => renderPage(AddProduk));
 page("/dashboard/Category", () => renderPage(AddCategory));
 page("/dashboard/listProduk", () => renderPage(ListProdukPage));
