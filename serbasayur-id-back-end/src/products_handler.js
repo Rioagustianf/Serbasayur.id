@@ -44,20 +44,16 @@ const addProductHandler = (request, h) => {
     const filename = `image-${nanoid(16)}.jpg`;
     const data = image._data;
 
-    fs.writeFile(
-      path.resolve(__dirname, `../image/${filename}`),
-      data,
-      (err) => {
-        if (err) {
-          const response = h.response({
-            status: "fail",
-            message: err.message,
-          });
-          response.code(500);
-          resolve(response);
-        }
+    fs.writeFile(path.resolve(__dirname, `/image/${filename}`), data, (err) => {
+      if (err) {
+        const response = h.response({
+          status: "fail",
+          message: err.message,
+        });
+        response.code(500);
+        resolve(response);
       }
-    );
+    });
 
     const sql = `INSERT INTO products(id_produk, nama, id_kategori, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${idKategori}','${deskripsi}',${harga},'${filename}',${kuantitas},${rating})`;
 
@@ -172,7 +168,7 @@ const editProductByIdHandler = (request, h) => {
             }
           );
 
-          fs.unlink(path.resolve(__dirname, `/image/${oldImage}`), (err) => {
+          fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
             if (err) {
               const response = h.response({
                 status: "fail",
@@ -227,7 +223,7 @@ const deleteProductByIdHandler = (request, h) => {
       if (typeof results !== "undefined" && results.length > 0) {
         const oldImage = results[0].image;
 
-        fs.unlink(path.resolve(__dirname, `/image/${oldImage}`), (err) => {
+        fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
           if (err) {
             const response = h.response({
               status: "fail",
