@@ -1,14 +1,28 @@
-import { Navbar } from "../../components/admin/Navbar.js";
-import { handleAdminNavigation } from "../../utils/adminHandler.js";
-import ListProduk from "../../components/admin/ListProduk.js";
-import { getAllProducts } from "../../services/api/product.js";
+// CustomerPage.js
 
-const ListProdukPage = {
+import ListCustomer from "../../components/admin/ListCustomer.js";
+import { Navbar } from "../../components/admin/Navbar.js";
+import { getAllUsers } from "../../services/api/user.js";
+import { handleAdminNavigation } from "../../utils/adminHandler.js";
+
+const CustomerPage = {
   async render() {
     try {
-      const products = await getAllProducts();
-      const listProduk = await ListProduk.render(products);
+      const response = await getAllUsers();
 
+      if (!response || !response.status === "success") {
+        throw new Error("Failed to fetch users");
+      }
+
+      const users =
+        response.data && Array.isArray(response.data.users)
+          ? response.data.users
+          : [];
+
+      console.log("Users:", users);
+
+      // Memanggil ListCustomer.render dengan benar
+      const listCustomer = await ListCustomer.render(users);
       return `
         <div class="container-dashboard ms-0">
           ${Navbar()}
@@ -28,24 +42,20 @@ const ListProdukPage = {
               </div>
             </div>
             <div class="container w-100">
-              ${listProduk}
+            ${listCustomer}
             </div>
           </div>
         </div>
       `;
     } catch (error) {
-      console.error("Failed to render ListProdukPage:", error);
-      return "<p>Failed to load products. Please try again later.</p>";
+      console.error("Failed to render CustomerPage:", error);
+      return "<p>Failed to load customers. Please try again later.</p>";
     }
   },
 
-  async afterRender() {
-    // Panggil ListProduk.afterRender() setelah render ListProdukPage
-    await ListProduk.afterRender();
-
-    // Handle navigation or other operations if needed
+  afterRender: () => {
     handleAdminNavigation();
   },
 };
 
-export default ListProdukPage;
+export default CustomerPage;

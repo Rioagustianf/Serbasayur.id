@@ -12,6 +12,8 @@ import { Dashboard } from "../pages/admin/Dashboard";
 import AddProduk from "../pages/admin/Addproduk";
 import AddCategory from "../pages/admin/AddCategory";
 import ListProdukPage from "../pages/admin/ListProdukPage";
+import CustomerDashboard from "../pages/admin/CustomerPage";
+import CustomerPage from "../pages/admin/CustomerPage";
 
 const app = document.getElementById("app");
 
@@ -40,7 +42,7 @@ page("/dashboard", () => renderPage(Dashboard));
 page("/dashboard/addProduk", () => renderPage(AddProduk));
 page("/dashboard/Category", () => renderPage(AddCategory));
 page("/dashboard/listProduk", () => renderPage(ListProdukPage));
-page("/dashboard/listProduk", () => renderPage(ListProdukPage));
+page("/customers", () => renderPage(CustomerPage));
 
 page("/c/:category", async (ctx) => {
   const { category } = ctx.params;

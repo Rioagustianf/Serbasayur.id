@@ -53,18 +53,35 @@ async function addProduct(formData) {
   }
 }
 
-async function updateProduct(id, product) {
-  const response = await fetch(`${API_BASE_URL}/products/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to update product");
+async function updateProduct(productId, productData) {
+  try {
+    // Membuat FormData untuk mengirim data produk
+    const formData = new FormData();
+    formData.append("nama", productData.nama);
+    formData.append("id_kategori", productData.id_kategori);
+    formData.append("deskripsi", productData.deskripsi);
+    formData.append("harga", productData.harga);
+    formData.append("image", productData.image); // file gambar
+    formData.append("kuantitas", productData.kuantitas);
+    formData.append("rating", productData.rating);
+
+    // Mengirim permintaan PUT ke endpoint backend
+    const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
+      method: "PUT",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json(); // Ambil pesan error dari server
+      throw new Error(errorData.message || "Gagal memperbarui produk");
+    }
+
+    const data = await response.json();
+    return data; // Mengembalikan data jika diperlukan di frontend
+  } catch (error) {
+    console.error("Gagal memperbarui produk:", error.message);
+    throw new Error(`Gagal memperbarui produk: ${error.message}`);
   }
-  return response.json();
 }
 
 async function deleteProduct(id) {
