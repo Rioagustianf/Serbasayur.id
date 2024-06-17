@@ -6,23 +6,23 @@ const CategoryContainer = {
     const categoriesHTML = categories
       .map((category) => {
         return `
-            <li class="ctg-container__content px-4">
-              <a href="/c/${category.name}" class="category-link" data-category="${category.name}">
-                ${category.name}
-              </a>
-            </li>
-          `;
+          <li class="ctg-container__content px-4">
+            <a href="/c/${category.name}" class="category-link" data-category="${category.name}">
+              ${category.name}
+            </a>
+          </li>
+        `;
       })
       .join("");
 
     return `
-        <div class="ctg-container me-4 rounded border">
-            <h4 class="ctg-container__title bg-body-tertiary rounded-top p-3">Kategori</h4>
-            <ul class="ctg-container__body mb-3">
-                ${categoriesHTML}
-            </ul>
-        </div>
-        `;
+      <div class="ctg-container me-4 rounded border">
+        <h4 class="ctg-container__title bg-body-tertiary rounded-top p-3">Kategori</h4>
+        <ul class="ctg-container__body mb-3">
+          ${categoriesHTML}
+        </ul>
+      </div>
+    `;
   },
   async afterRender() {
     // Add click event listener for category links

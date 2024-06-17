@@ -83,7 +83,9 @@ async function loginUser(email, password) {
       throw new Error("Expected an array of users");
     }
 
-    const user = usersData.find(user => user.email === email && user.password === password);
+    const user = usersData.find(
+      (user) => user.email === email && user.password === password
+    );
     if (user) {
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("userId", user.id_user);
@@ -98,4 +100,12 @@ async function loginUser(email, password) {
   }
 }
 
-export { getAllUsers, getUserById, addUser, updateUser, deleteUser, login, loginUser };
+export {
+  getAllUsers,
+  getUserById,
+  addUser,
+  updateUser,
+  deleteUser,
+  login,
+  loginUser,
+};

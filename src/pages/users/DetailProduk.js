@@ -39,7 +39,7 @@ const DetailProduk = {
             </div>
           </div>
           <div class="container mt-5">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-underline" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button
                   class="nav-link active text-success"
@@ -122,8 +122,11 @@ const DetailProduk = {
   },
 
   afterRender(productId) {
+    // Initialize Navbar after rendering
     Navbar.afterRender();
-    handleProdukQty(); // Panggil fungsi untuk menangani kuantitas produk
+
+    // Call function to handle product quantity
+    handleProdukQty();
   },
 };
 
