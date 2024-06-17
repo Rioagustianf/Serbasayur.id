@@ -1,3 +1,4 @@
+const path = require('path');
 const {
   addCategoryHandler,
   getAllCategoriesHandler,
@@ -38,6 +39,7 @@ const {
   addAdminHandler,
   getAllAdminsHandler,
   getAdminByIdHandler,
+  getAdminByUsernamePasswordHandler,
   editAdminByIdHandler,
   deleteAdminByIdHandler,
 } = require('./admins_handler');
@@ -133,9 +135,14 @@ const routes = [
     handler: deleteUserByIdHandler,
   },
   {
-    method: 'GET',
+    method: 'POST',
     path: '/login',
     handler: getUserByUsernamePasswordHandler,
+  },
+  {
+    method: 'POST',
+    path: '/adminlogin',
+    handler: getAdminByUsernamePasswordHandler,
   },
   {
     method: 'POST',
@@ -217,7 +224,7 @@ const routes = [
     path: '/image/{file*}',
     handler: {
       directory: {
-        path: 'image',
+        path: path.resolve(__dirname, '/image'),
       },
     },
   },

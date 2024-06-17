@@ -8,6 +8,7 @@ import CheckoutPage from "../pages/users/CheckoutPage";
 import OrderPage from "../pages/users/OrderPage";
 import ProductPage from "../pages/users/ProductPage";
 import SearchPage from "../pages/users/SearchPage";
+import AboutPage from "../pages/users/AboutPage";
 import { Dashboard } from "../pages/admin/Dashboard";
 import AddProduk from "../pages/admin/Addproduk";
 import AddCategory from "../pages/admin/AddCategory";
@@ -36,6 +37,7 @@ page("/detail/:id", async (ctx) => {
   const { id } = ctx.params;
   await renderPage(DetailProduk, id); // Render halaman detail produk dengan ID produk
 });
+page("/about", () => renderPage(AboutPage));
 page("/checkout", () => renderPage(CheckoutPage));
 page("/order", () => renderPage(OrderPage));
 page("/dashboard", () => renderPage(Dashboard));
