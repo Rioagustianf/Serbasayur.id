@@ -224,7 +224,7 @@ const routes = [
     path: '/image/{file*}',
     handler: {
       directory: {
-        path: path.resolve(__dirname, '/image'),
+        path: path.resolve(__dirname, '../image'),
       },
     },
   },
