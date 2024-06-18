@@ -68,11 +68,10 @@ export function Navbar() {
                     </span>
                     <span class="title">Settings</span>
                     <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Order</a></li>
+                    <li><a class="dropdown-item" href="#">Setting</a></li>
                     <hr />
-                    <li><a class="dropdown-item" href="#">Add Produk</a></li>
-                    <li><a class="dropdown-item" href="#">Kategori</a></li>
-                    <li><a class="dropdown-item" href="#">List Produk</a></li>
+                    <li><a class="dropdown-item" href="/dashboard/register">Add Account Admin</a></li>
+                    <li><a class="dropdown-item" href="#">Profile Admin</a></li>
                 </ul>
                 </a>
             </li>

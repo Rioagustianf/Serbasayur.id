@@ -18,6 +18,7 @@ import ListProdukPage from "../pages/admin/ListProdukPage";
 import CustomerDashboard from "../pages/admin/CustomerPage";
 import CustomerPage from "../pages/admin/CustomerPage";
 import { isObject } from "lodash";
+import Register from "../components/admin/Register";
 
 const app = document.getElementById("app");
 
@@ -50,6 +51,7 @@ page("/dashboard/addProduk", () => renderPage(AddProduk));
 page("/dashboard/Category", () => renderPage(AddCategory));
 page("/dashboard/listProduk", () => renderPage(ListProdukPage));
 page("/dashboard/customers", () => renderPage(CustomerPage));
+page("/dashboard/register", () => renderPage(Register));
 
 page("/c/:category", async (ctx) => {
   const { category } = ctx.params;

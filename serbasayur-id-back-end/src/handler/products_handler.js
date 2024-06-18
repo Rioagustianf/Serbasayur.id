@@ -45,7 +45,7 @@ const addProductHandler = (request, h) => {
     const data = image._data;
 
     fs.writeFile(
-      path.resolve(__dirname, `../image/${filename}`),
+      path.resolve(__dirname, `../../image/${filename}`),
       data,
       (err) => {
         if (err) {
@@ -157,7 +157,7 @@ const editProductByIdHandler = (request, h) => {
 
           // Write new image file
           fs.writeFile(
-            path.resolve(__dirname, `../image/${filename}`),
+            path.resolve(__dirname, `../../image/${filename}`),
             data,
             (err) => {
               if (err) {
@@ -172,17 +172,20 @@ const editProductByIdHandler = (request, h) => {
           );
 
           // Delete old image file
-          fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
-            if (err) {
-              const response = h.response({
-                status: "fail",
-                message: err.message,
-              });
-              response.code(500);
-              resolve(response);
+          fs.unlink(
+            path.resolve(__dirname, `../../image/${oldImage}`),
+            (err) => {
+              if (err) {
+                const response = h.response({
+                  status: "fail",
+                  message: err.message,
+                });
+                response.code(500);
+                resolve(response);
+              }
+              console.log("Old file was deleted");
             }
-            console.log("Old file was deleted");
-          });
+          );
         }
 
         // Construct SQL query based on whether image is updated or not
@@ -231,7 +234,7 @@ const deleteProductByIdHandler = (request, h) => {
       if (typeof results !== "undefined" && results.length > 0) {
         const oldImage = results[0].image;
 
-        fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
+        fs.unlink(path.resolve(__dirname, `../../image/${oldImage}`), (err) => {
           if (err) {
             const response = h.response({
               status: "fail",
