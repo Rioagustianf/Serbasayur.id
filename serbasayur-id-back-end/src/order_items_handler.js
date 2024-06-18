@@ -34,7 +34,7 @@ const addOrderItemHandler = (request, h) => {
   const idOrderItem = `orderitem-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO order_items(id_order_item, id_order, id_produk, kuantitas, harga_satuan) VALUES ('${idOrderItem}','${idOrder}','${idProduk}',${kuantitas},${hargaSatuan})`;
+    const sql = `INSERT INTO order_items(id_order_item, id_order, id_produk, quantity, harga_unit) VALUES ('${idOrderItem}','${idOrder}','${idProduk}',${kuantitas},${hargaSatuan})`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -120,7 +120,7 @@ const editOrderItemByIdHandler = (request, h) => {
   const promise = new Promise((resolve) => {
     getOrderItemById(idOrder, idOrderItem, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE order_items SET id_produk='${idProduk}',kuantitas=${kuantitas},harga_satuan=${hargaSatuan} WHERE id_order_item='${idOrderItem}' AND id_order='${idOrder}'`;
+        const sql = `UPDATE order_items SET id_produk='${idProduk}',quantity=${kuantitas},harga_unit=${hargaSatuan} WHERE id_order_item='${idOrderItem}' AND id_order='${idOrder}'`;
 
         db.query(sql, (err) => {
           if (err) {

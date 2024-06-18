@@ -27,14 +27,14 @@ const addOrderHandler = (request, h) => {
   const {
     id_user: idUser,
     tanggal_order: tanggalOrder,
-    alamat_order: alamatOrder,
+    status,
     total_harga: totalHarga,
   } = request.payload;
 
   const idOrder = `order-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO orders(id_order, id_user, tanggal_order, alamat_order, total_harga) VALUES ('${idOrder}','${idUser}','${tanggalOrder}','${alamatOrder}',${totalHarga})`;
+    const sql = `INSERT INTO orders(id_order, id_user, tanggal_order, status, total_harga) VALUES ('${idOrder}','${idUser}','${tanggalOrder}','${status}',${totalHarga})`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -111,14 +111,14 @@ const editOrderByIdHandler = (request, h) => {
   const {
     id_user: idUser,
     tanggal_order: tanggalOrder,
-    alamat_order: alamatOrder,
+    status,
     total_harga: totalHarga,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
     getOrderById(idOrder, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE orders SET id_user='${idUser}',tanggal_order='${tanggalOrder}',alamat_order='${alamatOrder}',total_harga=${totalHarga} WHERE id_order='${idOrder}'`;
+        const sql = `UPDATE orders SET id_user='${idUser}',tanggal_order='${tanggalOrder}',status='${status}',total_harga=${totalHarga} WHERE id_order='${idOrder}'`;
 
         db.query(sql, (err) => {
           if (err) {
