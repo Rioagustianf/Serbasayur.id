@@ -1,3 +1,4 @@
+import page from "page";
 import { addAdmin } from "../../services/api/admin";
 
 const Register = {
@@ -7,7 +8,7 @@ const Register = {
         <div class="register-container text-center">
           <div class="register-card">
             <img src="../../public/images/logo1.png" alt="Logo" class="logo">
-            <form id="register-form" enctype="multipart/form-data">
+            <form id="register-form">
               <div class="input-group">
                 <div class="input-container">
                   <label for="username"></label>
@@ -39,7 +40,33 @@ const Register = {
     `;
   },
 
-  async afterRender() {},
+  async afterRender() {
+    const registerForm = document.querySelector("#register-form");
+
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault(); // Mencegah pengiriman form secara default
+
+      const adminData = {
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+      };
+
+      try {
+        const response = await addAdmin(adminData);
+
+        // Jika respons sukses, kosongkan nilai input
+        registerForm.reset();
+        page.redirect("/dashboard/login");
+
+        // Jika menggunakan alert untuk tujuan debug atau pemberitahuan sementara:
+        alert("Registration successful!");
+      } catch (error) {
+        console.error("Error during registration:", error);
+        alert("Registration failed. Please try again later.");
+      }
+    });
+  },
 };
 
 export default Register;

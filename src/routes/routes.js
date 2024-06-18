@@ -1,4 +1,3 @@
-// src/routes/index.js
 import page from "page";
 import LandingPage from "../pages/users/LandingPage";
 import LoginPage from "../pages/users/LoginPage";
@@ -17,8 +16,8 @@ import AddCategory from "../pages/admin/AddCategory";
 import ListProdukPage from "../pages/admin/ListProdukPage";
 import CustomerDashboard from "../pages/admin/CustomerPage";
 import CustomerPage from "../pages/admin/CustomerPage";
-import { isObject } from "lodash";
 import Register from "../components/admin/Register";
+import Login from "../components/admin/Login";
 
 const app = document.getElementById("app");
 
@@ -28,6 +27,19 @@ const renderPage = async (pageComponent, id) => {
   if (pageComponent.afterRender) {
     pageComponent.afterRender(id);
   }
+};
+
+const checkAdminAuth = async (ctx, next) => {
+  const currentAdmin = JSON.parse(sessionStorage.getItem("currentAdmin"));
+
+  if (!currentAdmin && ctx.pathname !== "/dashboard/login") {
+    // Jika tidak ada admin yang terotentikasi dan bukan halaman login, redirect ke halaman login
+    page.redirect("/dashboard/login");
+    return;
+  }
+
+  // Lanjutkan ke halaman yang diminta jika admin telah terotentikasi
+  next();
 };
 
 page("/", async () => {
@@ -44,14 +56,15 @@ page("/detail/:id", async (ctx) => {
 page("/about", () => renderPage(AboutPage));
 page("/checkout", () => renderPage(CheckoutPage));
 page("/order", () => renderPage(OrderPage));
-page("/dashboard", () => renderPage(Dashboard));
+page("/dashboard", checkAdminAuth, () => renderPage(Dashboard));
 page("/profile", () => renderPage(ProfilePage));
 page("/profile/edit-profile", () => renderPage(EditProfilePage));
-page("/dashboard/addProduk", () => renderPage(AddProduk));
-page("/dashboard/Category", () => renderPage(AddCategory));
-page("/dashboard/listProduk", () => renderPage(ListProdukPage));
-page("/dashboard/customers", () => renderPage(CustomerPage));
+page("/dashboard/addProduk", checkAdminAuth, () => renderPage(AddProduk));
+page("/dashboard/Category", checkAdminAuth, () => renderPage(AddCategory));
+page("/dashboard/listProduk", checkAdminAuth, () => renderPage(ListProdukPage));
+page("/dashboard/customers", checkAdminAuth, () => renderPage(CustomerPage));
 page("/dashboard/register", () => renderPage(Register));
+page("/dashboard/login", () => renderPage(Login));
 
 page("/c/:category", async (ctx) => {
   const { category } = ctx.params;

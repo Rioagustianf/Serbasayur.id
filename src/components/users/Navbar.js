@@ -31,8 +31,8 @@ const Navbar = {
                   <a class="nav-link d-lg-none" href="/chat">Pesan</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link d-none d-lg-block" href="/checkout"><i class="fas fa-shopping-cart icon"></i></a>
-                  <a class="nav-link d-lg-none" href="/checkout">Keranjang</a>
+                  <a class="nav-link d-none d-lg-block" href="/order"><i class="fas fa-shopping-cart icon"></i></a>
+                  <a class="nav-link d-lg-none" href="/order">Keranjang</a>
                 </li>
                 <li class="nav-item d-none d-lg-block">
                   <div class="ms-2"><img height="25px" src="../../public/images/icon3.png" alt="" /></div>

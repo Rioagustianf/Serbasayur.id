@@ -25,7 +25,7 @@ const CustomerPage = {
       const listCustomer = await ListCustomer.render(users);
       return `
         <div class="container-dashboard ms-0">
-          ${Navbar()}
+          ${await Navbar.render()}
           <div class="main">
             <div class="topbar">
               <div class="toggle">

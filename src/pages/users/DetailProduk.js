@@ -3,8 +3,8 @@ import Navbar from "../../components/users/Navbar";
 import Footer from "../../components/users/Footer";
 import { handleProdukQty } from "../../utils/productHandler";
 import { generateStarRating, formatCurrency } from "../../utils/productHandler";
-import { addOrder } from "../../services/api/order";
 import { getUserById } from "../../services/api/user";
+import { addCart, addCartItem } from "../../services/api/cart"; // Import addCart dan addCartItem
 
 const DetailProduk = {
   async render(productId) {
@@ -131,65 +131,36 @@ const DetailProduk = {
   },
 
   afterRender(productId) {
-    // Initialize Navbar after rendering
     Navbar.afterRender();
-
-    // Call function to handle product quantity
     handleProdukQty();
 
-    // Add event listener to add to cart button
     const addToCartButton = document.getElementById("addToCart");
     addToCartButton.addEventListener("click", async () => {
       try {
-        const productResponse = await getProductById(productId);
         const userId = localStorage.getItem("userId");
-        const userResponse = await getUserById(userId);
 
-        if (
-          productResponse.status === "success" &&
-          userResponse.status === "success"
-        ) {
-          const product = productResponse.data.product;
-          const user = userResponse.data.user;
+        // Tambahkan data ke tabel carts
+        const addCartResponse = await addCart({ id_user: userId });
+        const idCart = addCartResponse.id_cart;
 
-          const quantity = parseInt(document.getElementById("quantity").value);
+        // Dapatkan kuantitas produk yang ditambahkan ke keranjang
+        const quantity = parseInt(
+          document.getElementById("quantity").value,
+          10
+        );
 
-          // Get user id and alamat from user data
-          const userId = user.id_user;
-          if (!userId) {
-            throw new Error("User id not found in local storage");
-          }
+        // Tambahkan data ke tabel cart_items
+        const addCartItemResponse = await addCartItem(
+          idCart,
+          productId,
+          quantity
+        );
 
-          const alamat = user.alamat;
-          if (!alamat) {
-            throw new Error("Alamat not found in user data");
-          }
-
-          // Calculate total harga based on product price and quantity
-          const totalHarga = product.harga;
-
-          // Prepare order object
-          const order = {
-            id_user: userId,
-            tanggal_order: new Date().toISOString().split("T")[0], // Mengambil tanggal hari ini
-            alamat_order: alamat,
-            total_harga: totalHarga * quantity,
-          };
-
-          // Add order to database
-          const addOrderResponse = await addOrder(order);
-
-          if (addOrderResponse.status === "success") {
-            alert("Order berhasil ditambahkan ke keranjang!");
-          } else {
-            throw new Error("Failed to add order: " + addOrderResponse.message);
-          }
-        } else {
-          throw new Error("Failed to fetch product or user details");
-        }
+        // Tampilkan pesan sukses atau lakukan tindakan lainnya setelah berhasil menambahkan ke keranjang
+        alert("Produk berhasil ditambahkan ke keranjang!");
       } catch (error) {
-        console.error("Failed to add order:", error.message);
-        alert("Failed to add order. Please try again later.");
+        console.error("Error adding product to cart:", error.message);
+        alert("Gagal menambahkan produk ke keranjang. Silakan coba lagi.");
       }
     });
   },

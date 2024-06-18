@@ -1,5 +1,5 @@
-const { nanoid } = require('nanoid');
-const db = require('../db_config');
+const { nanoid } = require("nanoid");
+const db = require("../db_config");
 
 async function getAllCarts(idUser, callback) {
   const sql = `SELECT * FROM carts WHERE id_user='${idUser}'`;
@@ -24,9 +24,7 @@ async function getCartById(idUser, idOrder, callback) {
 }
 
 const addCartHandler = (request, h) => {
-  const {
-    id_user: idUser,
-  } = request.payload;
+  const { id_user: idUser } = request.payload;
 
   const idCart = `cart-${nanoid(16)}`;
 
@@ -36,15 +34,15 @@ const addCartHandler = (request, h) => {
     db.query(sql, (err) => {
       if (err) {
         const response = h.response({
-          status: 'fail',
+          status: "fail",
           message: err.message,
         });
         response.code(500);
         resolve(response);
       }
       const response = h.response({
-        status: 'success',
-        message: 'Keranjang berhasil ditambahkan',
+        status: "success",
+        message: "Keranjang berhasil ditambahkan",
         data: {
           id_cart: idCart,
         },
@@ -62,13 +60,13 @@ const getAllCartsHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getAllCarts(idUser, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const cartsList = [];
         Object.keys(results).forEach((v) => {
           cartsList.push(results[v]);
         });
         const response = {
-          status: 'success',
+          status: "success",
           data: {
             carts: cartsList,
           },
@@ -76,8 +74,8 @@ const getAllCartsHandler = (request, h) => {
         resolve(response);
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Keranjang tidak ditemukan. User tidak ditemukan',
+          status: "fail",
+          message: "Keranjang tidak ditemukan. User tidak ditemukan",
         });
         response.code(404);
         resolve(response);
@@ -92,9 +90,9 @@ const getCartByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getCartById(idUser, idCart, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const response = {
-          status: 'success',
+          status: "success",
           data: {
             cart: results[0],
           },
@@ -102,8 +100,8 @@ const getCartByIdHandler = (request, h) => {
         resolve(response);
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Keranjang tidak ditemukan',
+          status: "fail",
+          message: "Keranjang tidak ditemukan",
         });
         response.code(404);
         resolve(response);
@@ -118,29 +116,29 @@ const deleteCartByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getCartById(idUser, idCart, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const sql = `DELETE FROM carts WHERE id_cart='${idCart}'`;
 
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: 'fail',
+              status: "fail",
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: 'success',
-            message: 'Keranjang berhasil dihapus',
+            status: "success",
+            message: "Keranjang berhasil dihapus",
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Keranjang gagal dihapus. Id tidak ditemukan',
+          status: "fail",
+          message: "Keranjang gagal dihapus. Id tidak ditemukan",
         });
         response.code(404);
         resolve(response);

@@ -1,8 +1,8 @@
-const { nanoid } = require('nanoid');
-const db = require('../db_config');
+const { nanoid } = require("nanoid");
+const db = require("../db_config");
 
 async function getAllShippings(callback) {
-  const sql = 'SELECT * FROM shippings';
+  const sql = "SELECT * FROM shippings";
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -40,15 +40,15 @@ const addShippingHandler = (request, h) => {
     db.query(sql, (err) => {
       if (err) {
         const response = h.response({
-          status: 'fail',
+          status: "fail",
           message: err.message,
         });
         response.code(500);
         resolve(response);
       }
       const response = h.response({
-        status: 'success',
-        message: 'Pengiriman berhasil ditambahkan',
+        status: "success",
+        message: "Pengiriman berhasil ditambahkan",
         data: {
           id_shipping: idShipping,
         },
@@ -69,7 +69,7 @@ const getAllShippingsHandler = () => {
         shippingsList.push(results[v]);
       });
       const response = {
-        status: 'success',
+        status: "success",
         data: {
           payments: shippingsList,
         },
@@ -85,9 +85,9 @@ const getShippingByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getShippingById(idShipping, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const response = {
-          status: 'success',
+          status: "success",
           data: {
             shipping: results[0],
           },
@@ -95,8 +95,8 @@ const getShippingByIdHandler = (request, h) => {
         resolve(response);
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Pengiriman tidak ditemukan',
+          status: "fail",
+          message: "Pengiriman tidak ditemukan",
         });
         response.code(404);
         resolve(response);
@@ -119,29 +119,29 @@ const editShippingByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getShippingById(idShipping, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const sql = `UPDATE shippings SET id_order='${idOrder}',shipping_address='${shippingAddress}',shipping_date=${shippingDate},delivery_date='${deliveryDate}',shipping_status='${shippingStatus}' WHERE id_shipping='${idShipping}'`;
 
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: 'fail',
+              status: "fail",
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: 'success',
-            message: 'Pengiriman berhasil diperbarui',
+            status: "success",
+            message: "Pengiriman berhasil diperbarui",
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Gagal memperbarui pengiriman. Id tidak ditemukan',
+          status: "fail",
+          message: "Gagal memperbarui pengiriman. Id tidak ditemukan",
         });
         response.code(404);
         resolve(response);
@@ -157,29 +157,29 @@ const deleteShippingByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getShippingById(idShipping, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const sql = `DELETE FROM shippings WHERE id_shipping='${idShipping}'`;
 
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: 'fail',
+              status: "fail",
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: 'success',
-            message: 'Pengiriman berhasil dihapus',
+            status: "success",
+            message: "Pengiriman berhasil dihapus",
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Pengiriman gagal dihapus. Id tidak ditemukan',
+          status: "fail",
+          message: "Pengiriman gagal dihapus. Id tidak ditemukan",
         });
         response.code(404);
         resolve(response);

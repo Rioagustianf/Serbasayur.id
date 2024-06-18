@@ -56,6 +56,20 @@ const {
   editCartItemByIdHandler,
   deleteCartItemByIdHandler,
 } = require("./handler/cart_items_handler");
+const {
+  addPaymentHandler,
+  getAllPaymentsHandler,
+  getPaymentByIdHandler,
+  editPaymentByIdHandler,
+  deletePaymentByIdHandler,
+} = require("./handler/payments_handler");
+const {
+  addShippingHandler,
+  getAllShippingsHandler,
+  getShippingByIdHandler,
+  editShippingByIdHandler,
+  deleteShippingByIdHandler,
+} = require("./handler/shippings_handler");
 
 const routes = [
   {

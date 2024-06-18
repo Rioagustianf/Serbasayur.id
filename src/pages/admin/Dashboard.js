@@ -1,4 +1,3 @@
-// src/pages/admin/Dashboard.js
 import { Navbar } from "../../components/admin/Navbar.js";
 import { Card } from "../../components/admin/Card.js";
 import { RecentOrders } from "../../components/admin/RecentOrders.js";
@@ -9,7 +8,7 @@ const Dashboard = {
   async render() {
     return `
       <div class="container-dashboard ms-0">
-        ${Navbar()}
+        ${await Navbar.render()}
         <div class="main">
           <div class="topbar">
             <div class="toggle">
@@ -42,6 +41,7 @@ const Dashboard = {
 
   async afterRender() {
     handleAdminNavigation();
+    await Navbar.afterRender();
     await RecentCustomers.afterRender();
   },
 };
