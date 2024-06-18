@@ -148,7 +148,7 @@ const editProductByIdHandler = (request, h) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         let sql;
 
-        if (image) {
+        if (typeof image !== 'undefined') {
           const oldImage = results[0].image;
 
           // eslint-disable-next-line prefer-destructuring
