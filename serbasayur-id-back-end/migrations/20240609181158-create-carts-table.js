@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 /* eslint-disable func-names */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable comma-dangle */
@@ -26,40 +27,30 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('order_items', {
-    id_order_item: { type: 'char', primaryKey: true, length: 255 },
-    id_order: {
+  db.createTable('carts', {
+    id_cart: { type: 'char', primaryKey: true, length: 255 },
+    id_user: {
       type: 'char',
       length: 255,
       foreignKey: {
-        name: 'order_items_id_order',
-        table: 'orders',
+        name: 'carts_id_user',
+        table: 'users',
         rules: {
           onDelete: 'RESTRICT',
           onUpdate: 'RESTRICT'
         },
-        mapping: 'id_order'
+        mapping: 'id_user'
       }
     },
-    id_produk: {
-      type: 'char',
-      length: 255,
-      foreignKey: {
-        name: 'order_items_id_produk',
-        table: 'products',
-        rules: {
-          onDelete: 'RESTRICT',
-          onUpdate: 'RESTRICT'
-        },
-        mapping: 'id_produk'
-      }
+    create_at: {
+      type: 'timestamp',
+      defaultValue: new String('CURRENT_TIMESTAMP')
     },
-    harga_unit: { type: 'bigint' },
   }, callback);
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('order_items', true, callback);
+  db.dropTable('carts', true, callback);
 };
 
 exports._meta = {

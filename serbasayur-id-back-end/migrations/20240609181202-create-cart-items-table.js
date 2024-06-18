@@ -26,26 +26,26 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('order_items', {
-    id_order_item: { type: 'char', primaryKey: true, length: 255 },
-    id_order: {
+  db.createTable('cart_items', {
+    id_cart_item: { type: 'char', primaryKey: true, length: 255 },
+    id_cart: {
       type: 'char',
       length: 255,
       foreignKey: {
-        name: 'order_items_id_order',
-        table: 'orders',
+        name: 'cart_items_id_cart',
+        table: 'carts',
         rules: {
           onDelete: 'RESTRICT',
           onUpdate: 'RESTRICT'
         },
-        mapping: 'id_order'
+        mapping: 'id_cart'
       }
     },
     id_produk: {
       type: 'char',
       length: 255,
       foreignKey: {
-        name: 'order_items_id_produk',
+        name: 'cart_items_id_produk',
         table: 'products',
         rules: {
           onDelete: 'RESTRICT',
@@ -54,12 +54,11 @@ exports.up = function(db, callback) {
         mapping: 'id_produk'
       }
     },
-    harga_unit: { type: 'bigint' },
   }, callback);
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('order_items', true, callback);
+  db.dropTable('cart_items', true, callback);
 };
 
 exports._meta = {

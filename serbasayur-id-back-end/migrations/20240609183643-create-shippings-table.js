@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 /* eslint-disable func-names */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable comma-dangle */
@@ -26,13 +27,13 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db, callback) {
-  db.createTable('order_items', {
-    id_order_item: { type: 'char', primaryKey: true, length: 255 },
+  db.createTable('shippings', {
+    id_shipping: { type: 'char', primaryKey: true, length: 255 },
     id_order: {
       type: 'char',
       length: 255,
       foreignKey: {
-        name: 'order_items_id_order',
+        name: 'shippings_id_order',
         table: 'orders',
         rules: {
           onDelete: 'RESTRICT',
@@ -41,25 +42,15 @@ exports.up = function(db, callback) {
         mapping: 'id_order'
       }
     },
-    id_produk: {
-      type: 'char',
-      length: 255,
-      foreignKey: {
-        name: 'order_items_id_produk',
-        table: 'products',
-        rules: {
-          onDelete: 'RESTRICT',
-          onUpdate: 'RESTRICT'
-        },
-        mapping: 'id_produk'
-      }
-    },
-    harga_unit: { type: 'bigint' },
+    shipping_address: { type: 'text' },
+    shipping_date: { type: 'timestamp' },
+    delivery_date: { type: 'timestamp', defaultValue: new String('CURRENT_TIMESTAMP') },
+    shipping_status: { type: 'char', length: 50 },
   }, callback);
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('order_items', true, callback);
+  db.dropTable('shippings', true, callback);
 };
 
 exports._meta = {

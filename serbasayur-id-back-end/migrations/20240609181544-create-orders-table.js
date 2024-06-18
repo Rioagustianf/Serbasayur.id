@@ -1,3 +1,4 @@
+/* eslint-disable no-new-wrappers */
 /* eslint-disable func-names */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable comma-dangle */
@@ -41,14 +42,17 @@ exports.up = function(db, callback) {
         mapping: 'id_user'
       }
     },
-    tanggal_order: { type: 'date' },
-    alamat_order: { type: 'text' },
+    tanggal_order: {
+      type: 'date',
+      defaultValue: new String('CURRENT_TIMESTAMP')
+    },
+    status: { type: 'char', length: 50 },
     total_harga: { type: 'bigint' },
   }, callback);
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('orders', callback);
+  db.dropTable('orders', true, callback);
 };
 
 exports._meta = {
