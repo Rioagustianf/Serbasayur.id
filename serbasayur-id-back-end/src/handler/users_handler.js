@@ -1,19 +1,8 @@
 const { nanoid } = require('nanoid');
-const db = require('./db_config');
+const db = require('../db_config');
 
-async function getAllCartItems(idCart, callback) {
-  const sql = `SELECT * FROM cart_items WHERE id_cart='${idCart}'`;
-
-  db.query(sql, (err, results) => {
-    if (err) {
-      throw err;
-    }
-    return callback(Object.values(JSON.parse(JSON.stringify(results))));
-  });
-}
-
-async function getCartItemById(idCart, idCartItem, callback) {
-  const sql = `SELECT * FROM cart_items WHERE id_cart='${idCart}' AND id_cart_item='${idCartItem}'`;
+async function getAllUsers(callback) {
+  const sql = 'SELECT * FROM users';
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -23,17 +12,37 @@ async function getCartItemById(idCart, idCartItem, callback) {
   });
 }
 
-const addCartItemHandler = (request, h) => {
+async function getUserById(idUser, callback) {
+  const sql = `SELECT * FROM users WHERE id_user='${idUser}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
+async function getUserByUsernamePassword(username, password, callback) {
+  const sql = `SELECT * FROM users WHERE username='${username}' AND password='${password}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
+const addUserHandler = (request, h) => {
   const {
-    id_cart: idCart,
-    id_produk: idProduk,
-    quantity,
+    username, email, password, nomor_telepon: nomorTelepon, alamat,
   } = request.payload;
 
-  const idCartItem = `cartitem-${nanoid(16)}`;
+  const idUser = `user-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO cart_items(id_cart_item, id_cart, id_produk, quantity) VALUES ('${idCartItem}','${idCart}','${idProduk}',${quantity})`;
+    const sql = `INSERT INTO users(id_user, username, email, password, nomor_telepon, alamat) VALUES ('${idUser}','${username}','${email}','${password}','${nomorTelepon}','${alamat}')`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -46,10 +55,9 @@ const addCartItemHandler = (request, h) => {
       }
       const response = h.response({
         status: 'success',
-        message: 'Item keranjang berhasil ditambahkan',
+        message: 'User berhasil ditambahkan',
         data: {
-          id_cart: idCart,
-          id_cart_item: idCartItem,
+          id_user: idUser,
         },
       });
       response.code(201);
@@ -60,27 +68,42 @@ const addCartItemHandler = (request, h) => {
   return promise;
 };
 
-const getAllCartItemsHandler = (request, h) => {
-  const { idCart } = request.params;
+const getAllUsersHandler = () => {
+  const promise = new Promise((resolve) => {
+    getAllUsers((results) => {
+      const usersList = [];
+      Object.keys(results).forEach((v) => {
+        usersList.push(results[v]);
+      });
+      const response = {
+        status: 'success',
+        data: {
+          users: usersList,
+        },
+      };
+      resolve(response);
+    });
+  });
+  return promise;
+};
+
+const getUserByIdHandler = (request, h) => {
+  const { idUser } = request.params;
 
   const promise = new Promise((resolve) => {
-    getAllCartItems(idCart, (results) => {
+    getUserById(idUser, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const cartItemsList = [];
-        Object.keys(results).forEach((v) => {
-          cartItemsList.push(results[v]);
-        });
         const response = {
           status: 'success',
           data: {
-            cart_items: cartItemsList,
+            user: results[0],
           },
         };
         resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Item keranjang tidak ditemukan. Keranjang tidak ditemukan',
+          message: 'User tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -90,23 +113,23 @@ const getAllCartItemsHandler = (request, h) => {
   return promise;
 };
 
-const getCartItemByIdHandler = (request, h) => {
-  const { idCart, idCartItem } = request.params;
+const getUserByUsernamePasswordHandler = (request, h) => {
+  const { username, password } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getCartItemById(idCart, idCartItem, (results) => {
+    getUserByUsernamePassword(username, password, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
           status: 'success',
           data: {
-            cart_item: results[0],
+            user: results[0],
           },
         };
         resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Item keranjang tidak ditemukan',
+          message: 'Username/password salah',
         });
         response.code(404);
         resolve(response);
@@ -116,18 +139,17 @@ const getCartItemByIdHandler = (request, h) => {
   return promise;
 };
 
-const editCartItemByIdHandler = (request, h) => {
-  const { idCart, idCartItem } = request.params;
+const editUserByIdHandler = (request, h) => {
+  const { idUser } = request.params;
 
   const {
-    id_produk: idProduk,
-    quantity,
+    username, email, password, nomor_telepon: nomorTelepon, alamat,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getCartItemById(idCart, idCartItem, (results) => {
+    getUserById(idUser, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE cart_items SET id_produk='${idProduk}',quantity=${quantity} WHERE id_cart_item='${idCartItem}' AND id_cart='${idCart}'`;
+        const sql = `UPDATE users SET username='${username}',email='${email}',password='${password}',nomor_telepon='${nomorTelepon}',alamat='${alamat}' WHERE id_user='${idUser}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -140,7 +162,7 @@ const editCartItemByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'Item keranjang berhasil diperbarui',
+            message: 'User berhasil diperbarui',
           });
           response.code(200);
           resolve(response);
@@ -148,7 +170,7 @@ const editCartItemByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Gagal memperbarui item keranjang. Id tidak ditemukan',
+          message: 'Gagal memperbarui user. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -159,13 +181,13 @@ const editCartItemByIdHandler = (request, h) => {
   return promise;
 };
 
-const deleteCartItemByIdHandler = (request, h) => {
-  const { idCart, idCartItem } = request.params;
+const deleteUserByIdHandler = (request, h) => {
+  const { idUser } = request.params;
 
   const promise = new Promise((resolve) => {
-    getCartItemById(idCart, idCartItem, (results) => {
+    getUserById(idUser, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `DELETE FROM cart_items WHERE id_cart_item='${idCartItem}'`;
+        const sql = `DELETE FROM users WHERE id_user='${idUser}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -178,7 +200,7 @@ const deleteCartItemByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'Item keranjang berhasil dihapus',
+            message: 'User berhasil dihapus',
           });
           response.code(200);
           resolve(response);
@@ -186,7 +208,7 @@ const deleteCartItemByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Item keranjang gagal dihapus. Id tidak ditemukan',
+          message: 'User gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -198,9 +220,10 @@ const deleteCartItemByIdHandler = (request, h) => {
 };
 
 module.exports = {
-  addCartItemHandler,
-  getAllCartItemsHandler,
-  getCartItemByIdHandler,
-  editCartItemByIdHandler,
-  deleteCartItemByIdHandler,
+  addUserHandler,
+  getAllUsersHandler,
+  getUserByIdHandler,
+  getUserByUsernamePasswordHandler,
+  editUserByIdHandler,
+  deleteUserByIdHandler,
 };

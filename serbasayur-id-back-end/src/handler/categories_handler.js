@@ -1,19 +1,8 @@
 const { nanoid } = require('nanoid');
-const db = require('./db_config');
+const db = require('../db_config');
 
-async function getAllAdmins(callback) {
-  const sql = 'SELECT * FROM admins';
-
-  db.query(sql, (err, results) => {
-    if (err) {
-      throw err;
-    }
-    return callback(Object.values(JSON.parse(JSON.stringify(results))));
-  });
-}
-
-async function getAdminById(idAdmin, callback) {
-  const sql = `SELECT * FROM admins WHERE id_admin='${idAdmin}'`;
+async function getAllCategories(callback) {
+  const sql = 'SELECT * FROM categories';
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -23,8 +12,8 @@ async function getAdminById(idAdmin, callback) {
   });
 }
 
-async function getAdminByUsernamePassword(username, password, callback) {
-  const sql = `SELECT * FROM admins WHERE username='${username}' AND password='${password}'`;
+async function getCategoryById(idKategori, callback) {
+  const sql = `SELECT * FROM categories WHERE id_kategori='${idKategori}'`;
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -34,15 +23,15 @@ async function getAdminByUsernamePassword(username, password, callback) {
   });
 }
 
-const addAdminHandler = (request, h) => {
+const addCategoryHandler = (request, h) => {
   const {
-    username, email, password,
+    nama_kategori: namaKategori,
   } = request.payload;
 
-  const idAdmin = `admin-${nanoid(16)}`;
+  const idKategori = `category-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO admins(id_admin, username, email, password) VALUES ('${idAdmin}','${username}','${email}','${password}')`;
+    const sql = `INSERT INTO categories(id_kategori, nama_kategori) VALUES ('${idKategori}','${namaKategori}')`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -55,9 +44,9 @@ const addAdminHandler = (request, h) => {
       }
       const response = h.response({
         status: 'success',
-        message: 'User admin berhasil ditambahkan',
+        message: 'Kategori berhasil ditambahkan',
         data: {
-          id_admin: idAdmin,
+          id_kategori: idKategori,
         },
       });
       response.code(201);
@@ -68,17 +57,17 @@ const addAdminHandler = (request, h) => {
   return promise;
 };
 
-const getAllAdminsHandler = () => {
+const getAllCategoriesHandler = () => {
   const promise = new Promise((resolve) => {
-    getAllAdmins((results) => {
-      const adminsList = [];
+    getAllCategories((results) => {
+      const categoriesList = [];
       Object.keys(results).forEach((v) => {
-        adminsList.push(results[v]);
+        categoriesList.push(results[v]);
       });
       const response = {
         status: 'success',
         data: {
-          admins: adminsList,
+          categories: categoriesList,
         },
       };
       resolve(response);
@@ -87,23 +76,23 @@ const getAllAdminsHandler = () => {
   return promise;
 };
 
-const getAdminByIdHandler = (request, h) => {
-  const { idAdmin } = request.params;
+const getCategoryByIdHandler = (request, h) => {
+  const { idKategori } = request.params;
 
   const promise = new Promise((resolve) => {
-    getAdminById(idAdmin, (results) => {
+    getCategoryById(idKategori, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
           status: 'success',
           data: {
-            admin: results[0],
+            category: results[0],
           },
         };
         resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'User admin tidak ditemukan',
+          message: 'Kategori tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -113,43 +102,17 @@ const getAdminByIdHandler = (request, h) => {
   return promise;
 };
 
-const getAdminByUsernamePasswordHandler = (request, h) => {
-  const { username, password } = request.payload;
-
-  const promise = new Promise((resolve) => {
-    getAdminByUsernamePassword(username, password, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
-        const response = {
-          status: 'success',
-          data: {
-            user: results[0],
-          },
-        };
-        resolve(response);
-      } else {
-        const response = h.response({
-          status: 'fail',
-          message: 'Username/password salah',
-        });
-        response.code(404);
-        resolve(response);
-      }
-    });
-  });
-  return promise;
-};
-
-const editAdminByIdHandler = (request, h) => {
-  const { idAdmin } = request.params;
+const editCategoryByIdHandler = (request, h) => {
+  const { idKategori } = request.params;
 
   const {
-    username, email, password,
+    nama_kategori: namaKategori,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getAdminById(idAdmin, (results) => {
+    getCategoryById(idKategori, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE admins SET username='${username}',email='${email}',password='${password}' WHERE id_admin='${idAdmin}'`;
+        const sql = `UPDATE categories SET nama_kategori='${namaKategori}' WHERE id_kategori='${idKategori}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -162,7 +125,7 @@ const editAdminByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'User admin berhasil diperbarui',
+            message: 'Kategori berhasil diperbarui',
           });
           response.code(200);
           resolve(response);
@@ -170,7 +133,7 @@ const editAdminByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Gagal memperbarui user admin. Id tidak ditemukan',
+          message: 'Gagal memperbarui kategori. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -181,13 +144,13 @@ const editAdminByIdHandler = (request, h) => {
   return promise;
 };
 
-const deleteAdminByIdHandler = (request, h) => {
-  const { idAdmin } = request.params;
+const deleteCategoryByIdHandler = (request, h) => {
+  const { idKategori } = request.params;
 
   const promise = new Promise((resolve) => {
-    getAdminById(idAdmin, (results) => {
+    getCategoryById(idKategori, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `DELETE FROM admins WHERE id_admin='${idAdmin}'`;
+        const sql = `DELETE FROM categories WHERE id_kategori='${idKategori}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -200,7 +163,7 @@ const deleteAdminByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'User admin berhasil dihapus',
+            message: 'Kategori berhasil dihapus',
           });
           response.code(200);
           resolve(response);
@@ -208,7 +171,7 @@ const deleteAdminByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'User admin gagal dihapus. Id tidak ditemukan',
+          message: 'Kategori gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -220,10 +183,9 @@ const deleteAdminByIdHandler = (request, h) => {
 };
 
 module.exports = {
-  addAdminHandler,
-  getAllAdminsHandler,
-  getAdminByIdHandler,
-  getAdminByUsernamePasswordHandler,
-  editAdminByIdHandler,
-  deleteAdminByIdHandler,
+  addCategoryHandler,
+  getAllCategoriesHandler,
+  getCategoryByIdHandler,
+  editCategoryByIdHandler,
+  deleteCategoryByIdHandler,
 };

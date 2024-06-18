@@ -5,14 +5,14 @@ const {
   getCategoryByIdHandler,
   editCategoryByIdHandler,
   deleteCategoryByIdHandler,
-} = require('./categories_handler');
+} = require('./handler/categories_handler');
 const {
   addProductHandler,
   getAllProductsHandler,
   getProductByIdHandler,
   editProductByIdHandler,
   deleteProductByIdHandler,
-} = require('./products_handler');
+} = require('./handler/products_handler');
 const {
   addUserHandler,
   getAllUsersHandler,
@@ -20,27 +20,27 @@ const {
   getUserByUsernamePasswordHandler,
   editUserByIdHandler,
   deleteUserByIdHandler,
-} = require('./users_handler');
+} = require('./handler/users_handler');
 const {
   addCartHandler,
   getAllCartsHandler,
   getCartByIdHandler,
   deleteCartByIdHandler,
-} = require('./carts_handler');
+} = require('./handler/carts_handler');
 const {
   addOrderHandler,
   getAllOrdersHandler,
   getOrderByIdHandler,
   editOrderByIdHandler,
   deleteOrderByIdHandler,
-} = require('./orders_handler');
+} = require('./handler/orders_handler');
 const {
   addOrderItemHandler,
   getAllOrderItemsHandler,
   getOrderItemByIdHandler,
   editOrderItemByIdHandler,
   deleteOrderItemByIdHandler,
-} = require('./order_items_handler');
+} = require('./handler/order_items_handler');
 const {
   addAdminHandler,
   getAllAdminsHandler,
@@ -48,14 +48,14 @@ const {
   getAdminByUsernamePasswordHandler,
   editAdminByIdHandler,
   deleteAdminByIdHandler,
-} = require('./admins_handler');
+} = require('./handler/admins_handler');
 const {
   addCartItemHandler,
   getAllCartItemsHandler,
   getCartItemByIdHandler,
   editCartItemByIdHandler,
   deleteCartItemByIdHandler,
-} = require('./cart_items_handler');
+} = require('./handler/cart_items_handler');
 
 const routes = [
   {

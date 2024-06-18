@@ -1,19 +1,8 @@
 const { nanoid } = require('nanoid');
-const db = require('./db_config');
+const db = require('../db_config');
 
-async function getAllCategories(callback) {
-  const sql = 'SELECT * FROM categories';
-
-  db.query(sql, (err, results) => {
-    if (err) {
-      throw err;
-    }
-    return callback(Object.values(JSON.parse(JSON.stringify(results))));
-  });
-}
-
-async function getCategoryById(idKategori, callback) {
-  const sql = `SELECT * FROM categories WHERE id_kategori='${idKategori}'`;
+async function getAllCartItems(idCart, callback) {
+  const sql = `SELECT * FROM cart_items WHERE id_cart='${idCart}'`;
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -23,15 +12,28 @@ async function getCategoryById(idKategori, callback) {
   });
 }
 
-const addCategoryHandler = (request, h) => {
+async function getCartItemById(idCart, idCartItem, callback) {
+  const sql = `SELECT * FROM cart_items WHERE id_cart='${idCart}' AND id_cart_item='${idCartItem}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
+const addCartItemHandler = (request, h) => {
   const {
-    nama_kategori: namaKategori,
+    id_cart: idCart,
+    id_produk: idProduk,
+    quantity,
   } = request.payload;
 
-  const idKategori = `category-${nanoid(16)}`;
+  const idCartItem = `cartitem-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO categories(id_kategori, nama_kategori) VALUES ('${idKategori}','${namaKategori}')`;
+    const sql = `INSERT INTO cart_items(id_cart_item, id_cart, id_produk, quantity) VALUES ('${idCartItem}','${idCart}','${idProduk}',${quantity})`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -44,9 +46,10 @@ const addCategoryHandler = (request, h) => {
       }
       const response = h.response({
         status: 'success',
-        message: 'Kategori berhasil ditambahkan',
+        message: 'Item keranjang berhasil ditambahkan',
         data: {
-          id_kategori: idKategori,
+          id_cart: idCart,
+          id_cart_item: idCartItem,
         },
       });
       response.code(201);
@@ -57,42 +60,27 @@ const addCategoryHandler = (request, h) => {
   return promise;
 };
 
-const getAllCategoriesHandler = () => {
-  const promise = new Promise((resolve) => {
-    getAllCategories((results) => {
-      const categoriesList = [];
-      Object.keys(results).forEach((v) => {
-        categoriesList.push(results[v]);
-      });
-      const response = {
-        status: 'success',
-        data: {
-          categories: categoriesList,
-        },
-      };
-      resolve(response);
-    });
-  });
-  return promise;
-};
-
-const getCategoryByIdHandler = (request, h) => {
-  const { idKategori } = request.params;
+const getAllCartItemsHandler = (request, h) => {
+  const { idCart } = request.params;
 
   const promise = new Promise((resolve) => {
-    getCategoryById(idKategori, (results) => {
+    getAllCartItems(idCart, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
+        const cartItemsList = [];
+        Object.keys(results).forEach((v) => {
+          cartItemsList.push(results[v]);
+        });
         const response = {
           status: 'success',
           data: {
-            category: results[0],
+            cart_items: cartItemsList,
           },
         };
         resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Kategori tidak ditemukan',
+          message: 'Item keranjang tidak ditemukan. Keranjang tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -102,17 +90,44 @@ const getCategoryByIdHandler = (request, h) => {
   return promise;
 };
 
-const editCategoryByIdHandler = (request, h) => {
-  const { idKategori } = request.params;
+const getCartItemByIdHandler = (request, h) => {
+  const { idCart, idCartItem } = request.params;
+
+  const promise = new Promise((resolve) => {
+    getCartItemById(idCart, idCartItem, (results) => {
+      if (typeof results !== 'undefined' && results.length > 0) {
+        const response = {
+          status: 'success',
+          data: {
+            cart_item: results[0],
+          },
+        };
+        resolve(response);
+      } else {
+        const response = h.response({
+          status: 'fail',
+          message: 'Item keranjang tidak ditemukan',
+        });
+        response.code(404);
+        resolve(response);
+      }
+    });
+  });
+  return promise;
+};
+
+const editCartItemByIdHandler = (request, h) => {
+  const { idCart, idCartItem } = request.params;
 
   const {
-    nama_kategori: namaKategori,
+    id_produk: idProduk,
+    quantity,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getCategoryById(idKategori, (results) => {
+    getCartItemById(idCart, idCartItem, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE categories SET nama_kategori='${namaKategori}' WHERE id_kategori='${idKategori}'`;
+        const sql = `UPDATE cart_items SET id_produk='${idProduk}',quantity=${quantity} WHERE id_cart_item='${idCartItem}' AND id_cart='${idCart}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -125,7 +140,7 @@ const editCategoryByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'Kategori berhasil diperbarui',
+            message: 'Item keranjang berhasil diperbarui',
           });
           response.code(200);
           resolve(response);
@@ -133,7 +148,7 @@ const editCategoryByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Gagal memperbarui kategori. Id tidak ditemukan',
+          message: 'Gagal memperbarui item keranjang. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -144,13 +159,13 @@ const editCategoryByIdHandler = (request, h) => {
   return promise;
 };
 
-const deleteCategoryByIdHandler = (request, h) => {
-  const { idKategori } = request.params;
+const deleteCartItemByIdHandler = (request, h) => {
+  const { idCart, idCartItem } = request.params;
 
   const promise = new Promise((resolve) => {
-    getCategoryById(idKategori, (results) => {
+    getCartItemById(idCart, idCartItem, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `DELETE FROM categories WHERE id_kategori='${idKategori}'`;
+        const sql = `DELETE FROM cart_items WHERE id_cart_item='${idCartItem}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -163,7 +178,7 @@ const deleteCategoryByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'Kategori berhasil dihapus',
+            message: 'Item keranjang berhasil dihapus',
           });
           response.code(200);
           resolve(response);
@@ -171,7 +186,7 @@ const deleteCategoryByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Kategori gagal dihapus. Id tidak ditemukan',
+          message: 'Item keranjang gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -183,9 +198,9 @@ const deleteCategoryByIdHandler = (request, h) => {
 };
 
 module.exports = {
-  addCategoryHandler,
-  getAllCategoriesHandler,
-  getCategoryByIdHandler,
-  editCategoryByIdHandler,
-  deleteCategoryByIdHandler,
+  addCartItemHandler,
+  getAllCartItemsHandler,
+  getCartItemByIdHandler,
+  editCartItemByIdHandler,
+  deleteCartItemByIdHandler,
 };

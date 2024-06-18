@@ -1,19 +1,8 @@
 const { nanoid } = require('nanoid');
-const db = require('./db_config');
+const db = require('../db_config');
 
-async function getAllUsers(callback) {
-  const sql = 'SELECT * FROM users';
-
-  db.query(sql, (err, results) => {
-    if (err) {
-      throw err;
-    }
-    return callback(Object.values(JSON.parse(JSON.stringify(results))));
-  });
-}
-
-async function getUserById(idUser, callback) {
-  const sql = `SELECT * FROM users WHERE id_user='${idUser}'`;
+async function getAllAdmins(callback) {
+  const sql = 'SELECT * FROM admins';
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -23,8 +12,8 @@ async function getUserById(idUser, callback) {
   });
 }
 
-async function getUserByUsernamePassword(username, password, callback) {
-  const sql = `SELECT * FROM users WHERE username='${username}' AND password='${password}'`;
+async function getAdminById(idAdmin, callback) {
+  const sql = `SELECT * FROM admins WHERE id_admin='${idAdmin}'`;
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -34,15 +23,26 @@ async function getUserByUsernamePassword(username, password, callback) {
   });
 }
 
-const addUserHandler = (request, h) => {
+async function getAdminByUsernamePassword(username, password, callback) {
+  const sql = `SELECT * FROM admins WHERE username='${username}' AND password='${password}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
+const addAdminHandler = (request, h) => {
   const {
-    username, email, password, nomor_telepon: nomorTelepon, alamat,
+    username, email, password,
   } = request.payload;
 
-  const idUser = `user-${nanoid(16)}`;
+  const idAdmin = `admin-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
-    const sql = `INSERT INTO users(id_user, username, email, password, nomor_telepon, alamat) VALUES ('${idUser}','${username}','${email}','${password}','${nomorTelepon}','${alamat}')`;
+    const sql = `INSERT INTO admins(id_admin, username, email, password) VALUES ('${idAdmin}','${username}','${email}','${password}')`;
 
     db.query(sql, (err) => {
       if (err) {
@@ -55,9 +55,9 @@ const addUserHandler = (request, h) => {
       }
       const response = h.response({
         status: 'success',
-        message: 'User berhasil ditambahkan',
+        message: 'User admin berhasil ditambahkan',
         data: {
-          id_user: idUser,
+          id_admin: idAdmin,
         },
       });
       response.code(201);
@@ -68,17 +68,17 @@ const addUserHandler = (request, h) => {
   return promise;
 };
 
-const getAllUsersHandler = () => {
+const getAllAdminsHandler = () => {
   const promise = new Promise((resolve) => {
-    getAllUsers((results) => {
-      const usersList = [];
+    getAllAdmins((results) => {
+      const adminsList = [];
       Object.keys(results).forEach((v) => {
-        usersList.push(results[v]);
+        adminsList.push(results[v]);
       });
       const response = {
         status: 'success',
         data: {
-          users: usersList,
+          admins: adminsList,
         },
       };
       resolve(response);
@@ -87,23 +87,23 @@ const getAllUsersHandler = () => {
   return promise;
 };
 
-const getUserByIdHandler = (request, h) => {
-  const { idUser } = request.params;
+const getAdminByIdHandler = (request, h) => {
+  const { idAdmin } = request.params;
 
   const promise = new Promise((resolve) => {
-    getUserById(idUser, (results) => {
+    getAdminById(idAdmin, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
           status: 'success',
           data: {
-            user: results[0],
+            admin: results[0],
           },
         };
         resolve(response);
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'User tidak ditemukan',
+          message: 'User admin tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -113,11 +113,11 @@ const getUserByIdHandler = (request, h) => {
   return promise;
 };
 
-const getUserByUsernamePasswordHandler = (request, h) => {
+const getAdminByUsernamePasswordHandler = (request, h) => {
   const { username, password } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getUserByUsernamePassword(username, password, (results) => {
+    getAdminByUsernamePassword(username, password, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
           status: 'success',
@@ -139,17 +139,17 @@ const getUserByUsernamePasswordHandler = (request, h) => {
   return promise;
 };
 
-const editUserByIdHandler = (request, h) => {
-  const { idUser } = request.params;
+const editAdminByIdHandler = (request, h) => {
+  const { idAdmin } = request.params;
 
   const {
-    username, email, password, nomor_telepon: nomorTelepon, alamat,
+    username, email, password,
   } = request.payload;
 
   const promise = new Promise((resolve) => {
-    getUserById(idUser, (results) => {
+    getAdminById(idAdmin, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `UPDATE users SET username='${username}',email='${email}',password='${password}',nomor_telepon='${nomorTelepon}',alamat='${alamat}' WHERE id_user='${idUser}'`;
+        const sql = `UPDATE admins SET username='${username}',email='${email}',password='${password}' WHERE id_admin='${idAdmin}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -162,7 +162,7 @@ const editUserByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'User berhasil diperbarui',
+            message: 'User admin berhasil diperbarui',
           });
           response.code(200);
           resolve(response);
@@ -170,7 +170,7 @@ const editUserByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'Gagal memperbarui user. Id tidak ditemukan',
+          message: 'Gagal memperbarui user admin. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -181,13 +181,13 @@ const editUserByIdHandler = (request, h) => {
   return promise;
 };
 
-const deleteUserByIdHandler = (request, h) => {
-  const { idUser } = request.params;
+const deleteAdminByIdHandler = (request, h) => {
+  const { idAdmin } = request.params;
 
   const promise = new Promise((resolve) => {
-    getUserById(idUser, (results) => {
+    getAdminById(idAdmin, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const sql = `DELETE FROM users WHERE id_user='${idUser}'`;
+        const sql = `DELETE FROM admins WHERE id_admin='${idAdmin}'`;
 
         db.query(sql, (err) => {
           if (err) {
@@ -200,7 +200,7 @@ const deleteUserByIdHandler = (request, h) => {
           }
           const response = h.response({
             status: 'success',
-            message: 'User berhasil dihapus',
+            message: 'User admin berhasil dihapus',
           });
           response.code(200);
           resolve(response);
@@ -208,7 +208,7 @@ const deleteUserByIdHandler = (request, h) => {
       } else {
         const response = h.response({
           status: 'fail',
-          message: 'User gagal dihapus. Id tidak ditemukan',
+          message: 'User admin gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -220,10 +220,10 @@ const deleteUserByIdHandler = (request, h) => {
 };
 
 module.exports = {
-  addUserHandler,
-  getAllUsersHandler,
-  getUserByIdHandler,
-  getUserByUsernamePasswordHandler,
-  editUserByIdHandler,
-  deleteUserByIdHandler,
+  addAdminHandler,
+  getAllAdminsHandler,
+  getAdminByIdHandler,
+  getAdminByUsernamePasswordHandler,
+  editAdminByIdHandler,
+  deleteAdminByIdHandler,
 };
