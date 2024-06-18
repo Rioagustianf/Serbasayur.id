@@ -56,6 +56,13 @@ const {
   editCartItemByIdHandler,
   deleteCartItemByIdHandler,
 } = require('./handler/cart_items_handler');
+const {
+  addPaymentHandler,
+  getAllPaymentsHandler,
+  getPaymentByIdHandler,
+  editPaymentByIdHandler,
+  deletePaymentByIdHandler,
+} = require('./handler/payments_handler');
 
 const routes = [
   {
@@ -251,6 +258,31 @@ const routes = [
     method: 'DELETE',
     path: '/orderitems/{idOrder}/{idOrderItem}',
     handler: deleteOrderItemByIdHandler,
+  },
+  {
+    method: 'POST',
+    path: '/payments',
+    handler: addPaymentHandler,
+  },
+  {
+    method: 'GET',
+    path: '/payments',
+    handler: getAllPaymentsHandler,
+  },
+  {
+    method: 'GET',
+    path: '/payments/{idPayment}',
+    handler: getPaymentByIdHandler,
+  },
+  {
+    method: 'PUT',
+    path: '/payments/{idPayment}',
+    handler: editPaymentByIdHandler,
+  },
+  {
+    method: 'DELETE',
+    path: '/payments/{idPayment}',
+    handler: deletePaymentByIdHandler,
   },
   {
     method: 'POST',
