@@ -138,7 +138,7 @@ const editProductByIdHandler = (request, h) => {
     id_kategori: idKategori,
     deskripsi,
     harga,
-    image = {},
+    image,
     kuantitas,
     rating,
   } = request.payload;
@@ -146,21 +146,34 @@ const editProductByIdHandler = (request, h) => {
   const promise = new Promise((resolve) => {
     getProductById(idProduk, (results) => {
       if (typeof results !== 'undefined' && results.length > 0) {
-        const oldImage = results[0].image;
-
-        // eslint-disable-next-line prefer-destructuring
-        const filename = `image-${nanoid(16)}.jpg`;
-        const data = image._data;
-
-        const checkOldFilename = image.hapi.filename;
-
         let sql;
 
-        if (checkOldFilename !== '') {
-          fs.writeFile(
-            path.resolve(__dirname, `../image/${filename}`),
-            data,
-            (err) => {
+        if (image) {
+          const oldImage = results[0].image;
+
+          // eslint-disable-next-line prefer-destructuring
+          const filename = `image-${nanoid(16)}.jpg`;
+          const data = image._data;
+
+          const checkOldFilename = image.hapi.filename;
+
+          if (checkOldFilename !== '') {
+            fs.writeFile(
+              path.resolve(__dirname, `../image/${filename}`),
+              data,
+              (err) => {
+                if (err) {
+                  const response = h.response({
+                    status: 'fail',
+                    message: err.message,
+                  });
+                  response.code(500);
+                  resolve(response);
+                }
+              },
+            );
+
+            fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
               if (err) {
                 const response = h.response({
                   status: 'fail',
@@ -169,22 +182,12 @@ const editProductByIdHandler = (request, h) => {
                 response.code(500);
                 resolve(response);
               }
-            },
-          );
-
-          fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
-            if (err) {
-              const response = h.response({
-                status: 'fail',
-                message: err.message,
-              });
-              response.code(500);
-              resolve(response);
-            }
-            console.log('file was deleted');
-          });
-
-          sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+              console.log('file was deleted');
+            });
+            sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+          } else {
+            sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+          }
         } else {
           sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
         }
