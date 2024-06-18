@@ -3,17 +3,24 @@ const API_BASE_URL = "http://localhost:3000";
 
 // Fungsi untuk menambahkan pesanan baru
 async function addOrder(order) {
-  const response = await fetch(`${API_BASE_URL}/orders`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(order),
-  });
-  if (!response.ok) {
-    throw new Error("Failed to add order");
+  try {
+    const response = await fetch(`${API_BASE_URL}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add order");
+    }
+
+    const data = await response.json();
+    return data; // Mengembalikan data order yang baru saja dibuat dari server
+  } catch (error) {
+    throw new Error(`Failed to add order: ${error.message}`);
   }
-  return response.json();
 }
 
 // Fungsi untuk menambahkan item pesanan baru
@@ -43,11 +50,16 @@ async function addOrderItem(orderItem) {
 
 // Fungsi untuk mengambil semua pesanan
 async function getAllOrders() {
-  const response = await fetch(`${API_BASE_URL}/orders`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch orders");
+  try {
+    const response = await fetch(`${API_BASE_URL}/orders`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch orders");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching orders:", error.message);
+    throw error;
   }
-  return response.json();
 }
 
 // Fungsi untuk mengambil pesanan berdasarkan ID

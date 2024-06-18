@@ -1,5 +1,5 @@
-const { nanoid } = require('nanoid');
-const db = require('./db_config');
+const { nanoid } = require("nanoid");
+const db = require("./db_config");
 
 async function getAllOrderItems(idOrder, callback) {
   const sql = `SELECT * FROM order_items WHERE id_order='${idOrder}'`;
@@ -39,15 +39,15 @@ const addOrderItemHandler = (request, h) => {
     db.query(sql, (err) => {
       if (err) {
         const response = h.response({
-          status: 'fail',
+          status: "fail",
           message: err.message,
         });
         response.code(500);
         resolve(response);
       }
       const response = h.response({
-        status: 'success',
-        message: 'Item order berhasil ditambahkan',
+        status: "success",
+        message: "Item order berhasil ditambahkan",
         data: {
           id_order: idOrder,
           id_order_item: idOrderItem,
@@ -71,7 +71,7 @@ const getAllOrderItemsHandler = (request) => {
         orderItemsList.push(results[v]);
       });
       const response = {
-        status: 'success',
+        status: "success",
         data: {
           order_items: orderItemsList,
         },
@@ -87,9 +87,9 @@ const getOrderItemByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getOrderItemById(idOrder, idOrderItem, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const response = {
-          status: 'success',
+          status: "success",
           data: {
             order_item: results[0],
           },
@@ -97,8 +97,8 @@ const getOrderItemByIdHandler = (request, h) => {
         resolve(response);
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Item order tidak ditemukan',
+          status: "fail",
+          message: "Item order tidak ditemukan",
         });
         response.code(404);
         resolve(response);
@@ -119,29 +119,29 @@ const editOrderItemByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getOrderItemById(idOrder, idOrderItem, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const sql = `UPDATE order_items SET id_produk='${idProduk}',kuantitas=${kuantitas},harga_satuan=${hargaSatuan} WHERE id_order_item='${idOrderItem}' AND id_order='${idOrder}'`;
 
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: 'fail',
+              status: "fail",
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: 'success',
-            message: 'Item order berhasil diperbarui',
+            status: "success",
+            message: "Item order berhasil diperbarui",
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Gagal memperbarui item order. Id tidak ditemukan',
+          status: "fail",
+          message: "Gagal memperbarui item order. Id tidak ditemukan",
         });
         response.code(404);
         resolve(response);
@@ -157,29 +157,29 @@ const deleteOrderItemByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getOrderItemById(idOrder, idOrderItem, (results) => {
-      if (typeof results !== 'undefined' && results.length > 0) {
+      if (typeof results !== "undefined" && results.length > 0) {
         const sql = `DELETE FROM order_items WHERE id_order_item='${idOrderItem}' AND id_order='${idOrder}'`;
 
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: 'fail',
+              status: "fail",
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: 'success',
-            message: 'Item order berhasil dihapus',
+            status: "success",
+            message: "Item order berhasil dihapus",
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: 'fail',
-          message: 'Item order gagal dihapus. Id tidak ditemukan',
+          status: "fail",
+          message: "Item order gagal dihapus. Id tidak ditemukan",
         });
         response.code(404);
         resolve(response);

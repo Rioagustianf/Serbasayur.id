@@ -31,7 +31,7 @@ const Navbar = {
                   <a class="nav-link d-lg-none" href="/chat">Pesan</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link d-none d-lg-block" href="/order"><i class="fas fa-shopping-cart icon"></i></a>
+                  <a class="nav-link d-none d-lg-block" href="/checkout"><i class="fas fa-shopping-cart icon"></i></a>
                   <a class="nav-link d-lg-none" href="/checkout">Keranjang</a>
                 </li>
                 <li class="nav-item d-none d-lg-block">
