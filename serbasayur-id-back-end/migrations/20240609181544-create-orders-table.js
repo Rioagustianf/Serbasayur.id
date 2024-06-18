@@ -43,7 +43,7 @@ exports.up = function(db, callback) {
       }
     },
     tanggal_order: {
-      type: 'date',
+      type: 'timestamp',
       defaultValue: new String('CURRENT_TIMESTAMP')
     },
     status: { type: 'char', length: 50 },
