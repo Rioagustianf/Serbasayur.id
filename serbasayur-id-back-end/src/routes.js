@@ -49,6 +49,13 @@ const {
   editAdminByIdHandler,
   deleteAdminByIdHandler,
 } = require('./admins_handler');
+const {
+  addCartItemHandler,
+  getAllCartItemsHandler,
+  getCartItemByIdHandler,
+  editCartItemByIdHandler,
+  deleteCartItemByIdHandler,
+} = require('./cart_items_handler');
 
 const routes = [
   {
@@ -169,6 +176,31 @@ const routes = [
     method: 'DELETE',
     path: '/carts/{idUser}/{idCart}',
     handler: deleteCartByIdHandler,
+  },
+  {
+    method: 'POST',
+    path: '/cartitems',
+    handler: addCartItemHandler,
+  },
+  {
+    method: 'GET',
+    path: '/cartitems/{idCart}',
+    handler: getAllCartItemsHandler,
+  },
+  {
+    method: 'GET',
+    path: '/cartitems/{idCart}/{idCartItem}',
+    handler: getCartItemByIdHandler,
+  },
+  {
+    method: 'PUT',
+    path: '/cartitems/{idCart}/{idCartItem}',
+    handler: editCartItemByIdHandler,
+  },
+  {
+    method: 'DELETE',
+    path: '/cartitems/{idCart}/{idCartItem}',
+    handler: deleteCartItemByIdHandler,
   },
   {
     method: 'POST',

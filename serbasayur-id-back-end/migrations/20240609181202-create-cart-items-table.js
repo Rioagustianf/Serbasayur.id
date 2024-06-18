@@ -54,6 +54,7 @@ exports.up = function(db, callback) {
         mapping: 'id_produk'
       }
     },
+    quantity: { type: 'bigint' }
   }, callback);
 };
 
