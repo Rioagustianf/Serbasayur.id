@@ -61,9 +61,13 @@ async function updateProduct(productId, productData) {
     formData.append("id_kategori", productData.id_kategori);
     formData.append("deskripsi", productData.deskripsi);
     formData.append("harga", productData.harga);
-    formData.append("image", productData.image); // file gambar
     formData.append("kuantitas", productData.kuantitas);
     formData.append("rating", productData.rating);
+
+    // Memeriksa apakah ada file gambar yang dipilih
+    if (productData.image) {
+      formData.append("image", productData.image); // file gambar
+    }
 
     // Mengirim permintaan PUT ke endpoint backend
     const response = await fetch(`${API_BASE_URL}/products/${productId}`, {

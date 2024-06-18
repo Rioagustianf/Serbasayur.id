@@ -132,7 +132,6 @@ const getProductByIdHandler = (request, h) => {
 
 const editProductByIdHandler = (request, h) => {
   const { idProduk } = request.params;
-
   const {
     nama,
     id_kategori: idKategori,
@@ -148,15 +147,15 @@ const editProductByIdHandler = (request, h) => {
       if (typeof results !== "undefined" && results.length > 0) {
         const oldImage = results[0].image;
 
-        // eslint-disable-next-line prefer-destructuring
-        const filename = `image-${nanoid(16)}.jpg`;
-        const data = image._data;
-
-        const checkOldFilename = image.hapi.filename;
-
         let sql;
+        let filename = oldImage; // Default to old image filename
 
-        if (checkOldFilename !== "") {
+        // Check if new image is uploaded
+        if (image && image.hapi.filename !== "") {
+          filename = `image-${nanoid(16)}.jpg`;
+          const data = image._data;
+
+          // Write new image file
           fs.writeFile(
             path.resolve(__dirname, `../image/${filename}`),
             data,
@@ -172,6 +171,7 @@ const editProductByIdHandler = (request, h) => {
             }
           );
 
+          // Delete old image file
           fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
             if (err) {
               const response = h.response({
@@ -181,14 +181,18 @@ const editProductByIdHandler = (request, h) => {
               response.code(500);
               resolve(response);
             }
-            console.log("file was deleted");
+            console.log("Old file was deleted");
           });
+        }
 
+        // Construct SQL query based on whether image is updated or not
+        if (image && image.hapi.filename !== "") {
           sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
         } else {
           sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
         }
 
+        // Execute SQL query
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({

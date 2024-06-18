@@ -21,7 +21,7 @@ export function Navbar() {
             </li>
 
             <li>
-                <a href="/customers">
+                <a href="/dashboard/customers">
                     <span class="icon">
                         <ion-icon name="people-outline"></ion-icon>
                     </span>
@@ -61,12 +61,19 @@ export function Navbar() {
                 </ul>
             </li>
 
-            <li>
-                <a href="#">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="icon">
                         <ion-icon name="settings-outline"></ion-icon>
                     </span>
                     <span class="title">Settings</span>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Order</a></li>
+                    <hr />
+                    <li><a class="dropdown-item" href="#">Add Produk</a></li>
+                    <li><a class="dropdown-item" href="#">Kategori</a></li>
+                    <li><a class="dropdown-item" href="#">List Produk</a></li>
+                </ul>
                 </a>
             </li>
 
@@ -75,7 +82,7 @@ export function Navbar() {
                     <span class="icon">
                         <ion-icon name="log-out-outline"></ion-icon>
                     </span>
-                    <span class="title">Sign Out</span>
+                    <span class="title">Logout</span>
                 </a>
             </li>
         </ul>

@@ -1,4 +1,5 @@
 import {
+  deleteProduct,
   getAllCategories,
   getProductById,
   updateProduct,
@@ -123,7 +124,6 @@ const ListProduk = {
     editButtons.forEach((button) => {
       button.addEventListener("click", async () => {
         const productId = button.dataset.id;
-        console.log("Product ID:", productId);
 
         // Pastikan productId terdefinisi
         if (!productId) {
@@ -140,7 +140,6 @@ const ListProduk = {
 
             // Isi formulir edit dengan data produk yang diperoleh
             document.getElementById("edit-nama").value = product.nama;
-            console.log(product.nama);
             document.getElementById("edit-deskripsi").value = product.deskripsi;
             document.getElementById("edit-harga").value = product.harga;
             document.getElementById("edit-kuantitas").value = product.kuantitas;
@@ -149,8 +148,7 @@ const ListProduk = {
             document.getElementById("edit-rating").value = product.rating;
 
             const imgPreview = document.getElementById("edit-gambar-preview");
-            imgPreview.src = `http://localhost:3000/image/${product.image}`;
-            // Sesuaikan dengan URL gambar sesuai struktur di server
+            imgPreview.src = imageUrl;
             document.getElementById("edit-id").value = productId;
           }
         } catch (error) {
@@ -170,11 +168,16 @@ const ListProduk = {
         nama: document.getElementById("edit-nama").value,
         deskripsi: document.getElementById("edit-deskripsi").value,
         harga: document.getElementById("edit-harga").value,
-        image: document.getElementById("edit-image").files[0], // File gambar
         kuantitas: document.getElementById("edit-kuantitas").value,
         id_kategori: document.getElementById("edit-id_kategori").value,
         rating: document.getElementById("edit-rating").value,
       };
+
+      // Periksa apakah input file tidak kosong
+      const editImageInput = document.getElementById("edit-image");
+      if (editImageInput.files.length > 0) {
+        editProduct.image = editImageInput.files[0]; // File gambar
+      }
 
       const productId = document.getElementById("edit-id").value;
 
@@ -186,6 +189,26 @@ const ListProduk = {
         console.error("Gagal memperbarui produk:", error);
         alert("Gagal memperbarui produk. Silakan coba lagi.");
       }
+    });
+
+    const deleteButtons = document.querySelectorAll(".delete-button");
+
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const productId = button.dataset.id;
+        try {
+          const response = await deleteProduct(productId);
+          if (response.status === "success") {
+            alert("Produk dihapus");
+            location.reload();
+          } else {
+            alert("Gagal menghapus produk. Silakan coba lagi.");
+          }
+        } catch (error) {
+          console.error("Gagal menghapus produk:", error);
+          alert("Gagal menghapus produk. Silakan coba lagi.");
+        }
+      });
     });
   },
 };

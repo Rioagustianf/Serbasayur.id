@@ -49,7 +49,7 @@ page("/profile/edit-profile", () => renderPage(EditProfilePage));
 page("/dashboard/addProduk", () => renderPage(AddProduk));
 page("/dashboard/Category", () => renderPage(AddCategory));
 page("/dashboard/listProduk", () => renderPage(ListProdukPage));
-page("/customers", () => renderPage(CustomerPage));
+page("/dashboard/customers", () => renderPage(CustomerPage));
 
 page("/c/:category", async (ctx) => {
   const { category } = ctx.params;
