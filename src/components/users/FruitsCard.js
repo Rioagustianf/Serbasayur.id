@@ -1,14 +1,33 @@
-import { getAllProducts } from "../../services/api/product";
+import { getAllProducts, getAllCategories } from "../../services/api/product";
 import page from "page";
 import { chunk } from "lodash-es";
+import { formatCurrency } from "../../utils/productHandler";
 
 const FruitsCard = {
   async render() {
     try {
-      const products = await getAllProducts();
-      if (!Array.isArray(products)) {
-        throw new Error("Products is not an array");
+      const [products, categories] = await Promise.all([
+        getAllProducts(),
+        getAllCategories(),
+      ]);
+
+      if (!Array.isArray(products) || !Array.isArray(categories)) {
+        throw new Error("Invalid data format for products or categories");
       }
+
+      // Temukan kategori "Buah-buahan"
+      const fruitCategory = categories.find(
+        (category) => category.nama_kategori === "Buah-Buahan"
+      );
+
+      if (!fruitCategory) {
+        throw new Error("Kategori 'Buah-buahan' tidak ditemukan");
+      }
+
+      // Filter produk berdasarkan kategori "Buah-buahan" dan ambil maksimal 9 produk
+      const fruitProducts = products
+        .filter((product) => product.id_kategori === fruitCategory.id_kategori)
+        .slice(0, 9); // Ambil maksimal 9 produk
 
       // Ubah jumlah kolom berdasarkan ukuran layar
       const colSize = {
@@ -17,15 +36,7 @@ const FruitsCard = {
         sm: 6,
       };
 
-      const productGroups = chunk(products, 3);
-
-      const formatCurrency = (amount) => {
-        return new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          maximumFractionDigits: 0,
-        }).format(amount);
-      };
+      const productGroups = chunk(fruitProducts, 3);
 
       const carouselItems = productGroups
         .map((group, index) => {

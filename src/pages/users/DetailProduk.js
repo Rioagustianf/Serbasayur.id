@@ -1,16 +1,25 @@
 import { getProductById } from "../../services/api/product";
-import Footer from "../../components/users/Footer";
 import Navbar from "../../components/users/Navbar";
+import Footer from "../../components/users/Footer";
 import { handleProdukQty } from "../../utils/productHandler";
 import { generateStarRating, formatCurrency } from "../../utils/productHandler";
+import { addOrder } from "../../services/api/order";
+import { getUserById } from "../../services/api/user";
 
 const DetailProduk = {
   async render(productId) {
     try {
       const productResponse = await getProductById(productId);
+      const userId = localStorage.getItem("userId");
+      const userResponse = await getUserById(userId);
 
-      if (productResponse.status === "success") {
+      if (
+        productResponse.status === "success" &&
+        userResponse.status === "success"
+      ) {
         const product = productResponse.data.product;
+        const user = userResponse.data.user;
+
         const imageUrl = `http://localhost:3000/image/${product.image}`;
 
         return `
@@ -32,7 +41,7 @@ const DetailProduk = {
                     <button id="increaseQty" class="btn btn-outline-success">+</button>
                   </div>
                   <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <button class="btn btn-success btn-cart p-2 mx-2">+ Keranjang</button>
+                    <button id="addToCart" class="btn btn-success btn-cart p-2 mx-2">+ Keranjang</button>
                   </div>
                 </div>
               </div>
@@ -113,7 +122,7 @@ const DetailProduk = {
           ${await Footer.render()}
         `;
       } else {
-        throw new Error("Failed to fetch product details");
+        throw new Error("Failed to fetch product or user details");
       }
     } catch (error) {
       console.error(error);
@@ -127,6 +136,62 @@ const DetailProduk = {
 
     // Call function to handle product quantity
     handleProdukQty();
+
+    // Add event listener to add to cart button
+    const addToCartButton = document.getElementById("addToCart");
+    addToCartButton.addEventListener("click", async () => {
+      try {
+        const productResponse = await getProductById(productId);
+        const userId = localStorage.getItem("userId");
+        const userResponse = await getUserById(userId);
+
+        if (
+          productResponse.status === "success" &&
+          userResponse.status === "success"
+        ) {
+          const product = productResponse.data.product;
+          const user = userResponse.data.user;
+
+          const quantity = parseInt(document.getElementById("quantity").value);
+
+          // Get user id and alamat from user data
+          const userId = user.id_user;
+          if (!userId) {
+            throw new Error("User id not found in local storage");
+          }
+
+          const alamat = user.alamat;
+          if (!alamat) {
+            throw new Error("Alamat not found in user data");
+          }
+
+          // Calculate total harga based on product price and quantity
+          const totalHarga = product.harga;
+
+          // Prepare order object
+          const order = {
+            id_user: userId,
+            tanggal_order: new Date().toISOString().split("T")[0], // Mengambil tanggal hari ini
+            alamat_order: alamat,
+            total_harga: totalHarga * quantity,
+          };
+
+          // Add order to database
+          const addOrderResponse = await addOrder(order);
+
+          if (addOrderResponse.status === "success") {
+            alert("Order berhasil ditambahkan ke keranjang!");
+          } else {
+            throw new Error("Failed to add order: " + addOrderResponse.message);
+          }
+        } else {
+          throw new Error("Failed to fetch product or user details");
+        }
+      } catch (error) {
+        console.error("Failed to add order:", error.message);
+        alert("Failed to add order. Please try again later.");
+      }
+    });
   },
 };
 

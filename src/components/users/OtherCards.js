@@ -1,14 +1,35 @@
-import { getAllProducts } from "../../services/api/product";
+import { getAllProducts, getAllCategories } from "../../services/api/product";
 import page from "page";
 import { chunk } from "lodash-es";
+import { formatCurrency } from "../../utils/productHandler";
 
 const OtherCards = {
   async render() {
     try {
-      const products = await getAllProducts();
-      if (!Array.isArray(products)) {
-        throw new Error("Products is not an array");
+      const [products, categories] = await Promise.all([
+        getAllProducts(),
+        getAllCategories(),
+      ]);
+
+      if (!Array.isArray(products) || !Array.isArray(categories)) {
+        throw new Error("Invalid data format for products or categories");
       }
+
+      // Filter produk untuk kategori lain (bukan sayuran dan buah-buahan)
+      const excludedCategories = ["Sayuran Segar", "Buah-Buahan"];
+      const otherCategoryProducts = products.filter((product) => {
+        const category = categories.find(
+          (cat) => cat.id_kategori === product.id_kategori
+        );
+        return category && !excludedCategories.includes(category.nama_kategori);
+      });
+
+      // Acak urutan produk
+      const shuffledProducts = shuffleArray(otherCategoryProducts);
+
+      // Ambil 9 produk pertama setelah diacak
+      const maxOtherCards = 9;
+      const selectedProducts = shuffledProducts.slice(0, maxOtherCards);
 
       // Ubah jumlah kolom berdasarkan ukuran layar
       const colSize = {
@@ -17,15 +38,7 @@ const OtherCards = {
         sm: 6,
       };
 
-      const productGroups = chunk(products, 3);
-
-      const formatCurrency = (amount) => {
-        return new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          maximumFractionDigits: 0,
-        }).format(amount);
-      };
+      const productGroups = chunk(selectedProducts, 3);
 
       const carouselItems = productGroups
         .map((group, index) => {
@@ -64,16 +77,16 @@ const OtherCards = {
 
       const productListLayout = `
         <div class="container mt-5">
-          <h2 class="text-center mb-4 py-2 title-product">Produk Lain</h2>
-          <div id="other-carousel" class="carousel slide" data-bs-ride="carousel">
+          <h2 class="text-center mb-4 py-2 title-product">Produk Lainnya</h2>
+          <div id="other-cards-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               ${carouselItems}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#other-carousel" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#other-cards-carousel" data-bs-slide="prev">
               <span class="prev-icon" aria-hidden="true"><i class="fa-sharp fa-solid fa-chevron-left"></i></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#other-carousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#other-cards-carousel" data-bs-slide="next">
               <span class="next-icon" aria-hidden="true"><i class="fa-sharp fa-solid fa-chevron-right"></i></span>
               <span class="visually-hidden">Next</span>
             </button>
@@ -101,5 +114,14 @@ const OtherCards = {
     });
   },
 };
+
+// Function untuk mengacak array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 export default OtherCards;

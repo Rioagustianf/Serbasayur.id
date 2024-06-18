@@ -44,16 +44,20 @@ const addProductHandler = (request, h) => {
     const filename = `image-${nanoid(16)}.jpg`;
     const data = image._data;
 
-    fs.writeFile(path.resolve(__dirname, `/image/${filename}`), data, (err) => {
-      if (err) {
-        const response = h.response({
-          status: "fail",
-          message: err.message,
-        });
-        response.code(500);
-        resolve(response);
+    fs.writeFile(
+      path.resolve(__dirname, `../image/${filename}`),
+      data,
+      (err) => {
+        if (err) {
+          const response = h.response({
+            status: "fail",
+            message: err.message,
+          });
+          response.code(500);
+          resolve(response);
+        }
       }
-    });
+    );
 
     const sql = `INSERT INTO products(id_produk, nama, id_kategori, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${idKategori}','${deskripsi}',${harga},'${filename}',${kuantitas},${rating})`;
 
@@ -154,7 +158,7 @@ const editProductByIdHandler = (request, h) => {
 
         if (checkOldFilename !== "") {
           fs.writeFile(
-            path.resolve(__dirname, `/image/${filename}`),
+            path.resolve(__dirname, `../image/${filename}`),
             data,
             (err) => {
               if (err) {

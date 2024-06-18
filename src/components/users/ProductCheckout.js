@@ -1,6 +1,6 @@
 const ProductCheckout = {
-    async render() {
-        return `
+  async render() {
+    return `
         <div class="container">
             <div class="section-title-wrapper d-grid">
                 <h2 class="section-title selected-product fw-semibold">HASIL PANEN DARING</h2>
@@ -35,7 +35,7 @@ const ProductCheckout = {
             </div>
         </div>
         `;
-    },
+  },
 };
 
 export default ProductCheckout;
