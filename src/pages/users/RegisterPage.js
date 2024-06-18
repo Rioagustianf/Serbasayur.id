@@ -1,5 +1,5 @@
 import Register from "../../components/users/Register";
-import { addUser } from "../../services/api/user";
+import { addUser, getAllUsers } from "../../services/api/user";
 import page from "page";
 
 const RegisterPage = {
@@ -29,6 +29,28 @@ const RegisterPage = {
       };
 
       try {
+        // Ambil semua pengguna dari database
+        const userResponse = await getAllUsers();
+        const users = userResponse.data.users;
+        
+        // Pastikan bahwa users adalah array
+        if (!Array.isArray(users)) {
+          throw new Error("Failed to fetch users");
+        }
+        // Periksa apakah email atau nomor telepon sudah digunakan
+        const emailExists = users.some((user) => user.email === email);
+        const phoneExists = users.some((user) => user.nomor_telepon === phone);
+
+        if (emailExists) {
+          alert("Email sudah digunakan, silakan gunakan email lain.");
+          return;
+        }
+
+        if (phoneExists) {
+          alert("Nomor telepon sudah digunakan, silakan gunakan nomor telepon lain.");
+          return;
+        }
+
         // Gunakan service API untuk menambahkan pengguna ke database
         const response = await addUser(user);
 

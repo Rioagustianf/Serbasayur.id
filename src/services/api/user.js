@@ -75,17 +75,24 @@ async function login(email, password) {
 
 async function loginUser(email, password) {
   try {
-    const response = await getAllUsers();
-    const users = response.data || response; // Pastikan untuk menangani respons dengan properti 'data' atau respons langsung sebagai array
-    const usersData = users.users;
+    const response = await fetch(`${API_BASE_URL}/users`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch users");
+    }
+    const userData = await response.json();
+    const users = userData.data.users;
+    console.log(users)
 
-    if (!Array.isArray(usersData)) {
+    // Pastikan bahwa users adalah array
+    if (!Array.isArray(users)) {
       throw new Error("Expected an array of users");
     }
 
-    const user = usersData.find(
+    const user = users.find(
       (user) => user.email === email && user.password === password
     );
+    console.log(users)
+
     if (user) {
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("userId", user.id_user);

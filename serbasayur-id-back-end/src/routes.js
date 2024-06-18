@@ -254,6 +254,56 @@ const routes = [
   },
   {
     method: "POST",
+    path: "/payments",
+    handler: addPaymentHandler,
+  },
+  {
+    method: "GET",
+    path: "/payments",
+    handler: getAllPaymentsHandler,
+  },
+  {
+    method: "GET",
+    path: "/payments/{idPayment}",
+    handler: getPaymentByIdHandler,
+  },
+  {
+    method: "PUT",
+    path: "/payments/{idPayment}",
+    handler: editPaymentByIdHandler,
+  },
+  {
+    method: "DELETE",
+    path: "/payments/{idPayment}",
+    handler: deletePaymentByIdHandler,
+  },
+  {
+    method: "POST",
+    path: "/shippings",
+    handler: addShippingHandler,
+  },
+  {
+    method: "GET",
+    path: "/shippings",
+    handler: getAllShippingsHandler,
+  },
+  {
+    method: "GET",
+    path: "/shippings/{idShipping}",
+    handler: getShippingByIdHandler,
+  },
+  {
+    method: "PUT",
+    path: "/shippings/{idShipping}",
+    handler: editShippingByIdHandler,
+  },
+  {
+    method: "DELETE",
+    path: "/shippings/{idShipping}",
+    handler: deleteShippingByIdHandler,
+  },
+  {
+    method: "POST",
     path: "/admins",
     handler: addAdminHandler,
   },

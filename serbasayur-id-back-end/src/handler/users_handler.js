@@ -34,6 +34,28 @@ async function getUserByUsernamePassword(username, password, callback) {
   });
 }
 
+async function checkEmail(email, callback) {
+  const sql = `SELECT * FROM users WHERE email='${email}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
+async function checkTelephoneNumber(nomorTelepon, callback) {
+  const sql = `SELECT * FROM users WHERE nomor_telepon='${nomorTelepon}'`;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    return callback(Object.values(JSON.parse(JSON.stringify(results))));
+  });
+}
+
 const addUserHandler = (request, h) => {
   const {
     username, email, password, nomor_telepon: nomorTelepon, alamat,
@@ -42,6 +64,26 @@ const addUserHandler = (request, h) => {
   const idUser = `user-${nanoid(16)}`;
 
   const promise = new Promise((resolve) => {
+    checkEmail(email, (results) => {
+      if (typeof results !== 'undefined' && results.length > 0) {
+        const response = {
+          status: 'fail',
+          message: 'Email harus unik',
+        };
+        resolve(response);
+      }
+    });
+
+    checkTelephoneNumber(nomorTelepon, (results) => {
+      if (typeof results !== 'undefined' && results.length > 0) {
+        const response = {
+          status: 'fail',
+          message: 'Nomor telepon harus unik',
+        };
+        resolve(response);
+      }
+    });
+
     const sql = `INSERT INTO users(id_user, username, email, password, nomor_telepon, alamat) VALUES ('${idUser}','${username}','${email}','${password}','${nomorTelepon}','${alamat}')`;
 
     db.query(sql, (err) => {
