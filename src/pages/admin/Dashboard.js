@@ -2,10 +2,11 @@
 import { Navbar } from "../../components/admin/Navbar.js";
 import { Card } from "../../components/admin/Card.js";
 import { RecentOrders } from "../../components/admin/RecentOrders.js";
-import { RecentCustomers } from "../../components/admin/RecentCustomer";
+import RecentCustomers from "../../components/admin/RecentCustomer.js";
 import { handleAdminNavigation } from "../../utils/adminHandler.js";
+
 const Dashboard = {
-  render: () => {
+  async render() {
     return `
       <div class="container-dashboard ms-0">
         ${Navbar()}
@@ -32,15 +33,16 @@ const Dashboard = {
           </div>
           <div class="details">
             ${RecentOrders()}
-            ${RecentCustomers()}
+            ${await RecentCustomers.render()}
           </div>
         </div>
       </div>
     `;
   },
 
-  afterRender: () => {
+  async afterRender() {
     handleAdminNavigation();
+    await RecentCustomers.afterRender();
   },
 };
 
