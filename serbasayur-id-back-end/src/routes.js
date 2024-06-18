@@ -167,7 +167,7 @@ const routes = [
   },
   {
     method: 'DELETE',
-    path: '/carts/{idUser}',
+    path: '/carts/{idUser}/{idCart}',
     handler: deleteCartByIdHandler,
   },
   {
