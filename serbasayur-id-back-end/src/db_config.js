@@ -1,7 +1,9 @@
-const mysql = require("mysql2");
-require("dotenv").config();
+const mysql = require('mysql2');
+require('dotenv').config();
 
-const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
+const {
+  DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME,
+} = process.env;
 
 const db = mysql.createConnection({
   host: DB_HOST,
@@ -15,7 +17,7 @@ db.connect((err) => {
   if (err) {
     console.log(err);
   } else {
-    console.info("Database terhubung");
+    console.info('Database terhubung');
   }
 });
 
