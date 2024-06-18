@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-const { nanoid } = require("nanoid");
-const fs = require("fs");
-const path = require("path");
-const db = require("./db_config");
+const { nanoid } = require('nanoid');
+const fs = require('fs');
+const path = require('path');
+const db = require('./db_config');
 
 async function getAllProducts(callback) {
-  const sql = "SELECT * FROM products";
+  const sql = 'SELECT * FROM products';
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -50,13 +50,13 @@ const addProductHandler = (request, h) => {
       (err) => {
         if (err) {
           const response = h.response({
-            status: "fail",
+            status: 'fail',
             message: err.message,
           });
           response.code(500);
           resolve(response);
         }
-      }
+      },
     );
 
     const sql = `INSERT INTO products(id_produk, nama, id_kategori, deskripsi, harga, image, kuantitas, rating) VALUES ('${idProduk}','${nama}','${idKategori}','${deskripsi}',${harga},'${filename}',${kuantitas},${rating})`;
@@ -64,15 +64,15 @@ const addProductHandler = (request, h) => {
     db.query(sql, (err) => {
       if (err) {
         const response = h.response({
-          status: "fail",
+          status: 'fail',
           message: err.message,
         });
         response.code(500);
         resolve(response);
       }
       const response = h.response({
-        status: "success",
-        message: "Berhasil",
+        status: 'success',
+        message: 'Berhasil',
         data: {
           id_produk: idProduk,
         },
@@ -93,7 +93,7 @@ const getAllProductsHandler = () => {
         productList.push(results[v]);
       });
       const response = {
-        status: "success",
+        status: 'success',
         data: {
           products: productList,
         },
@@ -109,9 +109,9 @@ const getProductByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getProductById(idProduk, (results) => {
-      if (typeof results !== "undefined" && results.length > 0) {
+      if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
-          status: "success",
+          status: 'success',
           data: {
             product: results[0],
           },
@@ -119,8 +119,8 @@ const getProductByIdHandler = (request, h) => {
         resolve(response);
       } else {
         const response = h.response({
-          status: "fail",
-          message: "Produk tidak ditemukan",
+          status: 'fail',
+          message: 'Produk tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -144,12 +144,17 @@ const editProductByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getProductById(idProduk, (results) => {
+<<<<<<< HEAD
       if (typeof results !== "undefined" && results.length > 0) {
         const oldImage = results[0].image;
 
+=======
+      if (typeof results !== 'undefined' && results.length > 0) {
+>>>>>>> 4a4363085a035c3b30dde41f6f2cb4d211d5d960
         let sql;
         let filename = oldImage; // Default to old image filename
 
+<<<<<<< HEAD
         // Check if new image is uploaded
         if (image && image.hapi.filename !== "") {
           filename = `image-${nanoid(16)}.jpg`;
@@ -160,14 +165,43 @@ const editProductByIdHandler = (request, h) => {
             path.resolve(__dirname, `../image/${filename}`),
             data,
             (err) => {
+=======
+        if (typeof image !== 'undefined') {
+          const oldImage = results[0].image;
+
+          // eslint-disable-next-line prefer-destructuring
+          const filename = `image-${nanoid(16)}.jpg`;
+          const data = image._data;
+
+          const checkOldFilename = image.hapi.filename;
+
+          if (checkOldFilename !== '') {
+            fs.writeFile(
+              path.resolve(__dirname, `../image/${filename}`),
+              data,
+              (err) => {
+                if (err) {
+                  const response = h.response({
+                    status: 'fail',
+                    message: err.message,
+                  });
+                  response.code(500);
+                  resolve(response);
+                }
+              },
+            );
+
+            fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
+>>>>>>> 4a4363085a035c3b30dde41f6f2cb4d211d5d960
               if (err) {
                 const response = h.response({
-                  status: "fail",
+                  status: 'fail',
                   message: err.message,
                 });
                 response.code(500);
                 resolve(response);
               }
+<<<<<<< HEAD
             }
           );
 
@@ -188,6 +222,14 @@ const editProductByIdHandler = (request, h) => {
         // Construct SQL query based on whether image is updated or not
         if (image && image.hapi.filename !== "") {
           sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+=======
+              console.log('file was deleted');
+            });
+            sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+          } else {
+            sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
+          }
+>>>>>>> 4a4363085a035c3b30dde41f6f2cb4d211d5d960
         } else {
           sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
         }
@@ -196,23 +238,23 @@ const editProductByIdHandler = (request, h) => {
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: "fail",
+              status: 'fail',
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: "success",
-            message: "Produk berhasil diperbarui",
+            status: 'success',
+            message: 'Produk berhasil diperbarui',
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: "fail",
-          message: "Gagal memperbarui produk. Id tidak ditemukan",
+          status: 'fail',
+          message: 'Gagal memperbarui produk. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -228,13 +270,13 @@ const deleteProductByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getProductById(idProduk, (results) => {
-      if (typeof results !== "undefined" && results.length > 0) {
+      if (typeof results !== 'undefined' && results.length > 0) {
         const oldImage = results[0].image;
 
         fs.unlink(path.resolve(__dirname, `../image/${oldImage}`), (err) => {
           if (err) {
             const response = h.response({
-              status: "fail",
+              status: 'fail',
               message: err.message,
             });
             response.code(500);
@@ -247,23 +289,23 @@ const deleteProductByIdHandler = (request, h) => {
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: "fail",
+              status: 'fail',
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: "success",
-            message: "Produk berhasil dihapus",
+            status: 'success',
+            message: 'Produk berhasil dihapus',
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: "fail",
-          message: "Produk gagal dihapus. Id tidak ditemukan",
+          status: 'fail',
+          message: 'Produk gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);

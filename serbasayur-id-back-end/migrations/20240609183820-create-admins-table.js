@@ -35,7 +35,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('admins', callback);
+  db.dropTable('admins', true, callback);
 };
 
 exports._meta = {

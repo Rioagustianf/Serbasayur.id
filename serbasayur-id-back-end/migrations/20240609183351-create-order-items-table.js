@@ -25,46 +25,41 @@ exports.setup = function (options, seedLink) {
   seed = seedLink;
 };
 
-exports.up = function (db, callback) {
-  db.createTable(
-    "order_items",
-    {
-      id_order_item: { type: "char", primaryKey: true, length: 255 },
-      id_order: {
-        type: "char",
-        length: 255,
-        foreignKey: {
-          name: "order_items_id_order",
-          table: "orders",
-          rules: {
-            onDelete: "RESTRICT",
-            onUpdate: "RESTRICT",
-          },
-          mapping: "id_order",
+exports.up = function(db, callback) {
+  db.createTable('order_items', {
+    id_order_item: { type: 'char', primaryKey: true, length: 255 },
+    id_order: {
+      type: 'char',
+      length: 255,
+      foreignKey: {
+        name: 'order_items_id_order',
+        table: 'orders',
+        rules: {
+          onDelete: 'RESTRICT',
+          onUpdate: 'RESTRICT'
         },
-      },
-      id_produk: {
-        type: "char",
-        length: 255,
-        foreignKey: {
-          name: "order_items_id_produk",
-          table: "products",
-          rules: {
-            onDelete: "RESTRICT",
-            onUpdate: "RESTRICT",
-          },
-          mapping: "id_produk",
-        },
-      },
-      kuantitas: { type: "bigint" },
-      harga_satuan: { type: "bigint" },
+        mapping: 'id_order'
+      }
     },
-    callback
-  );
+    id_produk: {
+      type: 'char',
+      length: 255,
+      foreignKey: {
+        name: 'order_items_id_produk',
+        table: 'products',
+        rules: {
+          onDelete: 'RESTRICT',
+          onUpdate: 'RESTRICT'
+        },
+        mapping: 'id_produk'
+      }
+    },
+    harga_unit: { type: 'bigint' },
+  }, callback);
 };
 
-exports.down = function (db, callback) {
-  db.dropTable("order_items", callback);
+exports.down = function(db, callback) {
+  db.dropTable('order_items', true, callback);
 };
 
 exports._meta = {

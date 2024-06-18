@@ -50,7 +50,7 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('products', callback);
+  db.dropTable('products', true, callback);
 };
 
 exports._meta = {
