@@ -1,5 +1,5 @@
 const { nanoid } = require('nanoid');
-const db = require('./db_config');
+const db = require('../db_config');
 
 async function getAllUsers(callback) {
   const sql = 'SELECT * FROM users';

@@ -2,7 +2,7 @@
 const { nanoid } = require('nanoid');
 const fs = require('fs');
 const path = require('path');
-const db = require('./db_config');
+const db = require('../db_config');
 
 async function getAllProducts(callback) {
   const sql = 'SELECT * FROM products';

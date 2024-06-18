@@ -1,5 +1,5 @@
 const { nanoid } = require('nanoid');
-const db = require('./db_config');
+const db = require('../db_config');
 
 async function getAllCarts(idUser, callback) {
   const sql = `SELECT * FROM carts WHERE id_user='${idUser}'`;
