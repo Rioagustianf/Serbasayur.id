@@ -157,9 +157,8 @@ const editProductByIdHandler = (request, h) => {
         const oldImage = results[0].image;
 
         let sql;
-        let filename = oldImage; // Default to old image filename
+        let filename = oldImage;
 
-        // Check if new image is uploaded
         if (image && image.hapi.filename !== '') {
           if (image.hapi.headers['content-type'] !== 'image/jpeg') {
             const response = h.response({
@@ -188,7 +187,6 @@ const editProductByIdHandler = (request, h) => {
             },
           );
 
-          // Delete old image file
           fs.unlink(path.resolve(__dirname, `../../image/${oldImage}`), (err) => {
             if (err) {
               const response = h.response({
@@ -198,18 +196,15 @@ const editProductByIdHandler = (request, h) => {
               response.code(500);
               resolve(response);
             }
-            console.log('Old file was deleted');
           });
         }
 
-        // Construct SQL query based on whether image is updated or not
         if (image && image.hapi.filename !== '') {
           sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},image='${filename}',kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
         } else {
           sql = `UPDATE products SET nama='${nama}',id_kategori='${idKategori}',deskripsi='${deskripsi}',harga=${harga},kuantitas=${kuantitas},rating=${rating} WHERE id_produk='${idProduk}'`;
         }
 
-        // Execute SQL query
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
