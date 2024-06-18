@@ -44,6 +44,15 @@ const addProductHandler = (request, h) => {
     const filename = `image-${nanoid(16)}.jpg`;
     const data = image._data;
 
+    if (image.hapi.headers['content-type'] !== 'image/jpeg') {
+      const response = h.response({
+        status: 'fail',
+        message: 'File gambar harus berformat jpg/jpeg',
+      });
+      response.code(400);
+      resolve(response);
+    }
+
     fs.writeFile(
       path.resolve(__dirname, `../../image/${filename}`),
       data,
@@ -152,10 +161,18 @@ const editProductByIdHandler = (request, h) => {
 
         // Check if new image is uploaded
         if (image && image.hapi.filename !== '') {
+          if (image.hapi.headers['content-type'] !== 'image/jpeg') {
+            const response = h.response({
+              status: 'fail',
+              message: 'File gambar harus berformat jpg/jpeg',
+            });
+            response.code(400);
+            resolve(response);
+          }
+
           filename = `image-${nanoid(16)}.jpg`;
           const data = image._data;
 
-          // Write new image file
           fs.writeFile(
             path.resolve(__dirname, `../../image/${filename}`),
             data,
