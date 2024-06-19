@@ -7,7 +7,7 @@ const Register = {
       <div id="register-page">
         <div class="register-container text-center">
           <div class="register-card">
-            <img src="../../public/images/logo1.png" alt="Logo" class="logo">
+            <img src="/public/images/logo1.png" alt="Logo" class="logo">
             <form id="register-form">
               <div class="input-group">
                 <div class="input-container">

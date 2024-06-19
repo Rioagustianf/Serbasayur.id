@@ -35,7 +35,7 @@ const Footer = {
             </div>
           </div>
           <div class="footer-section" id="footer-logo">
-            <img src="../../public/images/logo1.png" alt="Logo Sebarsayur.id">
+            <img src="/public/images/logo1.png" alt="Logo Sebarsayur.id">
           </div>
         </div>
         <div class="footer-bottom">

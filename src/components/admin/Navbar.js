@@ -10,7 +10,7 @@ const Navbar = {
               <li>
                   <a href="/dashboard">
                       <span class="icon mx-2">
-                          <img width="230px" class="img-fluid" src="../../../public/images/logo1.png" alt="" />
+                          <img width="230px" class="img-fluid" src="..//public/images/logo1.png" alt="" />
                       </span>
                   </a>
               </li>

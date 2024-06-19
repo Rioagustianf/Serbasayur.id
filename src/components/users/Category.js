@@ -10,7 +10,7 @@ const Category = {
               <div class="item-wrap">
                 <div class="item-wrap__image">
                   <div class="category-image">
-                    <img class="category-image__placement" src="../../public/images/categories/${category.image}">
+                    <img class="category-image__placement" src="/public/images/categories/${category.image}">
                   </div>
                 </div>
                 <div class="item-wrap__image-title">

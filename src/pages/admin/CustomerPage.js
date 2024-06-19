@@ -38,7 +38,7 @@ const CustomerPage = {
                 </label>
               </div>
               <div class="user">
-                <img src="../../../public/images/admin/customer01.jpg" alt="">
+                <img src="..//public/images/admin/customer01.jpg" alt="">
               </div>
             </div>
             <div class="container w-100">

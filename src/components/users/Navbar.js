@@ -9,7 +9,7 @@ const Navbar = {
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
             <div class="logo">
-              <a href="/"><img height="50px" src="../../public/images/logo1.png" alt="Serba Sayur ID"></a>
+              <a href="/"><img height="50px" src="/public/images/logo1.png" alt="Serba Sayur ID"></a>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -35,7 +35,7 @@ const Navbar = {
                   <a class="nav-link d-lg-none" href="/order">Keranjang</a>
                 </li>
                 <li class="nav-item d-none d-lg-block">
-                  <div class="ms-2"><img height="25px" src="../../public/images/icon3.png" alt="" /></div>
+                  <div class="ms-2"><img height="25px" src="/public/images/icon3.png" alt="" /></div>
                 </li>
                 <li class="nav-item ms-2 d-flex flex-column flex-sm-row">
                   ${
