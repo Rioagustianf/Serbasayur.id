@@ -1,0 +1,133 @@
+.cp-container {
+    display: block;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+.ctg-container {
+    width: 100%;
+    height: fit-content;
+}
+
+.ctg-container__title {
+    background-color: #fcfcfc;
+}
+
+.ctg-container__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 13px;
+}
+
+.ctg-container__content {
+    margin: 1rem;
+    border-left: 1px solid black;
+}
+
+.ctg-container__content a,
+.product-name a {
+    text-decoration: none;
+    color: black;
+}
+
+.ctg-container__content a:hover {
+    color: #4DC38C;
+}
+
+.product-shelf {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.product-cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.green-t {
+    color: #4DC38C;
+}
+
+.text-elip {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 768px) {
+    .cp-container {
+        display: flex;
+        width: 90%;
+    }
+    .ctg-container {
+        width: 20%;
+        height: fit-content;
+    }
+    .ctg-container__body {
+        display: block;
+        font-size: 11px;
+    }
+    .ctg-container__content {
+        margin: 1rem;
+        border: none;
+    }
+    .product-cards-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    .product-shelf {
+        width: 80%;
+    }
+    .text-elip {
+        width: 120px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .cp-container {
+        width: 90%;
+        max-width: 1200px; /* Atur lebar maksimum */
+        margin: 0 auto; /* Pusatkan kontainer */
+    }
+    .ctg-container__body {
+        font-size: 13px;
+    }
+    .product-cards-container {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+    .cart-res {
+        font-size: 0.5rem;
+    }
+    .text-elip {
+        width: 135px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .cp-container {
+        width: 90%;
+        max-width: 1440px; /* Atur lebar maksimum */
+    }
+    .product-cards-container {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem;
+    }
+    .cart-res {
+        font-size: 0.7rem;
+    }
+}
