@@ -17,7 +17,7 @@ const FruitsCard = {
 
       // Temukan kategori "Buah-buahan"
       const fruitCategory = categories.find(
-        (category) => category.nama_kategori === "Buah-Buahan"
+        (category) => category.nama_kategori.toLowerCase() === "Buah-Buahan".toLowerCase()
       );
 
       if (!fruitCategory) {

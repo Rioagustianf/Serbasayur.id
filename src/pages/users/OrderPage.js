@@ -6,25 +6,35 @@ import { getAllCarts, getAllCartItems } from "../../services/api/cart";
 import { getProductById } from "../../services/api/product";
 import { addOrder, addOrderItem } from "../../services/api/order";
 
+async function getItems () {
+  const userId = localStorage.getItem('userId');
+  const carts = await getAllCarts(userId);
+  const allCartItems = [];
+  const allCartItemsData = [];
+
+  for (const cart of carts) {
+    const cartItems = await getAllCartItems(cart.id_cart);
+    allCartItems.push(...cartItems);
+  }
+
+  for (const cartItem of allCartItems) {
+    const cartItemsData = await getProductById(cartItem.id_produk);
+    allCartItemsData.push(Object.assign(cartItemsData.data.product, { quantity: cartItem.quantity }));
+  }
+
+  console.log(allCartItemsData);
+
+  return allCartItemsData;
+}
+
+var total = 0;
+
 const OrderPage = {
   async render() {
     try {
-      const userId = localStorage.getItem('userId');
-      const carts = await getAllCarts(userId);
-      const allCartItems = [];
-      const allCartItemsData = [];
+      const cartItems = await getItems();
 
-      for (const cart of carts) {
-        const cartItems = await getAllCartItems(cart.id_cart);
-        allCartItems.push(...cartItems);
-      }
-      
-      for (const cart of allCartItems) {
-        const cartItemsData = await getProductById(cart.id_produk);
-        allCartItemsData.push(cartItemsData.data.product);
-      }    
-
-      const productListHTML = allCartItemsData
+      const productListHTML = cartItems
         .map(
           (item, index) => `
             <div class="border rounded-3 m-3" key="${item.id_produk}">
@@ -37,7 +47,7 @@ const OrderPage = {
                   <h4>Produk ${item.nama}</h4> <!-- Sesuaikan nama produk -->
                   <p>Harga: Rp${item.harga}</p> <!-- Sesuaikan harga produk -->
                   <div class="d-flex justify-content-between">
-                    ${QtyButton.render(item.kuantitas)}
+                    ${QtyButton.render(item.quantity)}
                     <div class="form-check form-check-reverse mt-2">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked-${item.id_produk}" checked>
                       <label class="form-check-label" for="flexCheckChecked-${item.id_produk}"></label>
@@ -50,8 +60,11 @@ const OrderPage = {
         )
         .join("");
 
-      const totalHarga = allCartItemsData.reduce((total, item) => total + (item.harga), 0);
-      console.log(totalHarga)
+      const totalHarga = cartItems.reduce((total, item) => total + (item.harga), 0);
+
+      total = totalHarga;
+
+      console.log(total);
       return `
         ${await Navbar.render()}
         <div class="container d-flex gap-3 my-5">
@@ -90,33 +103,53 @@ const OrderPage = {
     Navbar.afterRender();
     handleProdukQty();
 
-    const addToCartButton = document.getElementById("pay");
-    addToCartButton.addEventListener("click", async () => {
+    const cartItems = await getItems();
+
+    const orderButton = document.getElementById("pay");
+    orderButton.addEventListener("click", async () => {
       try {
         const userId = localStorage.getItem("userId");
 
+        const tanggalOrder = `${new Date().toISOString().slice(0, 19).replace('T', ' ')}`;
+
         // Tambahkan data ke tabel carts
-        const addOrderResponse = await addOrder(userId);
-        const idOrder = addOrderResponse.id_order;
-
-        // Dapatkan kuantitas produk yang ditambahkan ke keranjang
-        const quantity = parseInt(
-          document.getElementById("quantity").value,
-          10
+        const addOrderResponse = await addOrder(
+          userId,
+          tanggalOrder,
+          "Belum bayar",
+          total
         );
 
-        // Tambahkan data ke tabel cart_items
-        const addCartItemResponse = await addCartItem(
-          idOrder,
-          productId,
-          quantity
-        );
+        console.log(addOrderResponse);
+
+        const idOrder = addOrderResponse.data.id_order;
+
+        for (const item of cartItems) {
+          // Dapatkan kuantitas produk yang ditambahkan ke keranjang
+          const quantity = parseInt(
+            item.quantity,
+            10
+          );
+
+          const hargaSatuan = parseInt(
+            item.harga,
+            10
+          );
+
+          // Tambahkan data ke tabel cart_items
+          const addCartItemResponse = await addOrderItem(
+            idOrder,
+            item.id_produk,
+            quantity,
+            hargaSatuan
+          );
+        }
 
         // Tampilkan pesan sukses atau lakukan tindakan lainnya setelah berhasil menambahkan ke keranjang
-        alert("Produk berhasil ditambahkan ke keranjang!");
+        alert("Berhasil menambahkan ke pesanan!");
       } catch (error) {
-        console.error("Error adding product to cart:", error.message);
-        alert("Gagal menambahkan produk ke keranjang. Silakan coba lagi.");
+        console.error("Error adding all product to order:", error.message);
+        alert("Gagal menambahkan ke pesanan. Silakan coba lagi.");
       }
     });
   },

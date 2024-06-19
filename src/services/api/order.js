@@ -2,14 +2,15 @@
 const API_BASE_URL = "http://localhost:3000";
 
 // Fungsi untuk menambahkan pesanan baru
-async function addOrder(order) {
+async function addOrder(userId, tanggalOrder, status, totalHarga) {
   try {
+    console.log({ id_user: userId, tanggal_order: tanggalOrder, status: status, total_harga: totalHarga});
     const response = await fetch(`${API_BASE_URL}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(order),
+      body: JSON.stringify({ id_user: userId, tanggal_order: tanggalOrder, status: status, total_harga: totalHarga}),
     });
 
     if (!response.ok) {
@@ -24,14 +25,14 @@ async function addOrder(order) {
 }
 
 // Fungsi untuk menambahkan item pesanan baru
-async function addOrderItem(orderItem) {
+async function addOrderItem(idOrder, productId, quantity, hargaSatuan) {
   try {
     const response = await fetch(`${API_BASE_URL}/orderitems`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(orderItem),
+      body: JSON.stringify({id_order: idOrder, id_produk: productId, kuantitas: quantity, harga_satuan: hargaSatuan}),
     });
 
     if (!response.ok) {

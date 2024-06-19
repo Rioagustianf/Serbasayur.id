@@ -18,7 +18,7 @@ const VegetableCard = {
 
       // Temukan kategori "Sayuran Segar"
       const vegetableCategory = categories.find(
-        (category) => category.nama_kategori === "Sayuran Segar"
+        (category) => category.nama_kategori.toLowerCase() === "Sayuran Segar".toLowerCase()
       );
 
       if (!vegetableCategory) {
