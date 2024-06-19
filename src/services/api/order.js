@@ -90,12 +90,12 @@ async function getOrderById(idOrder) {
 // Fungsi untuk mengambil semua item pesanan berdasarkan ID pesanan
 async function getAllOrderItems(idOrder) {
   try {
-    const response = await fetch(`${API_BASE_URL}/orderitems`);
+    const response = await fetch(`${API_BASE_URL}/orderitems/${idOrder}`);
     if (!response.ok) {
       throw new Error("Failed to fetch order items");
     }
     const data = await response.json();
-    return data.data.order_items;
+    return data.data.order_items; // Mengembalikan array order_items dari respons
   } catch (error) {
     console.error("Error fetching order items:", error.message);
     throw error;
@@ -182,19 +182,6 @@ async function deleteOrderItem(idOrder, idOrderItem) {
   return response.json();
 }
 
-async function getOrderItems(orderId) {
-  try {
-    const orderItems = await getAllOrderItems(); // Mengambil semua item pesanan
-    const orderItemsData = orderItems.filter(
-      (item) => item.id_order === orderId
-    );
-    return orderItemsData;
-  } catch (error) {
-    console.error("Error fetching order items:", error.message);
-    throw error;
-  }
-}
-
 // Ekspor fungsi-fungsi API
 export {
   addOrder,
@@ -207,5 +194,4 @@ export {
   updateOrderItem,
   deleteOrder,
   deleteOrderItem,
-  getOrderItems,
 };

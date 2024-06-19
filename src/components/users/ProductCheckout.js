@@ -1,73 +1,67 @@
 import Navbar from "../../components/users/Navbar";
 import Footer from "../../components/users/Footer";
-import QtyButton from "../../components/users/QtyButton"; // Pastikan komponen QtyButton sudah diimpor
-import { getAllOrders, getAllOrderItems } from "../../services/api/order"; // Ganti dengan fungsi yang sesuai untuk mengambil orders dan order items
+import QtyButton from "../../components/users/QtyButton";
+import { getAllOrders, getAllOrderItems } from "../../services/api/order";
 import { getProductById } from "../../services/api/product";
+
+async function getItemOrders() {
+  try {
+    const userId = localStorage.getItem("userId");
+    console.log("User ID:", userId);
+    const allCartItems = [];
+    let orders = await getAllOrders(userId);
+    const response = orders.data.orders;
+    console.log("Response:", response);
+
+    for (const order of response) {
+      const orderItems = await getAllOrderItems(order.id_order);
+      allCartItems.push(...orderItems);
+    }
+
+    const allCartItemsData = [];
+    for (const orderItem of allCartItems) {
+      const productData = await getProductById(orderItem.id_produk);
+      if (productData.data.product) {
+        const product = productData.data.product;
+        allCartItemsData.push({
+          id_produk: product.id_produk,
+          nama: product.nama,
+          harga: product.harga,
+          quantity: orderItem.quantity,
+          image: product.image,
+        });
+      }
+    }
+
+    return allCartItemsData;
+  } catch (error) {
+    console.error("Error getting item orders:", error);
+    throw error; // Throw error agar dapat ditangkap di bagian render
+  }
+}
 
 const ProductCheckout = {
   async render() {
     try {
-      // Simulasikan userId, bisa diganti dengan cara sesuai di aplikasi Anda
-      const userId = localStorage.getItem("userId");
+      const orderItems = await getItemOrders();
 
-      // Ambil semua pesanan (orders) berdasarkan userId
-      let orders = await getAllOrders(userId);
-
-      if (!Array.isArray(orders)) {
-        // Jika bukan array, coba konversi menjadi array
-        orders = [orders];
+      if (!Array.isArray(orderItems) || orderItems.length === 0) {
+        console.warn("No order items found.");
+        return `<div>No order items found. Please try again later.</div>`;
       }
 
-      if (!Array.isArray(orders)) {
-        throw new Error("Orders is not an array");
-      }
-
-      const allOrderItemsData = await Promise.all(
-        orders.map(async (order) => {
-          const orderItems = await getAllOrderItems(order.id_order);
-
-          if (!Array.isArray(orderItems)) {
-            throw new Error("Order items is not an array");
-          }
-
-          // Mengambil data produk untuk setiap order item
-          const orderItemsData = await Promise.all(
-            orderItems.map(async (orderItem) => {
-              const productData = await getProductById(
-                { params: { idProduk: orderItem.id_produk } },
-                { response: { code: () => {} } }
-              ); // Panggil getProductByIdHandler dengan parameter yang sesuai
-              if (productData.status === "success") {
-                return {
-                  ...productData.data.product,
-                  quantity: orderItem.quantity,
-                };
-              } else {
-                throw new Error("Product not found");
-              }
-            })
-          );
-
-          return orderItemsData;
-        })
-      );
-
-      // Menyatukan semua order items menjadi satu array
-      const flattenedOrderItems = allOrderItemsData.flat();
-
-      // Render HTML untuk setiap item order
-      const productListHTML = flattenedOrderItems
+      const productListHTML = orderItems
         .map(
           (item, index) => `
             <div class="border rounded-3 m-3" key="${item.id_produk}">
               <h4 class="section-title ms-5 my-2">Serbasayur.id</h4>
               <div class="d-flex">
                 <div class="border border-2 ms-5 mb-3 mt-2">
-                  <img width="100px" src="http://localhost:3000/image/${item.image}" alt="${item.image}" /> <!-- Sesuaikan path gambar -->
+                  <img width="100px" src="http://localhost:3000/image/${item.image}" alt="${item.image}" />
                 </div>
                 <div class="mx-5 d-flex flex-column align-content-center w-100">
-                  <h4>Produk ${item.nama}</h4> <!-- Sesuaikan nama produk -->
-                  <p>Harga: Rp${item.harga}</p> <!-- Sesuaikan harga produk -->
+                  <h4>Produk ${item.nama}</h4>
+                  <p>Harga: Rp${item.harga}</p>
                   <div class="d-flex justify-content-between">
                     ${QtyButton.render(item.quantity)}
                     <div class="form-check form-check-reverse mt-2">
@@ -82,15 +76,18 @@ const ProductCheckout = {
         )
         .join("");
 
-      // Hitung total harga dari semua order items
-      const totalHarga = flattenedOrderItems.reduce(
-        (total, item) => total + item.harga * item.quantity,
-        0
-      );
+      const totalHarga = orderItems.reduce((total, item) => {
+        const harga = parseFloat(item.harga);
+        const quantity = parseInt(item.quantity);
+        return isNaN(harga) || isNaN(quantity)
+          ? total
+          : total + harga * quantity;
+      }, 0);
 
-      // Return HTML yang akan dirender
+      console.log("Total Harga:", totalHarga);
+
       return `
-        ${await Navbar.render()}
+
         <div class="container d-flex gap-3 my-5">
           <div class="container">
             <div class="bakul d-flex justify-content-between">
@@ -110,12 +107,11 @@ const ProductCheckout = {
             <p class="border border-bottom border-grey"></p>
             <div class="d-flex justify-content-between">
               <p>Total Harga</p>
-              <p>Rp${totalHarga}</p> <!-- Jumlah total harga disesuaikan -->
+              <p>Rp${totalHarga}</p>
             </div>
             <button id="pay" class="btn btn-success w-100">Bayar</button>
           </div>
         </div>
-        ${await Footer.render()}
       `;
     } catch (error) {
       console.error("Error rendering ProductCheckout:", error);
