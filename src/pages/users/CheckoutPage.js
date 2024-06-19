@@ -3,31 +3,23 @@ import Address from "../../components/users/Address";
 import Shipment from "../../components/users/Shipment";
 import Payment from "../../components/users/Payment";
 import Footer from "../../components/users/Footer";
-import { getAllOrders, getAllOrderItems } from "../../services/api/order";
+import { getAllOrderItems } from "../../services/api/order";
 import { getProductById } from "../../services/api/product";
 import { addPayment } from "../../services/api/payment";
 
-var orderId = "";
-var total = 0;
+var total = 0; // Variabel total didefinisikan di tingkat modul
 
 const CheckoutPage = {
   async render() {
     try {
-      const userId = localStorage.getItem("userId");
-      console.log("User ID:", userId);
-      const allCartItems = [];
-      let orders = await getAllOrders(userId);
-      const response = orders.data.orders;
-      console.log("Response:", response);
+      // Ambil id_order dari localStorage
+      const orderId = localStorage.getItem("currentOrderId");
 
-      for (const order of response) {
-        orderId = order.id_order;
-        const orderItems = await getAllOrderItems(order.id_order);
-        allCartItems.push(...orderItems);
-      }
+      // Gunakan orderId untuk mengambil semua item pesanan
+      const orderItems = await getAllOrderItems(orderId);
 
       const allCartItemsData = [];
-      for (const orderItem of allCartItems) {
+      for (const orderItem of orderItems) {
         const productData = await getProductById(orderItem.id_produk);
         if (productData.data.product) {
           const product = productData.data.product;
@@ -74,9 +66,9 @@ const CheckoutPage = {
           : total + harga * quantity;
       }, 0);
 
-      console.log("Total Harga:", totalHarga);
+      console.log(allCartItemsData);
 
-      total = totalHarga + 25000;
+      total = totalHarga + 25000; // Update nilai total
 
       return `
         ${await NavbarCheckout.render()}
@@ -94,7 +86,7 @@ const CheckoutPage = {
             <button id="payButton" class="pay text-center w-25 h-25">Bayar</button>
           </div>
         </div>
-        ${await Footer.render()} <!-- Memanggil render untuk komponen Footer -->
+        ${await Footer.render()}
       `;
     } catch (error) {
       console.error("Error rendering CheckoutPage:", error);
@@ -108,15 +100,11 @@ const CheckoutPage = {
     const payButton = document.getElementById("payButton");
     payButton.addEventListener("click", async () => {
       try {
-        const userId = localStorage.getItem("userId");
-
-        let orders = await getAllOrders(userId);
-        const response = orders.data.orders;
-
+        const orderId = localStorage.getItem("currentOrderId");
         const paymentDate = `${new Date().toISOString().slice(0, 19).replace("T", " ")}`;
         const payment_method = document.getElementById("paymentMethod").value;
 
-        // Tambahkan data ke tabel carts
+        // Tambahkan data ke tabel payments
         const addPaymentResponse = await addPayment(
           {
             id_order: orderId,
@@ -126,6 +114,8 @@ const CheckoutPage = {
             payment_status: "Berhasil",
           }
         );
+
+        localStorage.removeItem("currentOrderId");
 
         // Tampilkan pesan sukses atau lakukan tindakan lainnya setelah berhasil menambahkan ke keranjang
         alert("Berhasil menambahkan ke pembayaran!");
