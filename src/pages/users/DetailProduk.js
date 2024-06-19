@@ -18,7 +18,7 @@ const DetailProduk = {
       ) {
         const product = productResponse.data.product;
 
-        const imageUrl = `http://localhost:3000/image/${product.image}`;
+        const imageUrl = `https://serbasayur-id-back-end.up.railway.app/image/${product.image}`;
 
         return `
           ${await Navbar.render()}

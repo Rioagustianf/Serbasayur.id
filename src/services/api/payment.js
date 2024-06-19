@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://serbasayur-id-back-end.up.railway.app";
 
 // Fungsi untuk menambahkan pembayaran baru
 export async function addPayment(paymentData) {
