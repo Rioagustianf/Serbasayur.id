@@ -17,7 +17,6 @@ const ProductSearch = {
     const filteredProducts = result.map((res) => res.item);
 
     const productCards = await ProductCard.render(filteredProducts);
-    console.log(filteredProducts);
 
     return `
         <div class="product-shelf mt-3">

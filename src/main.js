@@ -6,6 +6,7 @@ import "./style/register.css";
 import "./style/checkout.css";
 import "./style/footer.css";
 import "./style/product.css";
+import "./style/about.css";
 import "./style/admin.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
