@@ -4,7 +4,7 @@ const Login = {
         <div id="login-page">
           <div class="login-container text-center">
             <div class="login-card">
-              <img src="/public/images/logo1.png" alt="Logo" class="logo">
+              <img src="../../public/images/logo1.png" alt="Logo" class="logo">
               <form id="login-form">
                 <div class="input-group">
                   <div class="input-container">

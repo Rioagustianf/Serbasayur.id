@@ -7,7 +7,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
             <div class="logo">
-              <a href="/"><img height="50px" src="../../public/images/logo1.png" alt="Serba Sayur ID"></a>
+              <a href="/"><img height="50px" src="../..../../public/images/logo1.png" alt="Serba Sayur ID"></a>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
                   <a class="nav-link d-lg-none" href="/order">Keranjang</a>
                 </li>
                 <li class="nav-item d-none d-lg-block">
-                  <div class="ms-2"><img height="25px" src="../../public/images/icon3.png" alt="" /></div>
+                  <div class="ms-2"><img height="25px" src="../..../../public/images/icon3.png" alt="" /></div>
                 </li>
                 <li class="nav-item ms-2 d-flex flex-column flex-sm-row">
                   ${localStorage.getItem("isLoggedIn")?`
@@ -186,7 +186,7 @@
               <div class="item-wrap">
                 <div class="item-wrap__image">
                   <div class="category-image">
-                    <img class="category-image__placement" src="../../public/images/categories/${n.image}">
+                    <img class="category-image__placement" src="../..../../public/images/categories/${n.image}">
                   </div>
                 </div>
                 <div class="item-wrap__image-title">
@@ -236,7 +236,7 @@
             </div>
           </div>
           <div class="footer-section" id="footer-logo">
-            <img src="../../public/images/logo1.png" alt="Logo Sebarsayur.id">
+            <img src="../..../../public/images/logo1.png" alt="Logo Sebarsayur.id">
           </div>
         </div>
         <div class="footer-bottom">
@@ -247,7 +247,7 @@
       ${t}
       <div class="container hero mt-3">
         <div class="row">
-            <a href="/about"><img src="../../public/images/hero.png" alt="Hero Image" class="img-fluid" /></a>
+            <a href="/about"><img src="../..../../public/images/hero.png" alt="Hero Image" class="img-fluid" /></a>
         </div>
       </div>
       ${n}
@@ -259,7 +259,7 @@
         <div id="login-page">
           <div class="login-container text-center">
             <div class="login-card">
-              <img src="../../public/images/logo1.png" alt="Logo" class="logo">
+              <img src="../..../../public/images/logo1.png" alt="Logo" class="logo">
               <form id="login-form">
                 <div class="input-group">
                   <div class="input-container">
@@ -287,7 +287,7 @@
       <div id="register-page">
         <div class="register-container text-center">
           <div class="register-card">
-            <img src="../../public/images/logo1.png" alt="Logo" class="logo">
+            <img src="../..../../public/images/logo1.png" alt="Logo" class="logo">
             <form id="register-form">
               <div class="input-group">
                 <div class="input-container">
@@ -435,7 +435,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
             <div class="logo">
-              <a href="/"><img height="50px" src="../../public/images/logo1.png" alt="Serba Sayur ID"></a>
+              <a href="/"><img height="50px" src="../..../../public/images/logo1.png" alt="Serba Sayur ID"></a>
             </div>
           </div>
         </nav>
@@ -627,7 +627,7 @@
                     ${await Te.render()}
                     `}else throw new Error("Failed to fetch search results")}catch(n){return console.error(n),"<div>Error fetching search results. Please try again later.</div>"}},async afterRender(){await te.afterRender(),await yn.afterRender()}},Cd={async render(){return`
       <div class="hero-about position-relative text-center d-flex justify-content-center align-items-center" 
-           style="margin: auto; width: 100vw; background: url('../../../public/images/about-bg.png') no-repeat bottom center; height: calc(100vh - 66px); background-size: 90vh;   font-family: 'poppins', sans-serif;">
+           style="margin: auto; width: 100vw; background: url('../../..../../public/images/about-bg.png') no-repeat bottom center; height: calc(100vh - 66px); background-size: 90vh;   font-family: 'poppins', sans-serif;">
         <div class="hero-about_title p-5 rounded" style="opacity: 0.9; margin-bottom: 40vh">
           <h1>Selamat Datang di <span style="color: #4dc38c;">Serbasayur.id!</span></h1>
         </div>
@@ -638,7 +638,7 @@
         <div class="shadow">
             <div class="company-desc">
                 <div class="image-desc">
-                    <img class="shadow" src="../../public/images/petani.jpg" alt="Petani">
+                    <img class="shadow" src="../..../../public/images/petani.jpg" alt="Petani">
                 </div>
                 <h4 class="mt-0 ms-4 fw-light">Serbasayur.id menjawab tantangan dalam memperoleh sayuran segar langsung dari petani lokal. Kami bertujuan untuk meningkatkan aksesibilitas dan kualitas dibandingkan pasar konvensional, memastikan keberlanjutan ekonomi petani lokal.</h4>
             </div>
@@ -647,14 +647,14 @@
             <div class="company-desc">
                 <h4 class="mt-0 fw-light text-end">Menjadi platform terdepan untuk mendapatkan sayuran segar langsung dari petani lokal, mempromosikan pertanian berkelanjutan dan gaya hidup sehat.</h4>
                 <div class="image-desc ms-4">
-                    <img class="shadow" src="../../public/images/vision.jpg" alt="Petani">
+                    <img class="shadow" src="../..../../public/images/vision.jpg" alt="Petani">
                 </div>
             </div>
         </div>
         <div class="shadow">
             <div class="company-desc">
                 <div class="image-desc">
-                    <img class="shadow" src="../../public/images/petani.jpg" alt="Petani">
+                    <img class="shadow" src="../..../../public/images/petani.jpg" alt="Petani">
                 </div>
                 <div class="company-mission ms-4">
                     <h2 class="card-title mt-5" style="font-weight: bold; color: #28a745;">Misi Kami</h2>
@@ -780,7 +780,7 @@
               <li>
                   <a href="/dashboard">
                       <span class="icon mx-2">
-                          <img width="230px" class="img-fluid" src="../../../public/images/logo1.png" alt="" />
+                          <img width="230px" class="img-fluid" src="../../..../../public/images/logo1.png" alt="" />
                       </span>
                   </a>
               </li>
@@ -1047,7 +1047,7 @@
                         </label>
                     </div>
                     <div class="user">
-                        <img src="../../../public/images/admin/customer01.jpg" alt="">
+                        <img src="../../..../../public/images/admin/customer01.jpg" alt="">
                     </div>
             </div>
             ${t}
@@ -1085,7 +1085,7 @@
               </label>
             </div>
             <div class="user">
-              <img src="../../../public/images/admin/customer01.jpg" alt="">
+              <img src="../../..../../public/images/admin/customer01.jpg" alt="">
             </div>
           </div>
           ${t}
@@ -1200,7 +1200,7 @@
                 </label>
               </div>
               <div class="user">
-                <img src="../../../public/images/admin/customer01.jpg" alt="">
+                <img src="../../..../../public/images/admin/customer01.jpg" alt="">
               </div>
             </div>
             <div class="container w-100">
@@ -1251,7 +1251,7 @@
                 </label>
               </div>
               <div class="user">
-                <img src="../../../public/images/admin/customer01.jpg" alt="">
+                <img src="../../..../../public/images/admin/customer01.jpg" alt="">
               </div>
             </div>
             <div class="container w-100">
@@ -1263,7 +1263,7 @@
       <div id="register-page">
         <div class="register-container text-center">
           <div class="register-card">
-            <img src="../../public/images/logo1.png" alt="Logo" class="logo">
+            <img src="../..../../public/images/logo1.png" alt="Logo" class="logo">
             <form id="register-form">
               <div class="input-group">
                 <div class="input-container">
@@ -1297,7 +1297,7 @@
       <div id="login-page">
         <div class="login-container text-center">
           <div class="login-card">
-            <img src="../../public/images/logo1.png" alt="Logo" class="logo">
+            <img src="../..../../public/images/logo1.png" alt="Logo" class="logo">
             <h5 style="color: #4dc38c">Login Admin</h5>
             <form id="login-form">
               <div class="input-group">

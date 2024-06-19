@@ -10,7 +10,7 @@ const AboutPage = {
         <div class="shadow">
             <div class="company-desc">
                 <div class="image-desc">
-                    <img class="shadow" src="/public/images/petani.jpg" alt="Petani">
+                    <img class="shadow" src="../../public/images/petani.jpg" alt="Petani">
                 </div>
                 <h4 class="mt-0 ms-4 fw-light">Serbasayur.id menjawab tantangan dalam memperoleh sayuran segar langsung dari petani lokal. Kami bertujuan untuk meningkatkan aksesibilitas dan kualitas dibandingkan pasar konvensional, memastikan keberlanjutan ekonomi petani lokal.</h4>
             </div>
@@ -19,14 +19,14 @@ const AboutPage = {
             <div class="company-desc">
                 <h4 class="mt-0 fw-light text-end">Menjadi platform terdepan untuk mendapatkan sayuran segar langsung dari petani lokal, mempromosikan pertanian berkelanjutan dan gaya hidup sehat.</h4>
                 <div class="image-desc ms-4">
-                    <img class="shadow" src="/public/images/vision.jpg" alt="Petani">
+                    <img class="shadow" src="../../public/images/vision.jpg" alt="Petani">
                 </div>
             </div>
         </div>
         <div class="shadow">
             <div class="company-desc">
                 <div class="image-desc">
-                    <img class="shadow" src="/public/images/petani.jpg" alt="Petani">
+                    <img class="shadow" src="../../public/images/petani.jpg" alt="Petani">
                 </div>
                 <div class="company-mission ms-4">
                     <h2 class="card-title mt-5" style="font-weight: bold; color: #28a745;">Misi Kami</h2>

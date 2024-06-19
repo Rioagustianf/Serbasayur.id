@@ -6,7 +6,7 @@
   margin: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url(/public/images/sayur-bg.png);
+  background-image: url(../../public/images/sayur-bg.png);
   background-repeat: no-repeat;
   background-size: cover;
 }

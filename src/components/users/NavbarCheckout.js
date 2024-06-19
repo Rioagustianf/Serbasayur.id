@@ -7,7 +7,7 @@ const NavbarCheckout = {
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
             <div class="logo">
-              <a href="/"><img height="50px" src="/public/images/logo1.png" alt="Serba Sayur ID"></a>
+              <a href="/"><img height="50px" src="../../public/images/logo1.png" alt="Serba Sayur ID"></a>
             </div>
           </div>
         </nav>

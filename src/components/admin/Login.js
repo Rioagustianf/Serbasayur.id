@@ -7,7 +7,7 @@ const Login = {
       <div id="login-page">
         <div class="login-container text-center">
           <div class="login-card">
-            <img src="/public/images/logo1.png" alt="Logo" class="logo">
+            <img src="../../public/images/logo1.png" alt="Logo" class="logo">
             <h5 style="color: #4dc38c">Login Admin</h5>
             <form id="login-form">
               <div class="input-group">
