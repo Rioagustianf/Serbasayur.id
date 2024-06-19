@@ -1,8 +1,8 @@
-const { nanoid } = require("nanoid");
-const db = require("../db_config");
+const { nanoid } = require('nanoid');
+const db = require('../db_config');
 
 async function getAllPayments(callback) {
-  const sql = "SELECT * FROM payments";
+  const sql = 'SELECT * FROM payments';
 
   db.query(sql, (err, results) => {
     if (err) {
@@ -40,15 +40,15 @@ const addPaymentHandler = (request, h) => {
     db.query(sql, (err) => {
       if (err) {
         const response = h.response({
-          status: "fail",
+          status: 'fail',
           message: err.message,
         });
         response.code(500);
         resolve(response);
       }
       const response = h.response({
-        status: "success",
-        message: "Pembayaran berhasil ditambahkan",
+        status: 'success',
+        message: 'Pembayaran berhasil ditambahkan',
         data: {
           id_payment: idPayment,
         },
@@ -69,7 +69,7 @@ const getAllPaymentsHandler = () => {
         paymentsList.push(results[v]);
       });
       const response = {
-        status: "success",
+        status: 'success',
         data: {
           payments: paymentsList,
         },
@@ -85,9 +85,9 @@ const getPaymentByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getPaymentById(idPayment, (results) => {
-      if (typeof results !== "undefined" && results.length > 0) {
+      if (typeof results !== 'undefined' && results.length > 0) {
         const response = {
-          status: "success",
+          status: 'success',
           data: {
             payment: results[0],
           },
@@ -95,8 +95,8 @@ const getPaymentByIdHandler = (request, h) => {
         resolve(response);
       } else {
         const response = h.response({
-          status: "fail",
-          message: "Pembayaran tidak ditemukan",
+          status: 'fail',
+          message: 'Pembayaran tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -119,29 +119,29 @@ const editPaymentByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getPaymentById(idPayment, (results) => {
-      if (typeof results !== "undefined" && results.length > 0) {
+      if (typeof results !== 'undefined' && results.length > 0) {
         const sql = `UPDATE payments SET id_order='${idOrder}',payment_date='${paymentDate}',amount=${amount},payment_method='${paymentMethod}',payment_status='${paymentStatus}' WHERE id_payment='${idPayment}'`;
 
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: "fail",
+              status: 'fail',
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: "success",
-            message: "Pembayaran berhasil diperbarui",
+            status: 'success',
+            message: 'Pembayaran berhasil diperbarui',
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: "fail",
-          message: "Gagal memperbarui pembayaran. Id tidak ditemukan",
+          status: 'fail',
+          message: 'Gagal memperbarui pembayaran. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
@@ -157,29 +157,29 @@ const deletePaymentByIdHandler = (request, h) => {
 
   const promise = new Promise((resolve) => {
     getPaymentById(idPayment, (results) => {
-      if (typeof results !== "undefined" && results.length > 0) {
+      if (typeof results !== 'undefined' && results.length > 0) {
         const sql = `DELETE FROM payments WHERE id_payment='${idPayment}'`;
 
         db.query(sql, (err) => {
           if (err) {
             const response = h.response({
-              status: "fail",
+              status: 'fail',
               message: err.message,
             });
             response.code(500);
             resolve(response);
           }
           const response = h.response({
-            status: "success",
-            message: "Pembayaran berhasil dihapus",
+            status: 'success',
+            message: 'Pembayaran berhasil dihapus',
           });
           response.code(200);
           resolve(response);
         });
       } else {
         const response = h.response({
-          status: "fail",
-          message: "Pembayaran gagal dihapus. Id tidak ditemukan",
+          status: 'fail',
+          message: 'Pembayaran gagal dihapus. Id tidak ditemukan',
         });
         response.code(404);
         resolve(response);
