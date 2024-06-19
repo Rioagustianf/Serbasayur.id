@@ -3,7 +3,7 @@ const Payment = {
         return `
         <div class="payment-container d-flex">
             <h1 class="payment-title fw-semibold">Pilih Metode Pembayaran</h1>
-            <select class="form-select form-select-lg mb-3" aria-label="Large select example">
+            <select id="paymentMethod" class="form-select form-select-lg mb-3" aria-label="Large select example">
                 <option selected>Pilih</option>
                 <option value="QRIS">QRIS</option>
                 <option value="Transfer Bank">Transfer Bank</option>

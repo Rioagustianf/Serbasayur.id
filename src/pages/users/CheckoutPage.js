@@ -5,6 +5,10 @@ import Payment from "../../components/users/Payment";
 import Footer from "../../components/users/Footer";
 import { getAllOrders, getAllOrderItems } from "../../services/api/order";
 import { getProductById } from "../../services/api/product";
+import { addPayment } from "../../services/api/payment";
+
+var orderId = "";
+var total = 0;
 
 const CheckoutPage = {
   async render() {
@@ -17,6 +21,7 @@ const CheckoutPage = {
       console.log("Response:", response);
 
       for (const order of response) {
+        orderId = order.id_order;
         const orderItems = await getAllOrderItems(order.id_order);
         allCartItems.push(...orderItems);
       }
@@ -71,6 +76,8 @@ const CheckoutPage = {
 
       console.log("Total Harga:", totalHarga);
 
+      total = totalHarga + 25000;
+
       return `
         ${await NavbarCheckout.render()}
         <div id="checkout-page">
@@ -81,7 +88,7 @@ const CheckoutPage = {
           ${await Payment.render()}
           <div class="total-price-container d-flex">
             <h2 class="price-total__title fw-normal">Total Harga</h2>
-            <h1 class="price-total__value fw-normal">Rp${totalHarga}</h1>
+            <h1 class="price-total__value fw-normal">Rp${total}</h1>
           </div> 
           <div class="d-flex justify-content-end w-100 mt-2">
             <button id="payButton" class="pay text-center w-25 h-25">Bayar</button>
@@ -93,6 +100,41 @@ const CheckoutPage = {
       console.error("Error rendering CheckoutPage:", error);
       return `<div>Error rendering CheckoutPage. Please try again later.</div>`;
     }
+  },
+
+  async afterRender() {
+    // NavbarCheckout.afterRender();
+
+    const payButton = document.getElementById("payButton");
+    payButton.addEventListener("click", async () => {
+      try {
+        const userId = localStorage.getItem("userId");
+
+        let orders = await getAllOrders(userId);
+        const response = orders.data.orders;
+
+        const paymentDate = `${new Date().toISOString().slice(0, 19).replace("T", " ")}`;
+        const payment_method = document.getElementById("paymentMethod").value;
+
+        // Tambahkan data ke tabel carts
+        const addPaymentResponse = await addPayment(
+          {
+            id_order: orderId,
+            payment_date: paymentDate,
+            amount: total,
+            payment_method: payment_method,
+            payment_status: "Berhasil",
+          }
+        );
+
+        // Tampilkan pesan sukses atau lakukan tindakan lainnya setelah berhasil menambahkan ke keranjang
+        alert("Berhasil menambahkan ke pembayaran!");
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error adding all product to payment:", error.message);
+        alert("Gagal menambahkan ke pembayaran. Silakan coba lagi.");
+      }
+    });
   },
 };
 
