@@ -6,7 +6,8 @@
   "scripts": {
     "start:prod": "NODE_ENV=production node ./src/server.js",
     "start:dev": "nodemon ./src/server.js",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "db-migrate": "node node_modules/db-migrate/bin/db-migrate"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +20,11 @@
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.9",
-    "mysql": "^2.18.1",
+    "db-migrate": "^0.11.14",
+    "db-migrate-mysql": "^2.3.2",
+    "dotenv": "^16.4.5",
+    "inert": "^5.1.3",
+    "mysql2": "^3.10.0",
     "nanoid": "^3.3.7"
   }
 }

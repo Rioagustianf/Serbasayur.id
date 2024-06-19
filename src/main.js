@@ -1,16 +1,22 @@
+import page from "page";
 import "./style/style.css";
-import javascriptLogo from "../public/javascript.svg";
-import viteLogo from "/vite.svg";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "./style/category.css";
+import "./style/login.css";
+import "./style/register.css";
+import "./style/checkout.css";
+import "./style/footer.css";
+import "./style/product.css";
+import "./style/about.css";
+import "./style/admin.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./routes/routes";
+import LandingPage from "./pages/users/LandingPage";
 
-document.querySelector("#app").innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-  </div>
-`;
+document.addEventListener("DOMContentLoaded", async () => {
+  const rootElement = document.getElementById("app");
+  rootElement.innerHTML = await LandingPage.render();
+  LandingPage.afterRender();
+  page();
+});
