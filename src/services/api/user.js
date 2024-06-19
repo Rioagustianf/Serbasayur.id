@@ -81,7 +81,6 @@ async function loginUser(email, password) {
     }
     const userData = await response.json();
     const users = userData.data.users;
-    console.log(users)
 
     // Pastikan bahwa users adalah array
     if (!Array.isArray(users)) {

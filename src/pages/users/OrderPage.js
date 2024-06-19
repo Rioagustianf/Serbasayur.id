@@ -4,6 +4,7 @@ import Footer from "../../components/users/Footer";
 import { handleProdukQty } from "../../utils/productHandler";
 import { getAllCarts, getAllCartItems } from "../../services/api/cart";
 import { getProductById } from "../../services/api/product";
+import { addOrder, addOrderItem } from "../../services/api/order";
 
 const OrderPage = {
   async render() {
@@ -30,7 +31,7 @@ const OrderPage = {
               <h4 class="section-title ms-5 my-2">Serbasayur.id</h4>
               <div class="d-flex">
                 <div class="border border-2 ms-5 mb-3 mt-2">
-                  <img width="100px" src="../../serbasayur-id-back-end/image/${item.image}" alt="${item.image}" /> <!-- Sesuaikan path gambar -->
+                  <img width="100px" src="http://localhost:3000/image/${item.image}" alt="${item.image}" /> <!-- Sesuaikan path gambar -->
                 </div>
                 <div class="mx-5 d-flex flex-column align-content-center w-100">
                   <h4>Produk ${item.nama}</h4> <!-- Sesuaikan nama produk -->
@@ -74,7 +75,7 @@ const OrderPage = {
               <p>Total Harga</p>
               <p>Rp${totalHarga}</p> <!-- Jumlah total harga disesuaikan -->
             </div>
-            <a href="/checkout" id="pay" class="btn btn-success w-100">Bayar</a>
+            <button id="pay" class="btn btn-success w-100">Bayar</button>
           </div>
         </div>
         ${await Footer.render()}
@@ -86,8 +87,38 @@ const OrderPage = {
   },
 
   async afterRender() {
-    await Navbar.afterRender();
+    Navbar.afterRender();
     handleProdukQty();
+
+    const addToCartButton = document.getElementById("pay");
+    addToCartButton.addEventListener("click", async () => {
+      try {
+        const userId = localStorage.getItem("userId");
+
+        // Tambahkan data ke tabel carts
+        const addOrderResponse = await addOrder(userId);
+        const idOrder = addOrderResponse.id_order;
+
+        // Dapatkan kuantitas produk yang ditambahkan ke keranjang
+        const quantity = parseInt(
+          document.getElementById("quantity").value,
+          10
+        );
+
+        // Tambahkan data ke tabel cart_items
+        const addCartItemResponse = await addCartItem(
+          idOrder,
+          productId,
+          quantity
+        );
+
+        // Tampilkan pesan sukses atau lakukan tindakan lainnya setelah berhasil menambahkan ke keranjang
+        alert("Produk berhasil ditambahkan ke keranjang!");
+      } catch (error) {
+        console.error("Error adding product to cart:", error.message);
+        alert("Gagal menambahkan produk ke keranjang. Silakan coba lagi.");
+      }
+    });
   },
 };
 

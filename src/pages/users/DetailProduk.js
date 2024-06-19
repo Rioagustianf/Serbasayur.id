@@ -5,20 +5,18 @@ import { handleProdukQty } from "../../utils/productHandler";
 import { generateStarRating, formatCurrency } from "../../utils/productHandler";
 import { getUserById } from "../../services/api/user";
 import { addCart, addCartItem } from "../../services/api/cart"; // Import addCart dan addCartItem
+import page from "page";
 
 const DetailProduk = {
   async render(productId) {
     try {
       const productResponse = await getProductById(productId);
       const userId = localStorage.getItem("userId");
-      const userResponse = await getUserById(userId);
 
       if (
-        productResponse.status === "success" &&
-        userResponse.status === "success"
+        productResponse.status === "success"
       ) {
         const product = productResponse.data.product;
-        const user = userResponse.data.user;
 
         const imageUrl = `http://localhost:3000/image/${product.image}`;
 
@@ -139,6 +137,11 @@ const DetailProduk = {
       try {
         const userId = localStorage.getItem("userId");
 
+        if (!userId) {
+          alert('Tidak bisa memasukkan ke Keranjang, Anda belum login.')
+          page.redirect('/login');
+          return;
+        }
         // Tambahkan data ke tabel carts
         const addCartResponse = await addCart({ id_user: userId });
         const idCart = addCartResponse.id_cart;
