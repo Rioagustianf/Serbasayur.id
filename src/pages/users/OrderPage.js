@@ -6,8 +6,8 @@ import { getAllCarts, getAllCartItems } from "../../services/api/cart";
 import { getProductById } from "../../services/api/product";
 import { addOrder, addOrderItem } from "../../services/api/order";
 
-async function getItems () {
-  const userId = localStorage.getItem('userId');
+async function getItems() {
+  const userId = localStorage.getItem("userId");
   const carts = await getAllCarts(userId);
   const allCartItems = [];
   const allCartItemsData = [];
@@ -19,7 +19,9 @@ async function getItems () {
 
   for (const cartItem of allCartItems) {
     const cartItemsData = await getProductById(cartItem.id_produk);
-    allCartItemsData.push(Object.assign(cartItemsData.data.product, { quantity: cartItem.quantity }));
+    allCartItemsData.push(
+      Object.assign(cartItemsData.data.product, { quantity: cartItem.quantity })
+    );
   }
 
   console.log(allCartItemsData);
@@ -60,7 +62,10 @@ const OrderPage = {
         )
         .join("");
 
-      const totalHarga = cartItems.reduce((total, item) => total + (item.harga), 0);
+      const totalHarga = cartItems.reduce(
+        (total, item) => total + item.harga * item.quantity,
+        0
+      );
 
       total = totalHarga;
 
@@ -110,7 +115,7 @@ const OrderPage = {
       try {
         const userId = localStorage.getItem("userId");
 
-        const tanggalOrder = `${new Date().toISOString().slice(0, 19).replace('T', ' ')}`;
+        const tanggalOrder = `${new Date().toISOString().slice(0, 19).replace("T", " ")}`;
 
         // Tambahkan data ke tabel carts
         const addOrderResponse = await addOrder(
@@ -126,15 +131,9 @@ const OrderPage = {
 
         for (const item of cartItems) {
           // Dapatkan kuantitas produk yang ditambahkan ke keranjang
-          const quantity = parseInt(
-            item.quantity,
-            10
-          );
+          const quantity = parseInt(item.quantity, 10);
 
-          const hargaSatuan = parseInt(
-            item.harga,
-            10
-          );
+          const hargaSatuan = parseInt(item.harga, 10);
 
           // Tambahkan data ke tabel cart_items
           const addCartItemResponse = await addOrderItem(
