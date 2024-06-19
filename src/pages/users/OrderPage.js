@@ -1,3 +1,4 @@
+// Import semua yang diperlukan
 import Navbar from "../../components/users/Navbar";
 import QtyButton from "../../components/users/QtyButton";
 import Footer from "../../components/users/Footer";
@@ -34,6 +35,21 @@ var total = 0;
 const OrderPage = {
   async render() {
     try {
+      const userId = localStorage.getItem("userId");
+      const tanggalOrder = `${new Date().toISOString().slice(0, 19).replace("T", " ")}`;
+      const status = "Belum bayar";
+
+      // Tambahkan order baru
+      const addOrderResponse = await addOrder(
+        userId,
+        tanggalOrder,
+        status,
+        total
+      );
+
+      // Simpan id_order ke localStorage
+      localStorage.setItem("currentOrderId", addOrderResponse.data.id_order);
+
       const cartItems = await getItems();
 
       const productListHTML = cartItems
@@ -143,6 +159,9 @@ const OrderPage = {
             hargaSatuan
           );
         }
+
+        // Simpan id_order ke localStorage
+        localStorage.setItem("currentOrderId", idOrder);
 
         // Tampilkan pesan sukses atau lakukan tindakan lainnya setelah berhasil menambahkan ke keranjang
         alert("Berhasil menambahkan ke pesanan!");
