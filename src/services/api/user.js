@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://serbasayur-id-back-end.up.railway.app";
 
 async function getAllUsers() {
   const response = await fetch(`${API_BASE_URL}/users`);
@@ -90,7 +90,7 @@ async function loginUser(email, password) {
     const user = users.find(
       (user) => user.email === email && user.password === password
     );
-    console.log(users)
+    console.log(users);
 
     if (user) {
       localStorage.setItem("isLoggedIn", true);

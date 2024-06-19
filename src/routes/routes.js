@@ -14,7 +14,6 @@ import { Dashboard } from "../pages/admin/Dashboard";
 import AddProduk from "../pages/admin/Addproduk";
 import AddCategory from "../pages/admin/AddCategory";
 import ListProdukPage from "../pages/admin/ListProdukPage";
-import CustomerDashboard from "../pages/admin/CustomerPage";
 import CustomerPage from "../pages/admin/CustomerPage";
 import Register from "../components/admin/Register";
 import Login from "../components/admin/Login";
@@ -32,13 +31,18 @@ const renderPage = async (pageComponent, id) => {
 const checkAdminAuth = async (ctx, next) => {
   const currentAdmin = JSON.parse(sessionStorage.getItem("currentAdmin"));
 
-  if (!currentAdmin && ctx.pathname !== "/dashboard/login") {
-    // Jika tidak ada admin yang terotentikasi dan bukan halaman login, redirect ke halaman login
+  // Periksa apakah admin belum login dan tidak berada di halaman login atau register
+  if (
+    !currentAdmin &&
+    ctx.pathname !== "/dashboard/login" &&
+    ctx.pathname !== "/dashboard/register"
+  ) {
+    // Redirect ke halaman login jika admin belum login
     page.redirect("/dashboard/login");
     return;
   }
 
-  // Lanjutkan ke halaman yang diminta jika admin telah terotentikasi
+  // Lanjutkan ke halaman yang diminta jika admin telah terotentikasi atau di halaman login/register
   next();
 };
 
@@ -63,8 +67,8 @@ page("/dashboard/addProduk", checkAdminAuth, () => renderPage(AddProduk));
 page("/dashboard/Category", checkAdminAuth, () => renderPage(AddCategory));
 page("/dashboard/listProduk", checkAdminAuth, () => renderPage(ListProdukPage));
 page("/dashboard/customers", checkAdminAuth, () => renderPage(CustomerPage));
-page("/dashboard/register", () => renderPage(Register));
-page("/dashboard/login", () => renderPage(Login));
+page("/dashboard/register", () => renderPage(Register)); // Menambahkan route untuk RegisterPage tanpa memerlukan auth
+page("/dashboard/login", () => renderPage(Login)); // Menambahkan route untuk LoginPage tanpa memerlukan auth
 
 page("/c/:category", async (ctx) => {
   const { category } = ctx.params;

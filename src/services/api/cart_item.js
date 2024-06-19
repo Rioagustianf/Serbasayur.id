@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://serbasayur-id-back-end.up.railway.app";
 
 async function getAllCartItems(idCart) {
   try {

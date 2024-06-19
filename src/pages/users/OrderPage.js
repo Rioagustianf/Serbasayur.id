@@ -43,7 +43,7 @@ const OrderPage = {
               <h4 class="section-title ms-5 my-2">Serbasayur.id</h4>
               <div class="d-flex">
                 <div class="border border-2 ms-5 mb-3 mt-2">
-                  <img width="100px" src="http://localhost:3000/image/${item.image}" alt="${item.image}" /> <!-- Sesuaikan path gambar -->
+                  <img width="100px" src="https://serbasayur-id-back-end.up.railway.app/image/${item.image}" alt="${item.image}" /> <!-- Sesuaikan path gambar -->
                 </div>
                 <div class="mx-5 d-flex flex-column align-content-center w-100">
                   <h4>Produk ${item.nama}</h4> <!-- Sesuaikan nama produk -->

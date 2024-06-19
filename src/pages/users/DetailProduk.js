@@ -13,12 +13,10 @@ const DetailProduk = {
       const productResponse = await getProductById(productId);
       const userId = localStorage.getItem("userId");
 
-      if (
-        productResponse.status === "success"
-      ) {
+      if (productResponse.status === "success") {
         const product = productResponse.data.product;
 
-        const imageUrl = `http://localhost:3000/image/${product.image}`;
+        const imageUrl = `https://serbasayur-id-back-end.up.railway.app/image/${product.image}`;
 
         return `
           ${await Navbar.render()}
@@ -138,8 +136,8 @@ const DetailProduk = {
         const userId = localStorage.getItem("userId");
 
         if (!userId) {
-          alert('Tidak bisa memasukkan ke Keranjang, Anda belum login.')
-          page.redirect('/login');
+          alert("Tidak bisa memasukkan ke Keranjang, Anda belum login.");
+          page.redirect("/login");
           return;
         }
         // Tambahkan data ke tabel carts
