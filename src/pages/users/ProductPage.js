@@ -19,7 +19,6 @@ const ProductPage = {
           productResponse,
           categoryResponse
         );
-        console.log(productShelf)
         return `
                     ${await Navbar.render()}
                     <div class="cp-container mt-5 mb-5">

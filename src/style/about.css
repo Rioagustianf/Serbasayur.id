@@ -1,0 +1,122 @@
+/* Umum */
+.company-desc-bg {
+    background-color: wheat;
+    max-width: 100vw;
+}
+
+.hero-about {
+    margin-right: -1.5rem;
+    overflow: hidden;
+}
+
+.company-desc {
+    display: grid;
+    max-width: 1200px;
+    margin: auto;
+    grid-template-columns: 1fr 1fr;
+    padding: 5rem 1rem;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.image-desc {
+    max-width: 600px;
+}
+
+.image-desc img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 25px;
+}
+
+.company-desc h4 {
+    width: 100%;
+    font-size: 1rem;
+}
+
+.contact-link {
+    color: #28a745;
+    text-decoration: none;
+}
+
+/* Responsive untuk perangkat kecil (mobile) */
+@media (max-width: 576px) {
+    .company-desc {
+        display: block;
+        width: 100%;
+        padding: 5rem 2rem;
+    }
+
+    .image-desc img {
+        max-width: 100%;
+    }
+
+    .company-desc h4 {
+        margin-left: 0 !important;
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+        font-size: 0.9rem;
+        text-align: center !important;
+    }
+
+    .list-group-item {
+        font-size: 0.8rem;
+    }
+    
+    h2.card-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Responsive untuk perangkat sedang (tablet) */
+@media (max-width: 768px) {
+    .company-desc {
+        display: block;
+        width: 100%;
+        padding: 5rem 2rem;
+    }
+
+    .image-desc img {
+        max-width: 100%;
+    }
+
+    .company-desc h4 {
+        margin-left: 0 !important;
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+        font-size: 0.9rem;
+        text-align: center !important;
+    }
+
+    .list-group-item {
+        font-size: 0.9rem;
+    }
+
+    h2.card-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* Responsive untuk perangkat besar (desktop) */
+@media (min-width: 769px) {
+    .company-desc {
+        grid-template-columns: 1fr 1fr;
+        padding: 5rem 1rem;
+    }
+
+    .image-desc img {
+        max-width: 600px;
+    }
+
+    .company-desc h4 {
+        font-size: 1rem;
+    }
+
+    .list-group-item {
+        font-size: 1rem;
+    }
+
+    h2.card-title {
+        font-size: 2rem;
+    }
+}
