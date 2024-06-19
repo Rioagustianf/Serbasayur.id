@@ -136,7 +136,7 @@ const ListProduk = {
           const productResponse = await getProductById(productId);
           if (productResponse.status === "success") {
             const product = productResponse.data.product;
-            const imageUrl = `http://localhost:3000/image/${product.image}`;
+            const imageUrl = `https://serbasayur-id-back-end.up.railway.app/image/${product.image}`;
 
             // Isi formulir edit dengan data produk yang diperoleh
             document.getElementById("edit-nama").value = product.nama;
