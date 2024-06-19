@@ -117,15 +117,13 @@ const CheckoutPage = {
         const payment_method = document.getElementById("paymentMethod").value;
 
         // Tambahkan data ke tabel carts
-        const addPaymentResponse = await addPayment(
-          {
-            id_order: orderId,
-            payment_date: paymentDate,
-            amount: total,
-            payment_method: payment_method,
-            payment_status: "Berhasil",
-          }
-        );
+        const addPaymentResponse = await addPayment({
+          id_order: orderId,
+          payment_date: paymentDate,
+          amount: total,
+          payment_method: payment_method,
+          payment_status: "Berhasil",
+        });
 
         // Tampilkan pesan sukses atau lakukan tindakan lainnya setelah berhasil menambahkan ke keranjang
         alert("Berhasil menambahkan ke pembayaran!");
