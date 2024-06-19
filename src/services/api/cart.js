@@ -93,18 +93,17 @@ async function deleteCart(idUser, idCart) {
 // Cart Items API
 async function getAllCartItems(idCart) {
   try {
-    const response = await fetch`${API_BASE_URL}/cartitems/${idCart}`;
+    const response = await fetch(`${API_BASE_URL}/cartitems/${idCart}`);
     if (!response.ok) {
       throw new Error("Failed to fetch cart items");
     }
     const cartItems = await response.json();
-    return cartItems;
+    return cartItems.data.cart_items;
   } catch (error) {
     console.error("Error fetching cart items:", error);
-    throw error; // Propagate the error back to the caller if needed
+    throw error;
   }
 }
-
 async function getCartItemById(idCart, idCartItem) {
   try {
     const response = await fetch(
