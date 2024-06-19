@@ -19,7 +19,7 @@ async function getAllProducts() {
 
   // Modifikasi produk untuk menambahkan URL gambar
   products.forEach((product) => {
-    product.imageUrl = `${API_BASE_URL}/image/${product.image}`; // Hapus spasi tambahan
+    product.imageUrl = `${API_BASE_URL}/image/${product.image}`;
   });
 
   return products;
@@ -35,13 +35,17 @@ async function getProductById(idProduk) {
 
 async function addProduct(formData) {
   try {
+<<<<<<< HEAD
+    const response = await fetch(`${API_BASE_URL}/products`, {
+=======
     const response = await fetch("https://serbasayur-id-back-end.up.railway.app/products", {
+>>>>>>> 9e6c1a4b5c7d5936067882dac0527236222e9cfe
       method: "POST",
       body: formData,
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
+      const errorData = await response.json(); // Attempt to parse error response
       throw new Error(errorData.message || "Gagal menambahkan produk");
     }
 

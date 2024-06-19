@@ -3,8 +3,8 @@ import HeroAbout from "../../components/users/HeroAbout";
 import Footer from "../../components/users/Footer";
 
 const AboutPage = {
-    async render() {
-        return `
+  async render() {
+    return `
         ${await Navbar.render()}
         ${await HeroAbout.render()}
         <div class="shadow">
@@ -51,11 +51,11 @@ const AboutPage = {
         </div>
         ${await Footer.render()}
         `;
-    },
+  },
 
-    async afterRender() {
-        Navbar.afterRender();
-    }
+  async afterRender() {
+    Navbar.afterRender();
+  },
 };
 
 export default AboutPage;

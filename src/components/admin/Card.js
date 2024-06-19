@@ -3,7 +3,7 @@ export function Card({ numbers, cardName, icon }) {
   return `
       <div class="card">
         <div>
-          <div class="numbers">${numbers}</div>
+          <div class="numbers fs-3">${numbers}</div>
           <div class="cardName">${cardName}</div>
         </div>
         <div class="iconBx">
