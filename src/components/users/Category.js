@@ -31,7 +31,7 @@ const Category = {
           </div>
           <div class="category-header-section__content">
             <div class="image-category">
-              <ul class="category-list">
+              <ul class="category-list mt-5 mb-5">
                 ${categoriesHTML}
               </ul>
             </div>

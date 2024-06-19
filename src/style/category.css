@@ -13,7 +13,7 @@
 
 .category-list {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr 1fr;
   border-top: 1px solid rgba(0, 0, 0, 0.203);
   border-left: 1px solid rgba(0, 0, 0, 0.203);
@@ -46,20 +46,17 @@
 
 @media (max-width: 1530px) {
   .category-list {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 1024px) {
   .category-list {
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
 @media (max-width: 767px) {
-  .category-list {
-    grid-template-rows: repeat(2, 1fr);
-  }
   .category-item,
   .item-wrap {
     width: 170px;
